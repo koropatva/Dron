@@ -2,6 +2,16 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+dron-interfaces/.classpath
+dron-interfaces/.gradle/
+dron-interfaces/.project
+dron-interfaces/.settings/
+dron-interfaces/build/
+dron/.classpath
+dron/.gradle/
+dron/.project
+dron/.settings/
+
 
 # Package Files #
 *.jar

@@ -54,10 +54,10 @@ public class Application {
         sequence =
                 mapper.readValue(
                         new File(
-                                "/Users/admin/Documents/drop-project/dron-interfaces/src/main/resources/json/TextbookSubscription.json"),
+                                "/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json"),
                         Sequence.class);
-        sequence.updateParam(new Param("{{userEmail}}", "andrij" + new Date().getTime()
-                + "@email.com"));
+//        sequence.updateParam(new Param("{{userEmail}}", "andrij" + new Date().getTime()
+//                + "@email.com"));
 //        sequence.updateParam(new Param(ORDER_ID, "220586551"));
         // sequence.updateParam(new Param(ORDER_LINE_IDS, "[747160613]"));
         SequenceService sequenceService = new SequenceService(sequence);

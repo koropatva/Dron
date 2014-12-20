@@ -1,34 +1,18 @@
-buildscript {
-    repositories {
-        maven { url "http://repo.spring.io/libs-snapshot" }
-        mavenLocal()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE")
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
+apply plugin: 'maven'
 
+group 'com.dron'
+version '14.12.16'
 jar {
-    baseName = 'gs-rest-service'
-    version =  '0.1.0'
+    baseName = 'dron-interfaces'
 }
 
 repositories {
     mavenCentral()
-    maven { url "http://repo.spring.io/libs-snapshot" }
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("com.fasterxml.jackson.core:jackson-databind")
-    testCompile("junit:junit")
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+    compile("com.fasterxml.jackson.core:jackson-databind:2.4.4")
+    compile('org.springframework:spring-web:4.0.3.RELEASE')
 }

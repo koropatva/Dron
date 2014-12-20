@@ -8,22 +8,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-	fx:controller="com.cheggnet.hackaton.controllers.RequestScene">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<VBox prefHeight="497.0" prefWidth="876.0">
 			<children>
 				<ToolBar prefHeight="40.0" prefWidth="200.0">
 					<items>
-						<TextField prefHeight="26.0" prefWidth="534.0">
+						<TextField prefHeight="26.0" prefWidth="534.0" promptText="URL">
 							<padding>
 								<Insets left="10.0" />
 							</padding>
 						</TextField>
 						<ChoiceBox prefWidth="150.0">
 							<items>
-								<FXCollections fx:factory="observableArrayList">
+								<FXCollections fx:factory="observableArrayList" >
 									<String fx:value="GET" />
 									<String fx:value="POST" />
 									<String fx:value="PUT" />
@@ -31,13 +29,11 @@
 								</FXCollections>
 							</items>
 						</ChoiceBox>
-						<ToggleButton mnemonicParsing="false" onAction="#onSelectCB" text="URL params" />
-						<ToggleButton mnemonicParsing="false" text="Headers" />
 					</items>
 				</ToolBar>
 				<VBox prefHeight="0" prefWidth="876.0">
 					<children>
-						<HBox prefHeight="12.0" prefWidth="876.0">
+						<HBox minWidth="200.0" prefHeight="121.0" prefWidth="876.0">
 							<children>
 								<TextField />
 								<TextField>
@@ -45,7 +41,7 @@
 										<Insets left="25.0" />
 									</HBox.margin>
 								</TextField>
-								<Button mnemonicParsing="false" text="Delete">
+								<Button mnemonicParsing="false" text="Update" textAlignment="CENTER">
 									<HBox.margin>
 										<Insets left="25.0" />
 									</HBox.margin>
@@ -55,22 +51,17 @@
 								<Insets bottom="5.0" left="10.0" top="5.0" />
 							</padding>
 						</HBox>
+      				<HBox minWidth="200.0" prefHeight="75.0" prefWidth="876.0" spacing="2.0">
+      					<children>
+      						<Button mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="Send" />
+      					</children>
+      					<padding>
+      						<Insets bottom="2.0" left="2.0" top="2.0" />
+      					</padding>
+      				</HBox>
+                  <TextArea minWidth="200.0" prefHeight="150.0" prefWidth="876.0" />
 					</children>
 				</VBox>
-				<HBox prefHeight="30.0" prefWidth="878.0" spacing="2.0">
-					<children>
-						<Button mnemonicParsing="false" prefHeight="25.0"
-							prefWidth="50.0" text="Send" />
-						<Button mnemonicParsing="false" prefHeight="26.0"
-							prefWidth="71.0" text="Preview" />
-						<Button mnemonicParsing="false" prefHeight="26.0"
-							prefWidth="137.0" text="Add to collection" />
-					</children>
-					<padding>
-						<Insets bottom="2.0" left="2.0" top="2.0" />
-					</padding>
-				</HBox>
-				<TextArea prefHeight="427.0" prefWidth="876.0" />
 			</children>
 		</VBox>
 	</children>

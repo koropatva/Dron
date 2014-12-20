@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+apply plugin: 'maven'
+
+group 'com.dron.applications'
+
+jar {
+    baseName = 'dron-service'
+    version =  '14.12.16'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+    	compile("org.springframework.boot:spring-boot-starter-web")
+    	compile("com.fasterxml.jackson.core:jackson-databind")
+    	compile("com.paypal.sdk:rest-api-sdk:0.5.2")
+	compile("com.dron.applications:dron-interfaces:14.12.16")
+    	testCompile("junit:junit")
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+		}
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}

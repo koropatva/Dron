@@ -53,15 +53,19 @@
 						</HBox>
       				<HBox minWidth="200.0" prefHeight="75.0" prefWidth="876.0" spacing="2.0">
       					<children>
-      						<Button fx:id="label" minWidth="200.0" mnemonicParsing="false" onAction="#doSomething" prefHeight="26.0" prefWidth="201.0" text="Send" />
+      						<Button fx:id="tbnSend" mnemonicParsing="false" onAction="#send" text="Send" />
       					</children>
       					<padding>
       						<Insets bottom="2.0" left="2.0" top="2.0" />
       					</padding>
       				</HBox>
-                  <TextArea minWidth="200.0" prefHeight="150.0" prefWidth="876.0" />
 					</children>
 				</VBox>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextArea fx:id="txaPostData" minHeight="300.0" minWidth="200.0" prefHeight="150.0" prefWidth="876.0" text="" />
+               </children>
+            </Pane>
 			</children>
 		</VBox>
 	</children>

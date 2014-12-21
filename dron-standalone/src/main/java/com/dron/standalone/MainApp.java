@@ -1,55 +1,32 @@
 package com.dron.standalone;
 
-import java.io.IOException;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.dron.standalone.actions.interfaces.IStageService;
+import com.dron.standalone.models.ControllerEnum;
 
 public class MainApp extends Application {
 
-	// private static ApplicationContext ctx;
+	private static final String SPRING_CONTEXT = "/META-INF/spring/context.xml";
 
-	private Stage primaryStage;
-	private AnchorPane rootLayout;
+	private static ApplicationContext ctx;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("AddressApp");
-
-		initRootLayout();
-	}
-
-	/**
-	 * Initializes the root layout.
-	 */
-	public void initRootLayout() {
-		try {
-			
-			// Load root layout from fxml file.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getClassLoader().getResource("META-INF/view/RequestLayout.fxml"));
-			rootLayout = (AnchorPane) loader.load();
-
-			// Show the scene containing the root layout.
-			Scene scene = new Scene(rootLayout);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public Stage getPrimaryStage() {
-		return primaryStage;
+		IStageService iStageService = ctx.getBean(IStageService.class);
+		//Initialize base configurations of PrimaryStage
+		iStageService.initPrimaryStage(primaryStage);
+		
+		//Show ROOT controller
+		iStageService.showController(ControllerEnum.ROOT);
 	}
 
 	public static void main(String[] args) {
-		// ctx = new
-		// ClassPathXmlApplicationContext("META-INF/spring/context.xml");
+		ctx = new ClassPathXmlApplicationContext(SPRING_CONTEXT);
 		launch(args);
 
 	}

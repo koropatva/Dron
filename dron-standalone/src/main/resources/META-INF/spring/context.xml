@@ -6,26 +6,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="com.dron" />
+	<context:component-scan base-package="com.dron.standalone" />
 
 	<context:annotation-config />
 	<context:mbean-export />
 
-	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-		<property name="messageConverters">
-			<list>
-				<bean
-					class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
-				<bean class="org.springframework.http.converter.FormHttpMessageConverter" />
-				<bean
-					class="org.springframework.http.converter.StringHttpMessageConverter" />
-				<bean
-					class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
-				<bean
-					class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" />
-				<bean
-					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
-			</list>
-		</property>
-	</bean>
 </beans>

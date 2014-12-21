@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dron.standalone.controllers.root.RootController">
 	<children>
 		<VBox prefHeight="497.0" prefWidth="876.0">
 			<children>
@@ -21,7 +21,7 @@
 						</TextField>
 						<ChoiceBox prefWidth="150.0">
 							<items>
-								<FXCollections fx:factory="observableArrayList" >
+								<FXCollections fx:factory="observableArrayList">
 									<String fx:value="GET" />
 									<String fx:value="POST" />
 									<String fx:value="PUT" />
@@ -53,7 +53,7 @@
 						</HBox>
       				<HBox minWidth="200.0" prefHeight="75.0" prefWidth="876.0" spacing="2.0">
       					<children>
-      						<Button mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="Send" />
+      						<Button fx:id="label" minWidth="200.0" mnemonicParsing="false" onAction="#doSomething" prefHeight="26.0" prefWidth="201.0" text="Send" />
       					</children>
       					<padding>
       						<Insets bottom="2.0" left="2.0" top="2.0" />

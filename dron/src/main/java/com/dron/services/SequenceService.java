@@ -16,120 +16,113 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SequenceService {
 
-    public static final String ROAD_SEPARATOR = "..";
+	public static final String ROAD_SEPARATOR = "..";
 
-    private RESTfullService restFullService = RESTfullService.getInstance();
+	private RESTfullService restFullService = RESTfullService.getInstance();
 
-    private final ObjectMapper mapper = new ObjectMapper();
+	private final ObjectMapper mapper = new ObjectMapper();
 
-    private Sequence sequence;
+	private Sequence sequence;
 
-    public SequenceService(Sequence sequence) {
-        this.sequence = sequence;
-    }
-    
-    public void runSequence() throws EmptyDataException {
-        for (Plugin plugin : sequence.getPlugins()) {
-            plugin.setSequence(sequence);
-            String response = restFullService.run(plugin);
-            System.out.println(response);
-            try {
-                fillFutureParams(response, plugin.getFutureParams());
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
+	public SequenceService(Sequence sequence) {
+		this.sequence = sequence;
+	}
 
-    private void fillFutureParams(String response, List<FutureParam> futureParams)
-            throws JsonProcessingException, IOException {
-        for (FutureParam futureParam : futureParams) {
+	public void runSequence() throws EmptyDataException {
+		for (Plugin plugin : sequence.getPlugins()) {
+			plugin.setSequence(sequence);
+			String response = restFullService.run(plugin);
+			plugin.setResponce(response);
+			System.out.println(response);
+			try {
+				fillFutureParams(response, plugin.getFutureParams());
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
 
-            JsonNode node = mapper.readTree(response);
-            fillFutureParam(node, futureParam, futureParam.getDependence());
-        }
-    }
+	private void fillFutureParams(String response,
+			List<FutureParam> futureParams) throws JsonProcessingException,
+			IOException {
+		for (FutureParam futureParam : futureParams) {
 
-    private void fillFutureParam(JsonNode node, FutureParam futureParam, String roadValue) {
-        while (roadValue.contains(ROAD_SEPARATOR)) {
-            List<Integer> listNodeIndexes = new ArrayList<Integer>();
+			JsonNode node = mapper.readTree(response);
+			fillFutureParam(node, futureParam, futureParam.getDependence());
+		}
+	}
 
-            // Get Node name
-            String nodeName = roadValue.substring(0, roadValue.indexOf(ROAD_SEPARATOR));
-            // Update roadValue without current node name
-            roadValue =
-                    roadValue
-                            .substring(roadValue.indexOf(ROAD_SEPARATOR) + ROAD_SEPARATOR.length());
+	private void fillFutureParam(JsonNode node, FutureParam futureParam,
+			String roadValue) {
+		while (roadValue.contains(ROAD_SEPARATOR)) {
+			List<Integer> listNodeIndexes = new ArrayList<Integer>();
 
-            if (nodeName.contains("[")) {
-                // Select all indexes
-                String roadIndexes =
-                        nodeName.substring(nodeName.indexOf("[") + 1, nodeName.indexOf("]"));
-                for (String index : roadIndexes.split(",")) {
-                    listNodeIndexes.add(Integer.parseInt(index.trim()));
-                }
-                // Get node key
-                nodeName = nodeName.substring(0, nodeName.indexOf("["));
+			// Get Node name
+			String nodeName = roadValue.substring(0,
+					roadValue.indexOf(ROAD_SEPARATOR));
+			// Update roadValue without current node name
+			roadValue = roadValue.substring(roadValue.indexOf(ROAD_SEPARATOR)
+					+ ROAD_SEPARATOR.length());
 
-                if (!nodeName.isEmpty()) {
-                    node = node.findPath(nodeName);
-                }
-                int index = 0;
-                for (Iterator<JsonNode> iterator = node.iterator(); iterator.hasNext();) {
-                    JsonNode iteratorNode = iterator.next();
+			if (nodeName.contains("[")) {
+				// Select all indexes
+				String roadIndexes = nodeName.substring(
+						nodeName.indexOf("[") + 1, nodeName.indexOf("]"));
+				for (String index : roadIndexes.split(",")) {
+					listNodeIndexes.add(Integer.parseInt(index.trim()));
+				}
+				// Get node key
+				nodeName = nodeName.substring(0, nodeName.indexOf("["));
 
-                    if (listNodeIndexes.contains(index)) {
-                        fillFutureParam(iteratorNode, futureParam, roadValue);
-                    }
-                    index++;
-                }
-            }
-            if (node == null || nodeName == null || !node.hasNonNull(nodeName)) {
-                return;
-            }
-            node = node.get(nodeName);
-        }
-        if (node == null || roadValue == null || !node.hasNonNull(roadValue)) {
-            return;
-        }
-        node = node.get(roadValue);
+				if (!nodeName.isEmpty()) {
+					node = node.findPath(nodeName);
+				}
+				int index = 0;
+				for (Iterator<JsonNode> iterator = node.iterator(); iterator
+						.hasNext();) {
+					JsonNode iteratorNode = iterator.next();
 
-        addParamToList(node, futureParam);
-    }
+					if (listNodeIndexes.contains(index)) {
+						fillFutureParam(iteratorNode, futureParam, roadValue);
+					}
+					index++;
+				}
+			}
+			if (node == null || nodeName == null || !node.hasNonNull(nodeName)) {
+				return;
+			}
+			node = node.get(nodeName);
+		}
+		if (node == null || roadValue == null || !node.hasNonNull(roadValue)) {
+			return;
+		}
+		node = node.get(roadValue);
 
-    private void addParamToList(JsonNode node, FutureParam futureParam) {
-        // Try to search if we have it param in the list
-        Param currentParam = null;
-        for (Param param : sequence.getParams()) {
-            if (param.getKey().equals(futureParam.getKey())) {
-                currentParam = param;
-                break;
-            }
-        }
+		addParamToList(node, futureParam);
+	}
 
-        // If the param presents, just update it
-        if (currentParam != null) {
-            currentParam.setValue(node.asText());
-            System.out.println("Added new param with key = " + futureParam.getKey() + " and value = "
-                    + currentParam.getValue());
-        } else {
-            // Other way added new
-            addParam(new Param(futureParam.getKey(), node.asText()));
-            System.out.println("Added new param with key = " + futureParam.getKey() + " and value = "
-                    + node.asText());
-        }
-    }
+	private void addParamToList(JsonNode node, FutureParam futureParam) {
+		// Try to search if we have it param in the list
+		Param currentParam = null;
+		for (Param param : sequence.getParams()) {
+			if (param.getKey().equals(futureParam.getKey())) {
+				currentParam = param;
+				break;
+			}
+		}
 
-    public void addParam(Param param) {
-        sequence.getParams().add(param);
-    }
-
-    public void updateParam(Param param) {
-        for (Param par : sequence.getParams()) {
-            if (par.getKey().equals(param.getKey())) {
-                par.setValue(param.getValue());
-            }
-        }
-    }
+		// If the param presents, just update it
+		if (currentParam != null) {
+			currentParam.setValue(node.asText());
+			System.out.println("Added new param with key = "
+					+ futureParam.getKey() + " and value = "
+					+ currentParam.getValue());
+		} else {
+			// Other way added new
+			sequence.addParam(new Param(futureParam.getKey(), node.asText()));
+			System.out.println("Added new param with key = "
+					+ futureParam.getKey() + " and value = " + node.asText());
+		}
+	}
 
 }

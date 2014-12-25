@@ -1,56 +1,87 @@
 package com.dron.models;
 
-public class Param {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Param() {
-    }
-    
-    public Param(final String key, final String value) {
-        this(key, value, false);
-    }
+import com.dron.interfaces.IBaseObserver;
 
-    public Param(final String key, final String value, final boolean array) {
-        this.key = key;
-        this.value = value;
-        this.array = array;
-    }
+public class Param implements IBaseObserver {
 
-    private String key;
+	private static final String PROPERTY_ARRAY = "Array";
 
-    private String value;
+	private static final String PROPERTY_VALUE = "Value";
 
-    private boolean array;
+	private static final String PROPERTY_KEY = "Key";
 
-    public String getKey() {
-        return key;
-    }
+	public Param() {
+	}
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	public Param(final String key, final String value) {
+		this(key, value, false);
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public Param(final String key, final String value, final boolean array) {
+		this.key = key;
+		this.value = value;
+		this.array = array;
+	}
 
-    public void setValue(String value) {
-        // If we don't fill it before just create array with one element int the list
-        if (array) {
-            if (this.value == null) {
-                this.value = "[" + value + "]";
-            } else {
-                this.value = this.value.substring(0, this.value.length() - 1) + ", " + value + "]";
-            }
-        } else {
-            this.value = value;
-        }
-    }
+	private List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
 
-    public boolean isArray() {
-        return array;
-    }
+	private String key;
 
-    public void setArray(boolean array) {
-        this.array = array;
-    }
+	private String value;
+
+	private boolean array;
+
+	public void addChangeListener(PropertyChangeListener newListener) {
+		listeners.add(newListener);
+	}
+
+	private void notifyListeners(Object object, String property,
+			Object oldValue, Object newValue) {
+		for (PropertyChangeListener listener : listeners) {
+			listener.propertyChange(new PropertyChangeEvent(object, property,
+					oldValue, newValue));
+		}
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		notifyListeners(this, PROPERTY_KEY, this.key, this.key = key);
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		// If we don't fill it before just create array with one element int the
+		// list
+		String newValue;
+		if (array) {
+			if (this.value == null) {
+				newValue = "[" + value + "]";
+			} else {
+				newValue = this.value.substring(0, this.value.length() - 1)
+						+ ", " + value + "]";
+			}
+		} else {
+			newValue = value;
+		}
+		notifyListeners(this, PROPERTY_VALUE, this.value, this.value = newValue);
+	}
+
+	public boolean isArray() {
+		return array;
+	}
+
+	public void setArray(boolean array) {
+		notifyListeners(this, PROPERTY_ARRAY, this.array, this.array = array);
+	}
 }

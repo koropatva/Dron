@@ -6,41 +6,45 @@ import java.util.List;
 
 public class Sequence {
 
-    private List<Plugin> plugins = new LinkedList<Plugin>();
+	private List<Plugin> plugins = new LinkedList<Plugin>();
 
-    private List<Param> params = new ArrayList<Param>();
+	private List<Param> params = new ArrayList<Param>();
 
-    public String findParam(String key) {
-        for (Param iterable : params) {
-            if (iterable.getKey().equals(key)) {
-                return iterable.getValue();
-            }
-        }
-        return null;
-    }
+	public String findParam(String key) {
+		for (Param iterable : params) {
+			if (iterable.getKey().equals(key)) {
+				return iterable.getValue();
+			}
+		}
+		return null;
+	}
 
-    public void updateParam(Param param) {
-        for (Param iterable : params) {
-            if (iterable.getKey().equals(param.getKey())) {
-                iterable.setValue(param.getValue());
-                break;
-            }
-        }
-    }
+	public void updateParam(Param param) {
+		for (Param iterable : params) {
+			if (iterable.getKey().equals(param.getKey())) {
+				iterable.setValue(param.getValue());
+				break;
+			}
+		}
+	}
 
-    public List<Param> getParams() {
-        return params;
-    }
+	public void addParam(Param param) {
+		params.add(param);
+	}
 
-    public List<Plugin> getPlugins() {
-        return plugins;
-    }
+	public List<Param> getParams() {
+		return params;
+	}
 
-    public void setPlugins(List<Plugin> plugins) {
-        this.plugins = plugins;
-    }
+	public List<Plugin> getPlugins() {
+		return plugins;
+	}
 
-    public void setParams(List<Param> params) {
-        this.params = params;
-    }
+	public void setPlugins(List<Plugin> plugins) {
+		this.plugins = plugins;
+	}
+
+	public void setParams(List<Param> params) {
+		this.params = params;
+	}
 }

@@ -4,6 +4,31 @@
       "Content-Type" : [ "application/json" ],
       "Accept" : [ "application/json" ]
     },
+    "httpMethod" : "POST",
+    "url" : "{{userUrl}}:{{userPort}}/user-api/rest/usernew",
+    "postBody" : "{\"password\":123456,\"active\":true,\"createdDate\":1339484400000,\"firstName\":\"Suzanne\",\"lastName\":\"Clark\",\"email\":\"{{userEmail}}\",\"modifiedDate\":1342722621000,\"gender\":\"NA\",\"schoolId\":1,\"registrationSource\":\"HOME\",\"schoolYear\":\"JUNIOR\",\"userStatus\":\"REGISTERED\",\"balance\":0.00,\"shippingAddressId\":1,\"billingAddressId\":1,\"userAgreement\":0,\"phantomPassword\":0}",
+    "request" : null,
+    "responce" : null,
+    "futureParams" : [ ]
+  }, {
+    "headers" : {
+      "Content-Type" : [ "application/json" ],
+      "Accept" : [ "application/json" ]
+    },
+    "httpMethod" : "GET",
+    "url" : "{{userUrl}}:{{userPort}}/user-api/rest/usernew?email={{userEmail}}",
+    "postBody" : null,
+    "request" : null,
+    "responce" : null,
+    "futureParams" : [ {
+      "key" : "{{userId}}",
+      "dependence" : "id"
+    } ]
+  }, {
+    "headers" : {
+      "Content-Type" : [ "application/json" ],
+      "Accept" : [ "application/json" ]
+    },
     "httpMethod" : "GET",
     "url" : "{{catalogUrl}}:{{catalogPort}}/catalog-api/rest/catalog/priced/byId/{{catalogSubscriptionTypeId}}",
     "postBody" : null,
@@ -34,7 +59,7 @@
     },
     "httpMethod" : "POST",
     "url" : "{{url}}:{{orderPort}}/order-api/rest/order/create",
-    "postBody" : "{\"items\":[{\"catalogItemId\":\"{{catalogSubscriptionTypeId}}\",\"pricingId\":\"{{logSubscriptionId}}\",\"quantity\":1},{\"catalogItemId\":\"{{catalogTextbookTypeId}}\",\"pricingId\":\"{{logTextbookId}}\",\"quantity\":1}],\"userId\":\"35197734\"}",
+    "postBody" : "{\"items\":[{\"catalogItemId\":\"{{catalogSubscriptionTypeId}}\",\"pricingId\":\"{{logSubscriptionId}}\",\"quantity\":1},{\"catalogItemId\":\"{{catalogTextbookTypeId}}\",\"pricingId\":\"{{logTextbookId}}\",\"quantity\":1}],\"userId\":\"{{userId}}\"}",
     "request" : null,
     "responce" : null,
     "futureParams" : [ {
@@ -62,7 +87,7 @@
     },
     "httpMethod" : "POST",
     "url" : "{{url}}:{{orderPort}}/order-api/rest/order/processor/plugin/data/{{orderId}}",
-    "postBody" : " [{\"namespace\":\"shipping_address\",\"key\":\"fname\",\"value\":\"Andrew2\"},{\"namespace\":\"shipping_address\",\"key\":\"lname\",\"value\":\"Koropatva2\"},{\"namespace\":\"shipping_address\",\"key\":\"line1\",\"value\":\"1216 Oak Creek Way\"},{\"namespace\":\"shipping_address\",\"key\":\"line2\",\"value\":\"\"},{\"namespace\":\"shipping_address\",\"key\":\"city\",\"value\":\"Sunnyvale\"},{\"namespace\":\"shipping_address\",\"key\":\"state\",\"value\":\"CA\"},{\"namespace\":\"shipping_address\",\"key\":\"country\",\"value\":\"US\"},{\"namespace\":\"shipping_address\",\"key\":\"zip\",\"value\":\"94089\"},{\"namespace\":\"shipping_address\",\"key\":\"phone\",\"value\":\"1345789123\"},{\"namespace\":\"shipping_address\",\"key\":\"address_id\",\"value\":\"128103598\"},{\"namespace\":\"billing_address\",\"key\":\"fname\",\"value\":\"Andrew2\"},{\"namespace\":\"billing_address\",\"key\":\"lname\",\"value\":\"Koropatva2\"},{\"namespace\":\"billing_address\",\"key\":\"line1\",\"value\":\"1216 Oak Creek Way\"},{\"namespace\":\"billing_address\",\"key\":\"line2\",\"value\":\"\"},{\"namespace\":\"billing_address\",\"key\":\"city\",\"value\":\"Sunnyvale\"},{\"namespace\":\"billing_address\",\"key\":\"state\",\"value\":\"CA\"},{\"namespace\":\"billing_address\",\"key\":\"country\",\"value\":\"US\"},{\"namespace\":\"billing_address\",\"key\":\"zip\",\"value\":\"94089\"},{\"namespace\":\"billing_address\",\"key\":\"phone\",\"value\":\"4086368303\"},{\"namespace\":\"billing_address\",\"key\":\"address_id\",\"value\":\"128103600\"},{\"namespace\":\"method_of_payment1\",\"key\":\"type\",\"value\":\"CREDITCARD\"},{\"namespace\":\"method_of_payment1\",\"key\":\"id\",\"value\":\"71084052\"},{\"namespace\":\"method_of_payment1\",\"key\":\"amount\",\"value\":null},{\"namespace\":\"confirm_checkout\",\"key\":\"confirmed\",\"value\":\"1\"}]",
+    "postBody" : " [{\"namespace\":\"shipping_address\",\"key\":\"fname\",\"value\":\"Andrew2\"},{\"namespace\":\"shipping_address\",\"key\":\"lname\",\"value\":\"Koropatva2\"},{\"namespace\":\"shipping_address\",\"key\":\"line1\",\"value\":\"1216 Oak Creek Way\"},{\"namespace\":\"shipping_address\",\"key\":\"line2\",\"value\":\"\"},{\"namespace\":\"shipping_address\",\"key\":\"city\",\"value\":\"Sunnyvale\"},{\"namespace\":\"shipping_address\",\"key\":\"state\",\"value\":\"CA\"},{\"namespace\":\"shipping_address\",\"key\":\"country\",\"value\":\"US\"},{\"namespace\":\"shipping_address\",\"key\":\"zip\",\"value\":\"94089\"},{\"namespace\":\"shipping_address\",\"key\":\"phone\",\"value\":\"4086311111\"},{\"namespace\":\"shipping_address\",\"key\":\"address_id\",\"value\":\"128103598\"},{\"namespace\":\"billing_address\",\"key\":\"fname\",\"value\":\"Andrew2\"},{\"namespace\":\"billing_address\",\"key\":\"lname\",\"value\":\"Koropatva2\"},{\"namespace\":\"billing_address\",\"key\":\"line1\",\"value\":\"1216 Oak Creek Way\"},{\"namespace\":\"billing_address\",\"key\":\"line2\",\"value\":\"\"},{\"namespace\":\"billing_address\",\"key\":\"city\",\"value\":\"Sunnyvale\"},{\"namespace\":\"billing_address\",\"key\":\"state\",\"value\":\"CA\"},{\"namespace\":\"billing_address\",\"key\":\"country\",\"value\":\"US\"},{\"namespace\":\"billing_address\",\"key\":\"zip\",\"value\":\"94089\"},{\"namespace\":\"billing_address\",\"key\":\"phone\",\"value\":\"4086311111\"},{\"namespace\":\"billing_address\",\"key\":\"address_id\",\"value\":\"128103600\"},{\"namespace\":\"method_of_payment1\",\"key\":\"type\",\"value\":\"CREDITCARD\"},{\"namespace\":\"method_of_payment1\",\"key\":\"id\",\"value\":\"71084052\"},{\"namespace\":\"method_of_payment1\",\"key\":\"amount\",\"value\":null},{\"namespace\":\"confirm_checkout\",\"key\":\"confirmed\",\"value\":\"1\"}]",
     "request" : null,
     "responce" : null,
     "futureParams" : [ ]
@@ -112,8 +137,16 @@
     "value" : "http://cops-web01.test3.cloud.cheggnet.com",
     "array" : false
   }, {
+    "key" : "{{userUrl}}",
+    "value" : "http://user.test3.cheggnet.com",
+    "array" : false
+  }, {
     "key" : "{{orderPort}}",
     "value" : "8090",
+    "array" : false
+  }, {
+    "key" : "{{userPort}}",
+    "value" : "6085",
     "array" : false
   }, {
     "key" : "{{catalogPort}}",
@@ -143,6 +176,14 @@
     "key" : "{{orderLineIds}}",
     "value" : null,
     "array" : true
+  }, {
+    "key" : "{{userEmail}}",
+    "value" : null,
+    "array" : false
+  }, {
+    "key" : "{{userId}}",
+    "value" : null,
+    "array" : false
   }, {
     "key" : "{{option_chosen}}",
     "value" : null,

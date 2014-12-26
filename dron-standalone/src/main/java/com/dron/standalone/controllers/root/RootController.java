@@ -1,57 +1,46 @@
 package com.dron.standalone.controllers.root;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.springframework.stereotype.Component;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
-import com.dron.exceptions.EmptyDataException;
-import com.dron.models.Sequence;
-import com.dron.services.SequenceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.dron.standalone.actions.interfaces.IStageService;
 import com.dron.standalone.controllers.base.BaseController;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.dron.standalone.controllers.root.tasks.SequenceTask;
+import com.dron.standalone.models.ControllerEnum;
 
 @Component
 public class RootController extends BaseController {
 
+	@Autowired
+	private IStageService iStageService;
+
+	@FXML
+	private Button btnSend;
+
+	@FXML
+	private TextArea txaLogger;
+
 	@Override
-	protected String getViewName() {
-		return "RootView";
+	protected ControllerEnum getControllerEnum() {
+		return ControllerEnum.ROOT;
 	}
 
 	@FXML
-	private Button tbnSend;
-
-	@FXML
-	private TextArea txaPostData;
-
-	private int count = 0;
-
-	@FXML
 	protected void send(ActionEvent actionEvent) {
-		try {
-			Sequence sequence;
+		SequenceTask sequenceTask = new SequenceTask(txaLogger,
+				"/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json");
 
-			ObjectMapper mapper = new ObjectMapper();
+		sequenceTask.start();
+	}
 
-			sequence = mapper
-					.readValue(
-							new File(
-									"/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json"),
-							Sequence.class);
-
-			SequenceService sequenceService = new SequenceService(sequence);
-
-			sequenceService.runSequence();
-		} catch (IOException | EmptyDataException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@FXML
+	private void swatSequenceScene(ActionEvent event) {
+		iStageService.showController(ControllerEnum.SEQUENCE);
 	}
 
 }

@@ -1,15 +1,16 @@
 package com.dron.standalone.controllers.base;
 
-import com.dron.standalone.controllers.base.interfaces.IBaseController;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+
+import com.dron.standalone.controllers.base.interfaces.IBaseController;
+import com.dron.standalone.models.ControllerEnum;
 
 public abstract class BaseController extends Pane implements IBaseController {
 
 	private FXMLLoader loader;
 
-	protected abstract String getViewName();
+	protected abstract ControllerEnum getControllerEnum();
 
 	protected BaseController() {
 
@@ -17,9 +18,9 @@ public abstract class BaseController extends Pane implements IBaseController {
 		String viewPath = this.getClass().getPackage().getName()
 				.replace('.', '/');
 
-		loader = new FXMLLoader();
-		loader.setLocation(BaseController.class.getResource("/" + viewPath
-				+ "/" + getViewName() + ".fxml"));
+		loader = new FXMLLoader(BaseController.class.getResource("/" + viewPath
+				+ "/" + getControllerEnum().getViewName() + ".fxml"));
+		loader.setController(this);
 	}
 
 	public FXMLLoader getLoader() {

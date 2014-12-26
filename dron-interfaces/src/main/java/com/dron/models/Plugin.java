@@ -1,5 +1,7 @@
 package com.dron.models;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,117 +10,142 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 
+import com.dron.interfaces.IBaseObserver;
 import com.dron.utils.ParamsUtils;
 
-public class Plugin {
+public class Plugin implements IBaseObserver {
 
-    public Plugin() {}
+	public static final String PROPERTY_SEQUENCE = "Sequence";
 
-    public Plugin(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-        setHeaders(null);
+	public static final String PROPERTY_URL = "Url";
 
-        futureParams = new ArrayList<FutureParam>();
-    }
+	public static final String PROPERTY_RESPONCE = "Responce";
 
-    public void setHeaders(HttpHeaders headers) {
-        if (headers == null) {
-            headers = new HttpHeaders();
-        }
-        List<MediaType> mediaTypes = new ArrayList<MediaType>();
-        mediaTypes.add(MediaType.APPLICATION_JSON);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(mediaTypes);
+	public static final String PROPERTY_POST_BODY = "PostBody";
 
-        this.headers = headers;
-    }
+	public static final String PROPERTY_HTTP_METHOD = "HttpMethod";
 
-    private Sequence sequence;
+	public Plugin() {
+	}
 
-    private HttpHeaders headers;
+	public Plugin(HttpMethod httpMethod) {
+		this.httpMethod = httpMethod;
+		setHeaders(null);
 
-    private HttpMethod httpMethod;
+		futureParams = new ArrayList<FutureParam>();
+	}
 
-    private String url;
+	private List<PropertyChangeListener> listeners = new ArrayList<>();
 
-    private String postBody;
+	private void notifyListeners(final Object object, final String property,
+			final Object oldValue, final Object newValue) {
+		for (final PropertyChangeListener listener : listeners) {
+			listener.propertyChange(new PropertyChangeEvent(object, property,
+					oldValue, newValue));
+		}
+	}
 
-    private String request;
+	public void addChangeListener(PropertyChangeListener newListener) {
+		listeners.add(newListener);
+	}
 
-    private String responce;
+	public void setHeaders(HttpHeaders headers) {
+		if (headers == null) {
+			headers = new HttpHeaders();
+		}
+		List<MediaType> mediaTypes = new ArrayList<MediaType>();
+		mediaTypes.add(MediaType.APPLICATION_JSON);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setAccept(mediaTypes);
 
-    /**
-     * Structure of parameter way looks like: names of JSON object separated by dot. If you need to
-     * select someone object from the list you should to use "[numbers separated by comma]"
-     */
-    private List<FutureParam> futureParams;
+		notifyListeners(this, "Headers", this.headers, this.headers = headers);
+	}
 
-    public void addFutureParam(String key, String dependence) {
-        sequence.getParams().add(new Param(key, null));
-        this.futureParams.add(new FutureParam(key, dependence));
-    }
+	private Sequence sequence;
 
-    public void addFutureParamList(String key, String dependence) {
-        sequence.getParams().add(new Param(key, null, true));
-        this.futureParams.add(new FutureParam(key, dependence));
-    }
+	private HttpHeaders headers;
 
-    public HttpEntity<String> fillEntity() {
-        return new HttpEntity<String>(ParamsUtils.fillDataParams(postBody, sequence.getParams()),
-                headers);
-    }
+	private HttpMethod httpMethod;
 
-    public String fillUrl() {
-        return ParamsUtils.fillDataParams(url, sequence.getParams());
-    }
+	private String url;
 
-    public HttpMethod getHttpMethod() {
-        return httpMethod;
-    }
+	private String postBody;
 
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
+	private String request;
 
-    public HttpHeaders getHeaders() {
-        return headers;
-    }
+	private String responce;
 
+	/**
+	 * Structure of parameter way looks like: names of JSON object separated by
+	 * dot. If you need to select someone object from the list you should to use
+	 * "[numbers separated by comma]"
+	 */
+	private List<FutureParam> futureParams;
 
-    public String getPostBody() {
-        return postBody;
-    }
+	public void addFutureParam(String key, String dependence) {
+		sequence.getParams().add(new Param(key, null));
+		this.futureParams.add(new FutureParam(key, dependence));
+	}
 
-    public void setPostBody(String postBody) {
-        this.postBody = postBody;
-    }
+	public HttpEntity<String> fillEntity() {
+		return new HttpEntity<String>(ParamsUtils.fillDataParams(postBody,
+				sequence.getParams()), headers);
+	}
 
-    public String getResponce() {
-        return responce;
-    }
+	public String fillUrl() {
+		return ParamsUtils.fillDataParams(url, sequence.getParams());
+	}
 
-    public void setResponce(String responce) {
-        this.responce = responce;
-    }
+	public HttpMethod getHttpMethod() {
+		return httpMethod;
+	}
 
-    public String getRequest() {
-        return request;
-    }
+	public void setHttpMethod(HttpMethod httpMethod) {
+		notifyListeners(this, PROPERTY_HTTP_METHOD, this.httpMethod,
+				this.httpMethod = httpMethod);
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public HttpHeaders getHeaders() {
+		return headers;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public String getPostBody() {
+		return postBody;
+	}
 
-    public void setSequence(Sequence sequence) {
-        this.sequence = sequence;
-    }
+	public void setPostBody(String postBody) {
+		notifyListeners(this, PROPERTY_POST_BODY, this.postBody,
+				this.postBody = postBody);
+	}
 
-    public List<FutureParam> getFutureParams() {
-        return futureParams;
-    }
+	public String getResponce() {
+		return responce;
+	}
+
+	public void setResponce(String responce) {
+		notifyListeners(this, PROPERTY_RESPONCE, this.responce,
+				this.responce = responce);
+	}
+
+	public String getRequest() {
+		return request;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		notifyListeners(this, PROPERTY_URL, this.url, this.url = url);
+	}
+
+	public void setSequence(Sequence sequence) {
+		notifyListeners(this, PROPERTY_SEQUENCE, this.sequence,
+				this.sequence = sequence);
+	}
+
+	public List<FutureParam> getFutureParams() {
+		return futureParams;
+	}
 
 }

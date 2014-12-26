@@ -71,8 +71,6 @@ public class Plugin implements IBaseObserver {
 
 	private String postBody;
 
-	private String request;
-
 	private String responce;
 
 	/**
@@ -125,10 +123,6 @@ public class Plugin implements IBaseObserver {
 	public void setResponce(String responce) {
 		notifyListeners(this, PROPERTY_RESPONCE, this.responce,
 				this.responce = responce);
-	}
-
-	public String getRequest() {
-		return request;
 	}
 
 	public String getUrl() {

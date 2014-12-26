@@ -5,20 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.annotation.PostConstruct;
-
-import javafx.beans.property.MapProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
+import javafx.util.converter.DefaultStringConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,7 +28,6 @@ import org.springframework.stereotype.Component;
 
 import com.dron.standalone.actions.interfaces.IStageService;
 import com.dron.standalone.controllers.base.BaseController;
-import com.dron.standalone.controllers.root.tasks.SequenceTask;
 import com.dron.standalone.models.ControllerEnum;
 import com.dron.standalone.models.UIHttpHeaders;
 
@@ -58,18 +59,43 @@ public class RootController extends BaseController implements Initializable {
 				MediaType.APPLICATION_JSON_VALUE));
 		httpHeaders.add(new UIHttpHeaders("Accept",
 				MediaType.APPLICATION_JSON_VALUE));
+		httpHeaders.add(new UIHttpHeaders("", ""));
 
 		ObservableList<UIHttpHeaders> observableList = FXCollections
 				.observableList(httpHeaders);
-		tableView.setItems(observableList);
-		TableColumn<UIHttpHeaders, String> headerCol = new TableColumn<>(
-				"header");
-		headerCol.setCellValueFactory(new PropertyValueFactory<>("header"));
 
-		TableColumn<UIHttpHeaders, String> valueCol = new TableColumn<>("value");
-		valueCol.setCellValueFactory(new PropertyValueFactory<>("value"));
+		TableColumn<UIHttpHeaders, String> headerCol = new TableColumn<>(
+				UIHttpHeaders.PROPERTY_HEADER);
+		headerCol.setCellValueFactory(new PropertyValueFactory<>(
+				UIHttpHeaders.PROPERTY_HEADER));
+		headerCol.setMinWidth(150);
+		headerCol
+				.setCellFactory(new Callback<TableColumn<UIHttpHeaders, String>, TableCell<UIHttpHeaders, String>>() {
+					@Override
+					public TableCell<UIHttpHeaders, String> call(
+							TableColumn<UIHttpHeaders, String> arg0) {
+						return new TextFieldTableCell<UIHttpHeaders, String>(
+								new DefaultStringConverter());
+					}
+				});
+
+		TableColumn<UIHttpHeaders, String> valueCol = new TableColumn<>(
+				UIHttpHeaders.PROPERTY_VALUE);
+		valueCol.setCellValueFactory(new PropertyValueFactory<>(
+
+		UIHttpHeaders.PROPERTY_VALUE));
+		valueCol.setMinWidth(150);
+		valueCol.setCellFactory(new Callback<TableColumn<UIHttpHeaders, String>, TableCell<UIHttpHeaders, String>>() {
+			@Override
+			public TableCell<UIHttpHeaders, String> call(
+					TableColumn<UIHttpHeaders, String> arg0) {
+				return new TextFieldTableCell<UIHttpHeaders, String>(
+						new DefaultStringConverter());
+			}
+		});
 
 		tableView.getColumns().setAll(headerCol, valueCol);
+		tableView.setItems(observableList);
 		tableView.setEditable(true);
 	}
 
@@ -80,13 +106,13 @@ public class RootController extends BaseController implements Initializable {
 
 	@FXML
 	protected void send(ActionEvent actionEvent) {
-//		SequenceTask sequenceTask = new SequenceTask(txaLogger,
-//				"/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json");
-//
-//		sequenceTask.start();
-		
-		tableView.setMinWidth(tableView.getMinWidth() + 300);
-		tableView.setMinHeight(tableView.getMinHeight() + 200);
+		// SequenceTask sequenceTask = new SequenceTask(txaLogger,
+		// "/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json");
+		//
+		// sequenceTask.start();
+		tableView.getItems().forEach(
+				action -> System.out.println(action.getValue()));
+
 	}
 
 	@FXML

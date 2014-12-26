@@ -10,59 +10,55 @@
 
 <AnchorPane layoutX="1.0" layoutY="1.0" prefHeight="454.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-      <ScrollPane prefHeight="430.0" prefWidth="595.0" AnchorPane.rightAnchor="24.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="452.0" prefWidth="617.0">
+		<VBox prefHeight="497.0" prefWidth="876.0">
+			<children>
+				<ToolBar prefHeight="40.0" prefWidth="200.0">
+					<items>
+						<TextField prefHeight="26.0" prefWidth="534.0" promptText="URL">
+							<padding>
+								<Insets left="10.0" />
+							</padding>
+						</TextField>
+						<ChoiceBox prefWidth="150.0">
+							<items>
+								<FXCollections fx:factory="observableArrayList">
+									<String fx:value="GET" />
+									<String fx:value="POST" />
+									<String fx:value="PUT" />
+									<String fx:value="DELETE" />
+								</FXCollections>
+							</items>
+						</ChoiceBox>
+					</items>
+				</ToolBar>
+				<VBox prefHeight="357.0" prefWidth="876.0">
+					<children>
+						<HBox minWidth="200.0" prefHeight="121.0" prefWidth="876.0">
+							<children>
+                        <ScrollPane prefHeight="115.0" prefWidth="320.0">
+                           <content>
+                              <TableView fx:id="tableView" minHeight="200.0" minWidth="200.0" prefHeight="284.0" prefWidth="300.0" />
+                           </content>
+                        </ScrollPane>
+								<Button mnemonicParsing="false" onAction="#swatSequenceScene" text="Update" textAlignment="CENTER">
+									<HBox.margin>
+										<Insets left="25.0" />
+									</HBox.margin>
+								</Button>
+							</children>
+							<padding>
+								<Insets bottom="5.0" left="10.0" top="5.0" />
+							</padding>
+						</HBox>
+						<Button fx:id="btnSend" mnemonicParsing="false" onAction="#send" text="Send" />
+					</children>
+				</VBox>
+            <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-            		<VBox prefHeight="497.0" prefWidth="876.0">
-            			<children>
-            				<ToolBar prefHeight="40.0" prefWidth="200.0">
-            					<items>
-            						<TextField prefHeight="26.0" prefWidth="534.0" promptText="URL">
-            							<padding>
-            								<Insets left="10.0" />
-            							</padding>
-            						</TextField>
-            						<ChoiceBox prefWidth="150.0">
-            							<items>
-            								<FXCollections fx:factory="observableArrayList">
-            									<String fx:value="GET" />
-            									<String fx:value="POST" />
-            									<String fx:value="PUT" />
-            									<String fx:value="DELETE" />
-            								</FXCollections>
-            							</items>
-            						</ChoiceBox>
-            					</items>
-            				</ToolBar>
-            				<VBox prefHeight="357.0" prefWidth="876.0">
-            					<children>
-            						<HBox minWidth="200.0" prefHeight="121.0" prefWidth="876.0">
-            							<children>
-                                    <TableView fx:id="tableView" minHeight="200.0" minWidth="200.0" prefHeight="168.0" prefWidth="378.0" />
-            								<Button mnemonicParsing="false" onAction="#swatSequenceScene" text="Update" textAlignment="CENTER">
-            									<HBox.margin>
-            										<Insets left="25.0" />
-            									</HBox.margin>
-            								</Button>
-            							</children>
-            							<padding>
-            								<Insets bottom="5.0" left="10.0" top="5.0" />
-            							</padding>
-            						</HBox>
-            						<Button fx:id="btnSend" mnemonicParsing="false" onAction="#send" text="Send" />
-            					</children>
-            				</VBox>
-                        <Pane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <TextArea fx:id="txaLogger" editable="false" minHeight="300.0" minWidth="200.0" prefHeight="350.0" prefWidth="876.0" text="" />
-                           </children>
-                        </Pane>
-            			</children>
-            		</VBox>
+                  <TextArea fx:id="txaLogger" editable="false" minHeight="300.0" minWidth="200.0" prefHeight="350.0" prefWidth="876.0" text="" />
                </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+            </Pane>
+			</children>
+		</VBox>
 	</children>
 </AnchorPane>

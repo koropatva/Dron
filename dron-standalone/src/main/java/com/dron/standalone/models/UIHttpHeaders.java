@@ -5,6 +5,9 @@ import javafx.beans.property.StringProperty;
 
 public class UIHttpHeaders {
 
+	public static final String PROPERTY_VALUE = "value";
+	public static final String PROPERTY_HEADER = "header";
+
 	public UIHttpHeaders(String header, String value) {
 		this.header = headerProperty();
 		this.header.set(header);
@@ -16,16 +19,17 @@ public class UIHttpHeaders {
 
 	private StringProperty value;
 
+
 	public StringProperty headerProperty() {
 		if (header == null) {
-			header = new SimpleStringProperty(this, "header");
+			header = new SimpleStringProperty(this, PROPERTY_HEADER);
 		}
 		return header;
 	}
 
 	public StringProperty valueProperty() {
 		if (value == null) {
-			value = new SimpleStringProperty(this, "value");
+			value = new SimpleStringProperty(this, PROPERTY_VALUE);
 		}
 		return value;
 	}

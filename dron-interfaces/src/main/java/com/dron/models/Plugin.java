@@ -37,9 +37,9 @@ public class Plugin implements IBaseObserver {
 
 	private List<PropertyChangeListener> listeners = new ArrayList<>();
 
-	private void notifyListeners(Object object, String property,
-			Object oldValue, Object newValue) {
-		for (PropertyChangeListener listener : listeners) {
+	private void notifyListeners(final Object object, final String property,
+			final Object oldValue, final Object newValue) {
+		for (final PropertyChangeListener listener : listeners) {
 			listener.propertyChange(new PropertyChangeEvent(object, property,
 					oldValue, newValue));
 		}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="372.0" prefWidth="432.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<Label layoutX="147.0" layoutY="145.0" text="Hello from sequence scene" />
+		<Button layoutX="128.0" layoutY="200.0" mnemonicParsing="false"
+			onAction="#swapRootScene" text="Button" />
+	</children>
+</AnchorPane>

@@ -1,6 +1,5 @@
 package com.dron.standalone.controllers.root.controls;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -10,7 +9,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DefaultStringConverter;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.MediaType;
 
 import com.dron.standalone.models.UIHttpHeaders;
 
@@ -18,15 +16,10 @@ public class HeaderTableView {
 
 	private static final int TABLE_PROPERTY_WIDTH = 150;
 
-	private static final ObservableList<UIHttpHeaders> observableList = FXCollections
-			.observableArrayList();
-
 	@SuppressWarnings("unchecked")
 	public static TableView<UIHttpHeaders> initialize(
-			TableView<UIHttpHeaders> tableView) {
-		observableList.addAll(new UIHttpHeaders("Content-type",
-				MediaType.APPLICATION_JSON_VALUE), new UIHttpHeaders("Accept",
-				MediaType.APPLICATION_JSON_VALUE), new UIHttpHeaders("", ""));
+			final ObservableList<UIHttpHeaders> observableList,
+			final TableView<UIHttpHeaders> tableView) {
 		final TableColumn<UIHttpHeaders, String> headerCol = initHeaderColumn(
 				observableList, tableView);
 
@@ -40,12 +33,14 @@ public class HeaderTableView {
 		tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tableView.managedProperty().bind(tableView.visibleProperty());
 
-		updateTableViewHeight(tableView);
+		updateTableViewHeight(observableList, tableView);
 
 		return tableView;
 	}
 
-	private static void updateTableViewHeight(TableView<UIHttpHeaders> tableView) {
+	private static void updateTableViewHeight(
+			final ObservableList<UIHttpHeaders> observableList,
+			final TableView<UIHttpHeaders> tableView) {
 		double newHeight = (observableList.size() + 2)
 				* tableView.getFixedCellSize();
 		tableView.setMinHeight(tableView.getMaxHeight() > newHeight ? newHeight
@@ -72,7 +67,7 @@ public class HeaderTableView {
 			} else {
 				value.getRowValue().setValue(value.getNewValue());
 			}
-			updateTableViewHeight(tableView);
+			updateTableViewHeight(observableList, tableView);
 		});
 		return valueCol;
 	}
@@ -97,7 +92,7 @@ public class HeaderTableView {
 			} else {
 				header.getRowValue().setHeader(header.getNewValue());
 			}
-			updateTableViewHeight(tableView);
+			updateTableViewHeight(observableList, tableView);
 		});
 
 		return headerCol;

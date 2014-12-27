@@ -96,14 +96,8 @@ public class RootController extends BaseController implements Initializable {
 
 	private void updateControls() {
 		tableView.setPrefHeight(RootConfig.getHeadersHeight());
-		tableView.setMinHeight(RootConfig.getHeadersHeight());
-		tableView.setMaxHeight(RootConfig.getHeadersHeight());
 		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
-		txaPostBody.setMinHeight(RootConfig.getPostBodyHeight());
-		txaPostBody.setMaxHeight(RootConfig.getPostBodyHeight());
 		txaResponce.setPrefHeight(RootConfig.getResponceHeight());
-		txaResponce.setMinHeight(RootConfig.getResponceHeight());
-		txaResponce.setMaxHeight(RootConfig.getResponceHeight());
 	}
 
 	@Override

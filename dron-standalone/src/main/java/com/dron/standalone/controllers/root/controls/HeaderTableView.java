@@ -28,7 +28,6 @@ public class HeaderTableView {
 		tableView.getColumns().setAll(headerCol, valueCol);
 		tableView.setItems(observableList);
 		tableView.setEditable(true);
-		tableView.setPrefHeight(RootConfig.getHeadersHeight());
 		tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tableView.managedProperty().bind(tableView.visibleProperty());
 

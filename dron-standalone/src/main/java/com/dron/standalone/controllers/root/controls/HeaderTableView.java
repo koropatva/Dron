@@ -14,7 +14,7 @@ import com.dron.standalone.models.UIHttpHeaders;
 
 public class HeaderTableView {
 
-	private static final int TABLE_PROPERTY_WIDTH = 150;
+	private static final int TABLE_PROPERTY_WIDTH = 120;
 
 	@SuppressWarnings("unchecked")
 	public static TableView<UIHttpHeaders> initialize(
@@ -28,23 +28,11 @@ public class HeaderTableView {
 		tableView.getColumns().setAll(headerCol, valueCol);
 		tableView.setItems(observableList);
 		tableView.setEditable(true);
-		tableView.setMaxHeight(170.0);
-		tableView.setFixedCellSize(25.0);
+		tableView.setPrefHeight(RootConfig.getHeadersHeight());
 		tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tableView.managedProperty().bind(tableView.visibleProperty());
 
-		updateTableViewHeight(observableList, tableView);
-
 		return tableView;
-	}
-
-	private static void updateTableViewHeight(
-			final ObservableList<UIHttpHeaders> observableList,
-			final TableView<UIHttpHeaders> tableView) {
-		double newHeight = (observableList.size() + 2)
-				* tableView.getFixedCellSize();
-		tableView.setMinHeight(tableView.getMaxHeight() > newHeight ? newHeight
-				: tableView.getMaxHeight());
 	}
 
 	private static TableColumn<UIHttpHeaders, String> initValueColumn(
@@ -67,7 +55,6 @@ public class HeaderTableView {
 			} else {
 				value.getRowValue().setValue(value.getNewValue());
 			}
-			updateTableViewHeight(observableList, tableView);
 		});
 		return valueCol;
 	}
@@ -92,7 +79,6 @@ public class HeaderTableView {
 			} else {
 				header.getRowValue().setHeader(header.getNewValue());
 			}
-			updateTableViewHeight(observableList, tableView);
 		});
 
 		return headerCol;

@@ -1,5 +1,7 @@
 package com.dron.standalone.models;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -19,6 +21,10 @@ public class UIHttpHeaders {
 
 	private StringProperty value;
 
+	public boolean isEmpty() {
+		return StringUtils.isBlank(header.get())
+				&& StringUtils.isBlank(value.get());
+	}
 
 	public StringProperty headerProperty() {
 		if (header == null) {

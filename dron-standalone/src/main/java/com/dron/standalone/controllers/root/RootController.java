@@ -10,11 +10,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,7 @@ import com.dron.standalone.controllers.root.controls.HeaderTableView;
 import com.dron.standalone.controllers.root.controls.RootConfig;
 import com.dron.standalone.models.ControllerEnum;
 import com.dron.standalone.models.UIHttpHeaders;
+import com.dron.standalone.models.UIHttpMethod;
 
 @Component
 public class RootController extends BaseController implements Initializable {
@@ -35,7 +38,7 @@ public class RootController extends BaseController implements Initializable {
 	private Button btnSend;
 
 	@FXML
-	private TextArea txaLogger;
+	private TextArea txaResponce;
 
 	@FXML
 	private StringProperty url;
@@ -52,6 +55,9 @@ public class RootController extends BaseController implements Initializable {
 	@FXML
 	private TextArea txaPostBody;
 
+	@FXML
+	private ChoiceBox<UIHttpMethod> cbMethods;
+
 	private final ObservableList<UIHttpHeaders> observableList = FXCollections
 			.observableArrayList();
 
@@ -62,15 +68,42 @@ public class RootController extends BaseController implements Initializable {
 				MediaType.APPLICATION_JSON_VALUE), new UIHttpHeaders("", ""));
 
 		tableView = HeaderTableView.initialize(observableList, tableView);
-		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
+
+		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
+
+		cbMethods.getItems().addAll(new UIHttpMethod(HttpMethod.GET),
+				new UIHttpMethod(HttpMethod.POST),
+				new UIHttpMethod(HttpMethod.PUT),
+				new UIHttpMethod(HttpMethod.DELETE));
+		cbMethods.getSelectionModel().selectedItemProperty()
+				.addListener((observableValue, oldChoice, newChoise) -> {
+					cbMethods.getSelectionModel().select(newChoise);
+					RootConfig.bindPostBody(txaPostBody, newChoise);
+
+					updateControls();
+				});
+		cbMethods.getSelectionModel().select(0);
 
 		tbtnHeaders.setOnAction(event -> {
 			tableView.setVisible(!tableView.isVisible());
 			RootConfig.bindHeaders(tableView.isVisible());
 
-			txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
-			tableView.setPrefHeight(RootConfig.getHeadersHeight());
+			updateControls();
 		});
+
+		updateControls();
+	}
+
+	private void updateControls() {
+		tableView.setPrefHeight(RootConfig.getHeadersHeight());
+		tableView.setMinHeight(RootConfig.getHeadersHeight());
+		tableView.setMaxHeight(RootConfig.getHeadersHeight());
+		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
+		txaPostBody.setMinHeight(RootConfig.getPostBodyHeight());
+		txaPostBody.setMaxHeight(RootConfig.getPostBodyHeight());
+		txaResponce.setPrefHeight(RootConfig.getResponceHeight());
+		txaResponce.setMinHeight(RootConfig.getResponceHeight());
+		txaResponce.setMaxHeight(RootConfig.getResponceHeight());
 	}
 
 	@Override
@@ -80,10 +113,6 @@ public class RootController extends BaseController implements Initializable {
 
 	@FXML
 	protected void send(final ActionEvent actionEvent) {
-		// SequenceTask sequenceTask = new SequenceTask(txaLogger,
-		// "/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json");
-		//
-		// sequenceTask.start();
 	}
 
 	@FXML

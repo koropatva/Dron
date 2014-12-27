@@ -26,46 +26,34 @@
 										<Insets left="10.0" />
 									</padding>
 								</TextField>
-								<ChoiceBox prefWidth="150.0">
-									<items>
-										<FXCollections fx:factory="observableArrayList">
-											<String fx:value="GET" />
-											<String fx:value="POST" />
-											<String fx:value="PUT" />
-											<String fx:value="DELETE" />
-										</FXCollections>
-									</items>
-								</ChoiceBox>
+								<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
 								<ToggleButton fx:id="tbtnHeaders" mnemonicParsing="false"
 									text="Headers" />
+								<Button fx:id="btnSend" mnemonicParsing="false" onAction="#send"
+									text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0" />
 							</items>
 						</ToolBar>
 					</children>
 				</AnchorPane>
-				<VBox>
+				<VBox maxHeight="600" prefHeight="600">
 					<children>
-						<AnchorPane prefHeight="45.0" prefWidth="886.0">
+						<AnchorPane>
 							<children>
 								<TableView fx:id="tableView" prefWidth="320.0"
-									AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+									AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+									AnchorPane.topAnchor="5.0" />
 							</children>
 						</AnchorPane>
 						<AnchorPane>
 							<children>
-								<TextArea fx:id="txaPostBody" AnchorPane.leftAnchor="5.0"
-									AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+								<TextArea fx:id="txaPostBody" AnchorPane.bottomAnchor="5.0"
+									AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+									AnchorPane.topAnchor="5.0" />
 							</children>
 						</AnchorPane>
 						<AnchorPane>
 							<children>
-								<Button fx:id="btnSend" mnemonicParsing="false" onAction="#send"
-									text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0" />
-							</children>
-						</AnchorPane>
-						<AnchorPane>
-							<children>
-								<TextArea fx:id="txaLogger" editable="false" minHeight="84.0"
-									minWidth="200.0" prefHeight="84.0" prefWidth="876.0" text=""
+								<TextArea fx:id="txaResponce" editable="false" text=""
 									AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
 									AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
 							</children>

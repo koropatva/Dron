@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import com.dron.standalone.actions.interfaces.IStageService;
 import com.dron.standalone.controllers.base.BaseController;
 import com.dron.standalone.controllers.root.controls.HeaderTableView;
+import com.dron.standalone.controllers.root.controls.RootConfig;
 import com.dron.standalone.models.ControllerEnum;
 import com.dron.standalone.models.UIHttpHeaders;
 
@@ -48,6 +49,9 @@ public class RootController extends BaseController implements Initializable {
 	@FXML
 	private ToggleButton tbtnHeaders;
 
+	@FXML
+	private TextArea txaPostBody;
+
 	private final ObservableList<UIHttpHeaders> observableList = FXCollections
 			.observableArrayList();
 
@@ -58,9 +62,14 @@ public class RootController extends BaseController implements Initializable {
 				MediaType.APPLICATION_JSON_VALUE), new UIHttpHeaders("", ""));
 
 		tableView = HeaderTableView.initialize(observableList, tableView);
+		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
 
 		tbtnHeaders.setOnAction(event -> {
 			tableView.setVisible(!tableView.isVisible());
+			RootConfig.bindHeaders(tableView.isVisible());
+
+			txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
+			tableView.setPrefHeight(RootConfig.getHeadersHeight());
 		});
 	}
 

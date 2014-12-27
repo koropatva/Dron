@@ -31,6 +31,8 @@
 								</FXCollections>
 							</items>
 						</ChoiceBox>
+						<ToggleButton fx:id="tbtnHeaders" mnemonicParsing="false"
+							text="Headers" />
 					</items>
 				</ToolBar>
 				<VBox prefHeight="357.0" prefWidth="876.0">

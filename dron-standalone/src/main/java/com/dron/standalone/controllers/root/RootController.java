@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.dron.standalone.actions.interfaces.IStageService;
@@ -45,9 +48,17 @@ public class RootController extends BaseController implements Initializable {
 	@FXML
 	private ToggleButton tbtnHeaders;
 
+	private final ObservableList<UIHttpHeaders> observableList = FXCollections
+			.observableArrayList();
+
 	@Override
 	public void initialize(final URL arg0, final ResourceBundle arg1) {
-		tableView = HeaderTableView.initialize(tableView);
+		observableList.addAll(new UIHttpHeaders("Content-type",
+				MediaType.APPLICATION_JSON_VALUE), new UIHttpHeaders("Accept",
+				MediaType.APPLICATION_JSON_VALUE), new UIHttpHeaders("", ""));
+
+		tableView = HeaderTableView.initialize(observableList, tableView);
+
 		tbtnHeaders.setOnAction(event -> {
 			tableView.setVisible(!tableView.isVisible());
 		});

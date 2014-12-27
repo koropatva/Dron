@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,9 +42,15 @@ public class RootController extends BaseController implements Initializable {
 	@FXML
 	private TableView<UIHttpHeaders> tableView;
 
+	@FXML
+	private ToggleButton tbtnHeaders;
+
 	@Override
 	public void initialize(final URL arg0, final ResourceBundle arg1) {
 		tableView = HeaderTableView.initialize(tableView);
+		tbtnHeaders.setOnAction(event -> {
+			tableView.setVisible(!tableView.isVisible());
+		});
 	}
 
 	@Override
@@ -57,9 +64,6 @@ public class RootController extends BaseController implements Initializable {
 		// "/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json");
 		//
 		// sequenceTask.start();
-		tableView.getItems().forEach(
-				action -> System.out.println(action.getValue()));
-
 	}
 
 	@FXML

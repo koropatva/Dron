@@ -38,6 +38,7 @@ public class HeaderTableView {
 		tableView.setMaxHeight(170.0);
 		tableView.setFixedCellSize(25.0);
 		tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		tableView.managedProperty().bind(tableView.visibleProperty());
 
 		updateTableViewHeight(tableView);
 

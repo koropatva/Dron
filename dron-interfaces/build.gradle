@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile("com.fasterxml.jackson.core:jackson-databind:2.4.4")
-    compile('org.springframework:spring-web:4.0.3.RELEASE')
+	compile("com.fasterxml.jackson.core:jackson-databind:2.4.4")
+	compile('org.springframework:spring-web:4.0.3.RELEASE')
+	compile("org.apache.commons:commons-lang3:3.0")
 }

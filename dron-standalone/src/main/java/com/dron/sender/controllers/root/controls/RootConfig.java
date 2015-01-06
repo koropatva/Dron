@@ -5,7 +5,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.TextArea;
 
-import com.dron.sender.ui.models.UIHttpMethod;
+import com.dron.sender.models.UIHttpMethod;
 
 public class RootConfig {
 
@@ -46,7 +46,7 @@ public class RootConfig {
 
 	public static void bindPostBody(TextArea txaPostBody, UIHttpMethod method) {
 		switch (method.getMethod()) {
-		case POST:
+		case "POST":
 			txaPostBody.setVisible(true);
 			postBodyHeight.set(TXA_POST_BODY_HEIGHT);
 			break;

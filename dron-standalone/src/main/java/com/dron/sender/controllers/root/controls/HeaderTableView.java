@@ -10,7 +10,7 @@ import javafx.util.converter.DefaultStringConverter;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.dron.sender.ui.models.UIHttpHeaders;
+import com.dron.sender.models.UIHttpHeaders;
 
 public class HeaderTableView {
 

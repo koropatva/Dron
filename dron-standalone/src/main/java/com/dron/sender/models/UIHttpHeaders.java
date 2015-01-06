@@ -1,4 +1,4 @@
-package com.dron.sender.ui.models;
+package com.dron.sender.models;
 
 import org.apache.commons.lang3.StringUtils;
 

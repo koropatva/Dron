@@ -14,13 +14,21 @@
 		<VBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
 			AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
 			<children>
+				<HBox>
+					<children>
+						<TextField fx:id="tfSequenceName" prefHeight="16.0"
+							prefWidth="448.0" promptText="Sequence Name" />
+						<Button fx:id="btnPrepareSequence" mnemonicParsing="false"
+							onAction="#prepareSequence" text="Prepare Sequence" />
+					</children>
+				</HBox>
 				<AnchorPane prefHeight="0.0">
 					<children>
 						<ToolBar AnchorPane.bottomAnchor="5.0"
 							AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
 							AnchorPane.topAnchor="5.0">
 							<items>
-								<TextField prefHeight="16.0" prefWidth="448.0"
+								<TextField fx:id="tfUrl" prefHeight="16.0" prefWidth="448.0"
 									promptText="URL">
 									<padding>
 										<Insets left="10.0" />
@@ -39,7 +47,7 @@
 					<children>
 						<AnchorPane>
 							<children>
-								<TableView fx:id="tableView" prefWidth="320.0"
+								<TableView fx:id="tblHeaders" prefWidth="320.0"
 									AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
 									AnchorPane.topAnchor="5.0" />
 							</children>
@@ -48,14 +56,15 @@
 							<children>
 								<TextArea fx:id="txaPostBody" AnchorPane.bottomAnchor="5.0"
 									AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-									AnchorPane.topAnchor="5.0" />
+									AnchorPane.topAnchor="5.0" promptText="Post body" />
 							</children>
 						</AnchorPane>
 						<AnchorPane>
 							<children>
 								<TextArea fx:id="txaResponce" editable="false" text=""
 									AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-									AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+									AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"
+									promptText="Responce" />
 							</children>
 						</AnchorPane>
 					</children>

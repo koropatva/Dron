@@ -73,6 +73,8 @@ public class Plugin implements IBaseObserver {
 
 	private String responce;
 
+	private String request;
+	
 	/**
 	 * Structure of parameter way looks like: names of JSON object separated by
 	 * dot. If you need to select someone object from the list you should to use
@@ -140,6 +142,14 @@ public class Plugin implements IBaseObserver {
 
 	public List<FutureParam> getFutureParams() {
 		return futureParams;
+	}
+
+	public String getRequest() {
+		return request;
+	}
+
+	public void setRequest(String request) {
+		this.request = request;
 	}
 
 }

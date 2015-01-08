@@ -3,19 +3,23 @@ package com.dron.sender.controllers.root;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -25,13 +29,12 @@ import com.dron.sender.actions.interfaces.IStageService;
 import com.dron.sender.controllers.base.BaseController;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
-import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.controllers.root.observers.BaseLoggerObserver;
+import com.dron.sender.controllers.root.service.UISequenceService;
 import com.dron.sender.controllers.root.tasks.SequenceTask;
 import com.dron.sender.models.ControllerEnum;
 import com.dron.sender.models.UIHttpHeaders;
 import com.dron.sender.models.UIHttpMethod;
-import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Plugin;
 import com.dron.sender.sequence.models.Sequence;
@@ -67,12 +70,10 @@ public class RootController extends BaseController implements Initializable {
 	@FXML
 	private Button btnSend;
 
-	private Sequence sequence;
+	@FXML
+	private Accordion accPlugins;
 
-	private UIPlugin uiPlugin;
-
-	private final ObservableList<UIHttpHeaders> headersList = FXCollections
-			.observableArrayList();
+	private UISequenceService uiSequence;
 
 	@Override
 	protected ControllerEnum getControllerEnum() {
@@ -81,8 +82,14 @@ public class RootController extends BaseController implements Initializable {
 
 	@Override
 	public void initialize(final URL url, final ResourceBundle resource) {
+		uiSequence = new UISequenceService(tfUrl, txaPostBody, cbMethods);
 
-		tblHeaders = HeaderTableView.initialize(headersList, tblHeaders);
+		TitledPane emptyPane = new TitledPane("Plugins", new AnchorPane());
+		accPlugins.getPanes().add(emptyPane);
+		accPlugins.setExpandedPane(emptyPane);
+
+		tblHeaders = new HeaderTableView().initialize(uiSequence.getUiPlugin()
+				.getHeadersList(), tblHeaders);
 
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
 
@@ -109,7 +116,6 @@ public class RootController extends BaseController implements Initializable {
 
 		updateControls();
 
-		uiPlugin = new UIPlugin(tfUrl, txaPostBody, cbMethods);
 	}
 
 	private void updateControls() {
@@ -127,27 +133,41 @@ public class RootController extends BaseController implements Initializable {
 	private void readSequence(String path) {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			sequence = mapper.readValue(new File(path), Sequence.class);
+			Sequence sequence = mapper
+					.readValue(new File(path), Sequence.class);
+			uiSequence.fillSequence(sequence);
 
-			fillControllerComponents(0);
+			fillAccordion();
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
-	private void fillControllerComponents(int pluginNumber) {
-		Plugin plugin = sequence.getPlugins().get(pluginNumber);
-		uiPlugin.fillPlugin(plugin);
+	private void fillAccordion() {
+		List<TitledPane> titledPanes = new ArrayList<TitledPane>();
 
-		headersList.clear();
-		TransformerFactory.transformEntity(plugin.getHeaders(), headersList);
+		uiSequence.getPlugins().forEach(
+				plugin -> {
+					List<Label> labels = new ArrayList<>();
+					plugin.getFutureParams().forEach(
+							futureParam -> labels.add(new Label(futureParam
+									.getKey())));
+					AnchorPane anchorPane = new AnchorPane();
+					anchorPane.getChildren().addAll(labels);
+					TitledPane pluginTitle = new TitledPane(plugin.getName(),
+							anchorPane);
+					titledPanes.add(pluginTitle);
+				});
+		accPlugins.getPanes().clear();
+		accPlugins.getPanes().addAll(titledPanes);
+		accPlugins.setExpandedPane(accPlugins.getPanes().get(0));
 	}
 
 	@FXML
 	protected void send(final ActionEvent actionEvent) {
-		initLogging(sequence);
+		initLogging(uiSequence.getSequence());
 
-		SequenceTask sequenceTask = new SequenceTask(sequence);
+		SequenceTask sequenceTask = new SequenceTask(uiSequence.getSequence());
 		sequenceTask.start();
 	}
 

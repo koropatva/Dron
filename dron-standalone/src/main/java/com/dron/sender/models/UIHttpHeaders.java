@@ -1,14 +1,12 @@
 package com.dron.sender.models;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class UIHttpHeaders {
 
-	public static final String PROPERTY_VALUE = "value";
-	public static final String PROPERTY_HEADER = "header";
+	public static final String PROPERTY_VALUE = "Value";
+	public static final String PROPERTY_HEADER = "Header";
 
 	public UIHttpHeaders(String header, String value) {
 		this.header = headerProperty();
@@ -20,11 +18,6 @@ public class UIHttpHeaders {
 	private StringProperty header;
 
 	private StringProperty value;
-
-	public boolean isEmpty() {
-		return StringUtils.isBlank(header.get())
-				&& StringUtils.isBlank(value.get());
-	}
 
 	public StringProperty headerProperty() {
 		if (header == null) {

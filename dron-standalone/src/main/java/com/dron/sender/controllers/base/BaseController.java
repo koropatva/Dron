@@ -4,7 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
 import com.dron.sender.controllers.base.interfaces.IBaseController;
-import com.dron.sender.models.ControllerEnum;
+import com.dron.sender.controllers.base.models.ControllerEnum;
 
 public abstract class BaseController extends Pane implements IBaseController {
 

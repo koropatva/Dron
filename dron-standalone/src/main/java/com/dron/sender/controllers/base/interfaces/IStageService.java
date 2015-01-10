@@ -1,8 +1,8 @@
-package com.dron.sender.actions.interfaces;
+package com.dron.sender.controllers.base.interfaces;
 
 import javafx.stage.Stage;
 
-import com.dron.sender.models.ControllerEnum;
+import com.dron.sender.controllers.base.models.ControllerEnum;
 
 public interface IStageService {
 

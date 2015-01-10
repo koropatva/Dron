@@ -6,9 +6,9 @@ import javafx.fxml.FXML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.dron.sender.actions.interfaces.IStageService;
 import com.dron.sender.controllers.base.BaseController;
-import com.dron.sender.models.ControllerEnum;
+import com.dron.sender.controllers.base.interfaces.IStageService;
+import com.dron.sender.controllers.base.models.ControllerEnum;
 
 @Component
 public class SequenceController extends BaseController {

@@ -47,7 +47,7 @@ public class UIPlugin {
 		});
 
 		TransformerFactory.transformEntity(plugin.getHeaders(), headersList,
-				TransformKey.HTTP_HEADERS_INTO_UI_HEADERS);
+				TransformKey.HTTP_HEADERS);
 
 	}
 

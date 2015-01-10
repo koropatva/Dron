@@ -26,7 +26,7 @@ public class FillPluginFutureParamsTransformer
 
 			TransformerFactory.transformEntity(plugin.getFutureParams(),
 					futureParams,
-					TransformKey.FUTURE_PARAMS_INTO_UI_FUTURE_PARAMS);
+					TransformKey.FUTURE_PARAMS);
 
 			mapFutureParams.put(plugin, futureParams);
 		});

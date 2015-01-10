@@ -35,7 +35,7 @@ import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.UIHttpHeaders;
 import com.dron.sender.controllers.root.models.UIHttpMethod;
 import com.dron.sender.controllers.root.models.UIParam;
-import com.dron.sender.controllers.root.service.UISequenceService;
+import com.dron.sender.controllers.root.models.UISequence;
 import com.dron.sender.controllers.root.tasks.SequenceTask;
 import com.dron.sender.pattern.models.transformers.TransformKey;
 import com.dron.sender.pattern.services.observers.BaseLoggerObserver;
@@ -87,7 +87,7 @@ public class RootController extends BaseController implements Initializable {
 	@FXML
 	private Accordion accPlugins;
 
-	private UISequenceService uiSequence;
+	private UISequence uiSequence;
 
 	@Override
 	protected ControllerEnum getControllerEnum() {
@@ -96,7 +96,7 @@ public class RootController extends BaseController implements Initializable {
 
 	@Override
 	public void initialize(final URL url, final ResourceBundle resource) {
-		uiSequence = new UISequenceService(tfUrl, txaPostBody, cbMethods);
+		uiSequence = new UISequence(tfUrl, txaPostBody, cbMethods);
 
 		TitledPane emptyPane = new TitledPane("Plugins", new AnchorPane());
 		accPlugins.getPanes().add(emptyPane);
@@ -105,7 +105,7 @@ public class RootController extends BaseController implements Initializable {
 		tblHeaders = new HeaderTableView().initialize(uiSequence.getUiPlugin()
 				.getHeadersList(), tblHeaders);
 
-		tblParams = new ParamTableView().initialize(uiSequence.getParams(),
+		tblParams = new ParamTableView().initialize(uiSequence.getUIParams(),
 				tblParams);
 
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
@@ -163,7 +163,9 @@ public class RootController extends BaseController implements Initializable {
 			ObjectMapper mapper = new ObjectMapper();
 			Sequence sequence = mapper
 					.readValue(new File(path), Sequence.class);
-			uiSequence.fillSequence(sequence);
+
+			TransformerFactory.transformEntity(sequence, uiSequence,
+					TransformKey.SEQUENCE);
 
 			fillAccordion();
 		} catch (IOException e) {
@@ -183,6 +185,7 @@ public class RootController extends BaseController implements Initializable {
 		accPlugins.expandedPaneProperty().addListener(
 				(ObservableValue<? extends TitledPane> observable,
 						TitledPane oldValue, TitledPane newValue) -> {
+					// TODO
 					System.out.println(newValue);
 				});
 	}

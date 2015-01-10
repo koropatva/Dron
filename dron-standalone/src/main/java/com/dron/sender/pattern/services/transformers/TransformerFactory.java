@@ -30,12 +30,14 @@ public class TransformerFactory {
 	private static <F, T> IBaseTransformer<F, T> getTransformer(F from, T to,
 			TransformKey key) {
 		switch (key) {
-		case HTTP_HEADERS_INTO_UI_HEADERS:
+		case HTTP_HEADERS:
 			return (IBaseTransformer<F, T>) new HttpHeaderTransformer();
-		case PARAMS_INTO_UI_PARAMS:
+		case PARAMS:
 			return (IBaseTransformer<F, T>) new ParamTransformer();
-		case FUTURE_PARAMS_INTO_UI_FUTURE_PARAMS:
+		case FUTURE_PARAMS:
 			return (IBaseTransformer<F, T>) new FutureParamTransformer();
+		case SEQUENCE:
+			return (IBaseTransformer<F, T>) new SequenceTransformer();
 		case FILL_PLUGIN_FUTURE_PARAMS:
 			return (IBaseTransformer<F, T>) new FillPluginFutureParamsTransformer();
 		case FILL_TITLED_PANES_WITH_FUTURE_PARAMS:

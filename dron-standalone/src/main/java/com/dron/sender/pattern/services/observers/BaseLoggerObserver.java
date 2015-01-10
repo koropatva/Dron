@@ -1,4 +1,4 @@
-package com.dron.sender.controllers.root.observers;
+package com.dron.sender.pattern.services.observers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

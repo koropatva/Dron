@@ -1,4 +1,4 @@
-package com.dron.sender.actions.services;
+package com.dron.sender.controllers.base.services;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,9 +13,9 @@ import javax.annotation.Resource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.dron.sender.actions.interfaces.ISceneService;
 import com.dron.sender.controllers.base.interfaces.IBaseController;
-import com.dron.sender.models.ControllerEnum;
+import com.dron.sender.controllers.base.interfaces.ISceneService;
+import com.dron.sender.controllers.base.models.ControllerEnum;
 
 /**
  * Service works with scene. It can find scene or create new, if it in not

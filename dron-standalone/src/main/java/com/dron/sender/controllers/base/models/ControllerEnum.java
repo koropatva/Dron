@@ -1,4 +1,4 @@
-package com.dron.sender.models;
+package com.dron.sender.controllers.base.models;
 
 public enum ControllerEnum {
 	ROOT("RootView", "rootController"), SEQUENCE("SequenceView",

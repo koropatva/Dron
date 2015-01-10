@@ -1,44 +1,70 @@
 package com.dron.sender.sequence.models;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
-public class FutureParam {
+import com.dron.sender.pattern.interfaces.IBaseObserver;
 
-    public FutureParam() {
-    }
-    
-    public FutureParam(final String key, final String dependence) {
-        this.key = key;
-        this.dependence = dependence;
-    }
+public class FutureParam implements IBaseObserver{
 
-    private String key;
+	public static final String PROPERTY_KEY = "Key";
 
-    private String dependence;
+	public static final String PROPERTY_DEPENDENCE = "Dependence";
 
-    private List<Rule> rules;
-    
-    public String getKey() {
-        return key;
-    }
+	public static final String PROPERTY_RULES = "Rules";
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	public FutureParam() {
+	}
 
-    public String getDependence() {
-        return dependence;
-    }
+	public FutureParam(final String key, final String dependence) {
+		this.key = key;
+		this.dependence = dependence;
+	}
 
-    public void setDependence(String dependence) {
-        this.dependence = dependence;
-    }
+	private String key;
 
-    public List<Rule> getRules() {
-        return rules;
-    }
+	private String dependence;
 
-    public void setRules(List<Rule> rules) {
-        this.rules = rules;
-    }
+	private List<Rule> rules;
+
+	private List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
+
+	public void addChangeListener(PropertyChangeListener newListener) {
+		listeners.add(newListener);
+	}
+
+	private void notifyListeners(Object object, String property,
+			Object oldValue, Object newValue) {
+		for (PropertyChangeListener listener : listeners) {
+			listener.propertyChange(new PropertyChangeEvent(object, property,
+					oldValue, newValue));
+		}
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		notifyListeners(this, PROPERTY_KEY, this.key, this.key = key);
+	}
+
+	public String getDependence() {
+		return dependence;
+	}
+
+	public void setDependence(String dependence) {
+		notifyListeners(this, PROPERTY_DEPENDENCE, dependence,
+				this.dependence = dependence);
+	}
+
+	public List<Rule> getRules() {
+		return rules;
+	}
+
+	public void setRules(List<Rule> rules) {
+		notifyListeners(this, PROPERTY_RULES, rules, this.rules = rules);
+	}
 }

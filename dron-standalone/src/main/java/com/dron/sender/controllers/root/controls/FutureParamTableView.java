@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.dron.sender.controllers.base.controls.BasePropertyTableView;
 import com.dron.sender.controllers.root.models.UIFutureParam;
+import com.dron.sender.sequence.models.FutureParam;
 
 public class FutureParamTableView extends BasePropertyTableView<UIFutureParam> {
 
@@ -16,7 +17,7 @@ public class FutureParamTableView extends BasePropertyTableView<UIFutureParam> {
 
 	@Override
 	protected String getKeyName() {
-		return UIFutureParam.PROPERTY_KEY;
+		return FutureParam.PROPERTY_KEY;
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class FutureParamTableView extends BasePropertyTableView<UIFutureParam> {
 
 	@Override
 	protected String getValueName() {
-		return UIFutureParam.PROPERTY_DEPENDENCE;
+		return FutureParam.PROPERTY_DEPENDENCE;
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 
-import com.dron.sender.models.UIHttpHeaders;
+import com.dron.sender.controllers.root.models.UIHttpHeaders;
 import com.dron.sender.pattern.interfaces.IBaseTransformer;
 
 public class HttpHeaderTransformer implements
@@ -17,6 +17,7 @@ public class HttpHeaderTransformer implements
 		headers.forEach((key, value) -> {
 			headersList.add(new UIHttpHeaders(key, value.get(0)));
 		});
+		headersList.add(new UIHttpHeaders());
 		return headersList;
 	}
 

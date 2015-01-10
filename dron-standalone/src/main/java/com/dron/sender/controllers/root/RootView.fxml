@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane layoutX="1.0" layoutY="1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane layoutX="1.0" layoutY="1.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<HBox>
 			<children>
@@ -16,22 +17,32 @@
 					<children>
 						<HBox>
 							<children>
-								<TextField fx:id="tfSequenceName" prefHeight="16.0" prefWidth="448.0" promptText="Sequence Name" />
-								<Button fx:id="btnPrepareSequence" mnemonicParsing="false" onAction="#prepareSequence" text="Prepare Sequence" />
+								<TextField fx:id="tfSequenceName" prefHeight="16.0"
+									prefWidth="448.0" promptText="Sequence Name" />
+								<Button fx:id="btnPrepareSequence" mnemonicParsing="false"
+									onAction="#prepareSequence" text="Prepare Sequence" />
 							</children>
 						</HBox>
 						<AnchorPane prefHeight="0.0">
 							<children>
-								<ToolBar AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+								<ToolBar AnchorPane.bottomAnchor="5.0"
+									AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+									AnchorPane.topAnchor="5.0">
 									<items>
-										<TextField fx:id="tfUrl" prefHeight="16.0" prefWidth="448.0" promptText="URL">
+										<TextField fx:id="tfUrl" prefHeight="16.0"
+											prefWidth="448.0" promptText="URL">
 											<padding>
 												<Insets left="10.0" />
 											</padding>
 										</TextField>
 										<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
-										<ToggleButton fx:id="tbtnHeaders" mnemonicParsing="false" text="Headers" />
-										<Button fx:id="btnSend" mnemonicParsing="false" onAction="#send" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0" />
+										<ToggleButton fx:id="tbtnHeaders"
+											mnemonicParsing="false" text="Headers" />
+										<ToggleButton fx:id="tbtnParams" mnemonicParsing="false"
+											text="Params" />
+										<Button fx:id="btnSend" mnemonicParsing="false"
+											onAction="#send" text="Send" AnchorPane.bottomAnchor="5.0"
+											AnchorPane.topAnchor="5.0" />
 									</items>
 								</ToolBar>
 							</children>
@@ -40,17 +51,28 @@
 							<children>
 								<AnchorPane>
 									<children>
-										<TableView fx:id="tblHeaders" prefWidth="320.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+										<HBox fx:id="hbHeadersParamsTable" prefWidth="640.0"
+											AnchorPane.leftAnchor="5.0">
+											<children>
+												<TableView fx:id="tblHeaders" prefWidth="320.0" />
+												<TableView fx:id="tblParams" prefWidth="320.0" />
+											</children>
+										</HBox>
 									</children>
 								</AnchorPane>
 								<AnchorPane>
 									<children>
-										<TextArea fx:id="txaPostBody" promptText="Post body" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+										<TextArea fx:id="txaPostBody" promptText="Post body"
+											AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+											AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
 									</children>
 								</AnchorPane>
 								<AnchorPane>
 									<children>
-										<TextArea fx:id="txaResponce" editable="false" promptText="Responce" text="" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+										<TextArea fx:id="txaResponce" editable="false"
+											promptText="Responce" text="" AnchorPane.bottomAnchor="5.0"
+											AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+											AnchorPane.topAnchor="5.0" />
 									</children>
 								</AnchorPane>
 							</children>

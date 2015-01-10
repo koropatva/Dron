@@ -9,11 +9,11 @@ import com.dron.sender.pattern.interfaces.IBaseObserver;
 
 public class Param implements IBaseObserver {
 
-	private static final String PROPERTY_ARRAY = "Array";
+	public static final String PROPERTY_ARRAY = "Array";
 
-	private static final String PROPERTY_VALUE = "Value";
+	public static final String PROPERTY_VALUE = "Value";
 
-	private static final String PROPERTY_KEY = "Key";
+	public static final String PROPERTY_KEY = "Key";
 
 	public Param() {
 	}
@@ -28,13 +28,13 @@ public class Param implements IBaseObserver {
 		this.array = array;
 	}
 
-	private List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
-
 	private String key;
 
 	private String value;
 
 	private boolean array;
+
+	private List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
 
 	public void addChangeListener(PropertyChangeListener newListener) {
 		listeners.add(newListener);

@@ -1,4 +1,4 @@
-package com.dron.sender.models;
+package com.dron.sender.controllers.root.models;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

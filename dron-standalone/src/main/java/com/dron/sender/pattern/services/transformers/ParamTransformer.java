@@ -22,4 +22,14 @@ public class ParamTransformer implements
 		return uiParams;
 	}
 
+	@Override
+	public List<Param> reverseTransform(final List<Param> params,
+			final ObservableList<UIParam> uiParams) {
+		params.clear();
+		uiParams.forEach(uiParam -> {
+			params.add(new Param(uiParam.getKey(), uiParam.getValue()));
+		});
+		return params;
+	}
+
 }

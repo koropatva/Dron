@@ -11,14 +11,23 @@ public class HttpHeaderTransformer implements
 		IBaseTransformer<HttpHeaders, List<UIHttpHeaders>> {
 
 	@Override
-	public List<UIHttpHeaders> transform(final HttpHeaders headers,
-			final List<UIHttpHeaders> headersList) {
-		headersList.clear();
-		headers.forEach((key, value) -> {
-			headersList.add(new UIHttpHeaders(key, value.get(0)));
+	public List<UIHttpHeaders> transform(final HttpHeaders httpHeaders,
+			final List<UIHttpHeaders> uiHttpHeaders) {
+		uiHttpHeaders.clear();
+		httpHeaders.forEach((key, value) -> {
+			uiHttpHeaders.add(new UIHttpHeaders(key, value.get(0)));
 		});
-		headersList.add(new UIHttpHeaders());
-		return headersList;
+		uiHttpHeaders.add(new UIHttpHeaders());
+		return uiHttpHeaders;
+	}
+
+	@Override
+	public HttpHeaders reverseTransform(final HttpHeaders headers,
+			final List<UIHttpHeaders> uiHttpHeaders) {
+		uiHttpHeaders.forEach(uiHttpHeader -> {
+			headers.add(uiHttpHeader.getHeader(), uiHttpHeader.getValue());
+		});
+		return headers;
 	}
 
 }

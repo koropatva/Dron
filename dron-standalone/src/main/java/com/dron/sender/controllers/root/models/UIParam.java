@@ -3,9 +3,10 @@ package com.dron.sender.controllers.root.models;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import com.dron.sender.controllers.base.interfaces.IModelTableView;
 import com.dron.sender.sequence.models.Param;
 
-public class UIParam {
+public class UIParam implements IModelTableView {
 
 	public UIParam() {
 		this("", "");
@@ -24,6 +25,26 @@ public class UIParam {
 	private StringProperty key;
 
 	private StringProperty value;
+
+	@Override
+	public String getModelKey() {
+		return getKey();
+	}
+
+	@Override
+	public void updateModelKey(String key) {
+		setKey(key);
+	}
+
+	@Override
+	public String getModelValue() {
+		return getValue();
+	}
+
+	@Override
+	public void updateModelValue(String value) {
+		setValue(value);
+	}
 
 	public StringProperty keyProperty() {
 		return keyProperty(null);

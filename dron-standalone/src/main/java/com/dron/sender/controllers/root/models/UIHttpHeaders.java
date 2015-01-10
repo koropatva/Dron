@@ -1,9 +1,11 @@
 package com.dron.sender.controllers.root.models;
 
+import com.dron.sender.controllers.base.interfaces.IModelTableView;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class UIHttpHeaders {
+public class UIHttpHeaders implements IModelTableView {
 
 	public static final String PROPERTY_VALUE = "Value";
 	public static final String PROPERTY_HEADER = "Header";
@@ -20,6 +22,26 @@ public class UIHttpHeaders {
 	private StringProperty header;
 
 	private StringProperty value;
+
+	@Override
+	public String getModelKey() {
+		return getHeader();
+	}
+
+	@Override
+	public void updateModelKey(String key) {
+		setHeader(key);
+	}
+
+	@Override
+	public String getModelValue() {
+		return getValue();
+	}
+
+	@Override
+	public void updateModelValue(String value) {
+		setValue(value);
+	}
 
 	public StringProperty headerProperty() {
 		return headerProperty(null);
@@ -60,4 +82,5 @@ public class UIHttpHeaders {
 	public void setValue(String value) {
 		this.value.set(value);
 	}
+
 }

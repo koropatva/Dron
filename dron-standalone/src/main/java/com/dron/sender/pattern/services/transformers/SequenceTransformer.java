@@ -25,4 +25,18 @@ public class SequenceTransformer implements
 		return uiSequence;
 	}
 
+	@Override
+	public Sequence reverseTransform(final Sequence sequence,
+			final UISequence uiSequence) {
+		// Fill Params for sequence
+		TransformerFactory.reverseTransformEntity(sequence.getParams(),
+				uiSequence.getUIParams(), TransformKey.PARAMS);
+
+		// Fill FutureParams for each plugin
+		TransformerFactory.reverseTransformEntity(sequence.getPlugins(),
+				uiSequence.getMapFutureParams(),
+				TransformKey.FILL_PLUGIN_FUTURE_PARAMS);
+		return sequence;
+	}
+
 }

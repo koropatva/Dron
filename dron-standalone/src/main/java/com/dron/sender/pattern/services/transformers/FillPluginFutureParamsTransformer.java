@@ -1,5 +1,6 @@
 package com.dron.sender.pattern.services.transformers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.pattern.interfaces.IBaseTransformer;
 import com.dron.sender.pattern.models.transformers.TransformKey;
+import com.dron.sender.sequence.models.FutureParam;
 import com.dron.sender.sequence.models.Plugin;
 
 public class FillPluginFutureParamsTransformer
@@ -25,12 +27,28 @@ public class FillPluginFutureParamsTransformer
 					.observableArrayList();
 
 			TransformerFactory.transformEntity(plugin.getFutureParams(),
-					futureParams,
-					TransformKey.FUTURE_PARAMS);
+					futureParams, TransformKey.FUTURE_PARAMS);
 
 			mapFutureParams.put(plugin, futureParams);
 		});
 		return mapFutureParams;
+	}
+
+	@Override
+	public List<Plugin> reverseTransform(final List<Plugin> plugins,
+			final Map<Plugin, ObservableList<UIFutureParam>> mapFutureParam) {
+		plugins.clear();
+		mapFutureParam.forEach((plugin, uiFutureParams) -> {
+			List<FutureParam> futureParams = new ArrayList<>();
+
+			TransformerFactory.reverseTransformEntity(futureParams,
+					plugin.getFutureParams(), TransformKey.FUTURE_PARAMS);
+
+			plugin.getFutureParams().clear();
+			plugin.getFutureParams().addAll(futureParams);
+			plugins.add(plugin);
+		});
+		return null;
 	}
 
 }

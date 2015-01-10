@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -27,16 +28,18 @@ import org.springframework.stereotype.Component;
 
 import com.dron.sender.actions.interfaces.IStageService;
 import com.dron.sender.controllers.base.BaseController;
-import com.dron.sender.controllers.root.controls.FutureParamTableView;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
+import com.dron.sender.controllers.root.controls.ParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
-import com.dron.sender.controllers.root.models.UIFutureParam;
+import com.dron.sender.controllers.root.models.UIHttpHeaders;
+import com.dron.sender.controllers.root.models.UIHttpMethod;
+import com.dron.sender.controllers.root.models.UIParam;
 import com.dron.sender.controllers.root.observers.BaseLoggerObserver;
 import com.dron.sender.controllers.root.service.UISequenceService;
 import com.dron.sender.controllers.root.tasks.SequenceTask;
 import com.dron.sender.models.ControllerEnum;
-import com.dron.sender.models.UIHttpHeaders;
-import com.dron.sender.models.UIHttpMethod;
+import com.dron.sender.pattern.models.transformers.TransformKey;
+import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Plugin;
 import com.dron.sender.sequence.models.Sequence;
@@ -44,8 +47,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class RootController extends BaseController implements Initializable {
-
-	private static final double FUTURE_PARAM_TBL_PREF_WIDTH = 320.0;
 
 	@Autowired
 	private IStageService iStageService;
@@ -63,7 +64,16 @@ public class RootController extends BaseController implements Initializable {
 	private TableView<UIHttpHeaders> tblHeaders;
 
 	@FXML
+	private TableView<UIParam> tblParams;
+
+	@FXML
+	private HBox hbHeadersParamsTable;
+
+	@FXML
 	private ToggleButton tbtnHeaders;
+
+	@FXML
+	private ToggleButton tbtnParams;
 
 	@FXML
 	private TextArea txaPostBody;
@@ -95,6 +105,9 @@ public class RootController extends BaseController implements Initializable {
 		tblHeaders = new HeaderTableView().initialize(uiSequence.getUiPlugin()
 				.getHeadersList(), tblHeaders);
 
+		tblParams = new ParamTableView().initialize(uiSequence.getParams(),
+				tblParams);
+
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
 		txaPostBody.setEditable(true);
 
@@ -114,7 +127,16 @@ public class RootController extends BaseController implements Initializable {
 
 		tbtnHeaders.setOnAction(event -> {
 			tblHeaders.setVisible(!tblHeaders.isVisible());
-			RootConfig.bindHeaders(tblHeaders.isVisible());
+			RootConfig.bindHeaders(tblHeaders.isVisible()
+					|| tblParams.isVisible());
+
+			updateControls();
+		});
+
+		tbtnParams.setOnAction(event -> {
+			tblParams.setVisible(!tblParams.isVisible());
+			RootConfig.bindHeaders(tblHeaders.isVisible()
+					|| tblParams.isVisible());
 
 			updateControls();
 		});
@@ -124,7 +146,8 @@ public class RootController extends BaseController implements Initializable {
 	}
 
 	private void updateControls() {
-		tblHeaders.setPrefHeight(RootConfig.getHeadersHeight());
+		hbHeadersParamsTable.setPrefHeight(RootConfig
+				.getHbHeadersParamsHeight());
 		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
 		txaResponce.setPrefHeight(RootConfig.getResponceHeight());
 	}
@@ -151,22 +174,9 @@ public class RootController extends BaseController implements Initializable {
 	private void fillAccordion() {
 		List<TitledPane> titledPanes = new ArrayList<TitledPane>();
 
-		uiSequence
-				.getMapFutureParams()
-				.forEach(
-						(plugin, futureParams) -> {
-							AnchorPane anchorPane = new AnchorPane();
-							TableView<UIFutureParam> tblFutureParams = new TableView<>();
-							tblFutureParams
-									.setPrefWidth(FUTURE_PARAM_TBL_PREF_WIDTH);
-							tblFutureParams = new FutureParamTableView()
-									.initialize(futureParams, tblFutureParams);
+		TransformerFactory.transformEntity(uiSequence.getMapFutureParams(),
+				titledPanes, TransformKey.FILL_TITLED_PANES_WITH_FUTURE_PARAMS);
 
-							anchorPane.getChildren().addAll(tblFutureParams);
-							TitledPane pluginTitle = new TitledPane(plugin
-									.getName(), anchorPane);
-							titledPanes.add(pluginTitle);
-						});
 		accPlugins.getPanes().clear();
 		accPlugins.getPanes().addAll(titledPanes);
 		accPlugins.setExpandedPane(accPlugins.getPanes().get(0));

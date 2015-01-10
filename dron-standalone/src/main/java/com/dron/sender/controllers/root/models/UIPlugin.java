@@ -8,8 +8,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import com.dron.sender.models.UIHttpHeaders;
-import com.dron.sender.models.UIHttpMethod;
+import com.dron.sender.pattern.models.transformers.TransformKey;
 import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Plugin;
 
@@ -34,8 +33,6 @@ public class UIPlugin {
 
 	private ChoiceBox<UIHttpMethod> ssmMethod;
 
-
-
 	private final ObservableList<UIHttpHeaders> headersList = FXCollections
 			.observableArrayList();
 
@@ -49,9 +46,9 @@ public class UIPlugin {
 			}
 		});
 
-		headersList.clear();
-		TransformerFactory.transformEntity(plugin.getHeaders(), headersList);
-		headersList.add(new UIHttpHeaders());
+		TransformerFactory.transformEntity(plugin.getHeaders(), headersList,
+				TransformKey.HTTP_HEADERS_INTO_UI_HEADERS);
+
 	}
 
 	public ObservableList<UIHttpHeaders> getHeadersList() {

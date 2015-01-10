@@ -7,10 +7,6 @@ import javafx.beans.property.StringProperty;
 
 public class UIFutureParam {
 
-	public static final String PROPERTY_KEY = "Key";
-
-	public static final String PROPERTY_DEPENDENCE = "Dependence";
-
 	public UIFutureParam() {
 		this("", "");
 	}
@@ -35,7 +31,8 @@ public class UIFutureParam {
 
 	public StringProperty keyProperty(String keyValue) {
 		if (this.key == null) {
-			this.key = new SimpleStringProperty(this, PROPERTY_KEY, keyValue);
+			this.key = new SimpleStringProperty(this, FutureParam.PROPERTY_KEY,
+					keyValue);
 		}
 		return this.key;
 	}
@@ -47,7 +44,7 @@ public class UIFutureParam {
 	public StringProperty dependenceProperty(String dependenceValue) {
 		if (this.dependence == null) {
 			this.dependence = new SimpleStringProperty(this,
-					PROPERTY_DEPENDENCE, dependenceValue);
+					FutureParam.PROPERTY_DEPENDENCE, dependenceValue);
 		}
 		return this.dependence;
 	}

@@ -3,7 +3,7 @@ package com.dron.sender.controllers.root.controls;
 import org.apache.commons.lang3.StringUtils;
 
 import com.dron.sender.controllers.base.controls.BasePropertyTableView;
-import com.dron.sender.models.UIHttpHeaders;
+import com.dron.sender.controllers.root.models.UIHttpHeaders;
 
 public class HeaderTableView extends BasePropertyTableView<UIHttpHeaders> {
 

@@ -10,25 +10,17 @@ import javafx.util.converter.DefaultStringConverter;
 
 import org.apache.commons.lang3.StringUtils;
 
-public abstract class BasePropertyTableView<T> {
+import com.dron.sender.controllers.base.interfaces.IModelTableView;
+
+public abstract class BasePropertyTableView<T extends IModelTableView> {
 
 	protected abstract int getMinWidth();
 
 	protected abstract String getKeyName();
 
-	protected abstract String getKey(T row);
-
 	protected abstract String getValueName();
 
-	protected abstract String getValue(T row);
-
-	protected abstract boolean isEmpty(T row);
-
 	protected abstract T getEmptyInstance();
-
-	protected abstract void updateKey(T row, String newKey);
-
-	protected abstract void updateValue(T row, String newValue);
 
 	@SuppressWarnings("unchecked")
 	public TableView<T> initialize(final ObservableList<T> observableList,
@@ -55,13 +47,13 @@ public abstract class BasePropertyTableView<T> {
 		headerCol.setCellFactory(factory -> new TextFieldTableCell<T, String>(
 				new DefaultStringConverter()));
 		headerCol.setOnEditCommit(header -> {
-			if (header != null && isEmpty(header.getRowValue())) {
+			if (header != null && header.getRowValue().isEmpty()) {
 				observableList.add(getEmptyInstance());
 			}
 			if (shouldRemoveHeader(observableList, header)) {
 				observableList.remove(header.getRowValue());
 			} else {
-				updateKey(header.getRowValue(), header.getNewValue());
+				header.getRowValue().updateModelKey(header.getNewValue());
 			}
 		});
 
@@ -78,13 +70,13 @@ public abstract class BasePropertyTableView<T> {
 		valueCol.setCellFactory(factory -> new TextFieldTableCell<T, String>(
 				new DefaultStringConverter()));
 		valueCol.setOnEditCommit(value -> {
-			if (value != null && isEmpty(value.getRowValue())) {
+			if (value != null && value.getRowValue().isEmpty()) {
 				observableList.add(getEmptyInstance());
 			}
 			if (shouldRemoveHeader(observableList, value)) {
 				observableList.remove(value.getRowValue());
 			} else {
-				updateValue(value.getRowValue(), value.getNewValue());
+				value.getRowValue().updateModelValue(value.getNewValue());
 			}
 		});
 		return valueCol;
@@ -96,13 +88,13 @@ public abstract class BasePropertyTableView<T> {
 		return header != null
 				&& index >= 0
 				&& StringUtils.isBlank(header.getNewValue())
-				&& (getKey(observableList.get(index)).equals(
-						header.getOldValue())
-						&& StringUtils.isBlank(getValue(observableList
-								.get(index))) || getValue(
-						observableList.get(index)).equals(header.getOldValue())
-						&& StringUtils
-								.isBlank(getKey(observableList.get(index))));
+				&& (observableList.get(index).getModelKey()
+						.equals(header.getOldValue())
+						&& StringUtils.isBlank(observableList.get(index)
+								.getModelValue()) || observableList.get(index)
+						.getModelValue().equals(header.getOldValue())
+						&& StringUtils.isBlank(observableList.get(index)
+								.getModelKey()));
 	}
 
 }

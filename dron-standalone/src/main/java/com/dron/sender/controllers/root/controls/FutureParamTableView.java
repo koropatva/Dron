@@ -1,7 +1,5 @@
 package com.dron.sender.controllers.root.controls;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.dron.sender.controllers.base.controls.BasePropertyTableView;
 import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.sequence.models.FutureParam;
@@ -21,39 +19,13 @@ public class FutureParamTableView extends BasePropertyTableView<UIFutureParam> {
 	}
 
 	@Override
-	protected String getKey(UIFutureParam row) {
-		return row.getKey();
-	}
-
-	@Override
 	protected String getValueName() {
 		return FutureParam.PROPERTY_DEPENDENCE;
 	}
 
 	@Override
-	protected String getValue(UIFutureParam row) {
-		return row.getDependence();
-	}
-
-	@Override
-	protected boolean isEmpty(UIFutureParam row) {
-		return StringUtils.isBlank(row.getKey())
-				&& StringUtils.isBlank(row.getDependence());
-	}
-
-	@Override
 	protected UIFutureParam getEmptyInstance() {
 		return new UIFutureParam();
-	}
-
-	@Override
-	protected void updateKey(UIFutureParam row, String newKey) {
-		row.setKey(newKey);
-	}
-
-	@Override
-	protected void updateValue(UIFutureParam row, String newValue) {
-		row.setDependence(newValue);
 	}
 
 }

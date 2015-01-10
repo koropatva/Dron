@@ -22,4 +22,16 @@ public class FutureParamTransformer implements
 		return uiFutureParams;
 	}
 
+	@Override
+	public List<FutureParam> reverseTransform(
+			final List<FutureParam> futureParams,
+			final ObservableList<UIFutureParam> uiFutureParams) {
+		futureParams.clear();
+		uiFutureParams.forEach(uiFutureParam -> {
+			futureParams.add(new FutureParam(uiFutureParam.getKey(),
+					uiFutureParam.getDependence()));
+		});
+		return null;
+	}
+
 }

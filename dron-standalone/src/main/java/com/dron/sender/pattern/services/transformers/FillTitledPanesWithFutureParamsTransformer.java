@@ -38,4 +38,12 @@ public class FillTitledPanesWithFutureParamsTransformer
 		return titledPanes;
 	}
 
+	@Override
+	public Map<Plugin, ObservableList<UIFutureParam>> reverseTransform(
+			final Map<Plugin, ObservableList<UIFutureParam>> mapFutureParams,
+			final List<TitledPane> titledPanes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

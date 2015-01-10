@@ -1,11 +1,12 @@
 package com.dron.sender.controllers.root.models;
 
-import com.dron.sender.sequence.models.FutureParam;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class UIFutureParam {
+import com.dron.sender.controllers.base.interfaces.IModelTableView;
+import com.dron.sender.sequence.models.FutureParam;
+
+public class UIFutureParam implements IModelTableView {
 
 	public UIFutureParam() {
 		this("", "");
@@ -24,6 +25,26 @@ public class UIFutureParam {
 	private StringProperty key;
 
 	private StringProperty dependence;
+
+	@Override
+	public String getModelKey() {
+		return getKey();
+	}
+
+	@Override
+	public void updateModelKey(String key) {
+		setKey(key);
+	}
+
+	@Override
+	public String getModelValue() {
+		return getDependence();
+	}
+
+	@Override
+	public void updateModelValue(String value) {
+		setDependence(value);
+	}
 
 	public StringProperty keyProperty() {
 		return keyProperty(null);

@@ -7,7 +7,7 @@
     "httpMethod" : "POST",
     "url" : "{{url}}:{{orderPort}}/order-api/rest/v2/order/ORDER_INFORMATION",
     "postBody" : "{\"orderId\":{{orderId}},\"inputData\" : { \"include.extension\":true, \"include.purchase\":true }}",
-    "request" : null,
+    "name" : null,
     "responce" : null,
     "futureParams" : [ {
       "key" : "{{extCatalogItemId}}",
@@ -24,7 +24,7 @@
     "httpMethod" : "POST",
     "url" : "{{url}}:{{orderPort}}/order-api/rest/v2/order/EXTEND_RENTAL",
     "postBody" : "{\"orderId\": {{orderId}},\"orderLineIds\": {{orderLineIds}},\"itemList\": [{ \"catalogItemId\": \"{{extCatalogItemId}}\", \"pricingId\": \"{{extPricingId}}\" }],\"inputData\" : {\"confirm.EXTEND_RENTAL\": true},\"paymentInfo\": [{\"mopIdentifier\": 57685499,\"notes\": null,\"cvv\": 123,\"billingAddressId\": 42768171,\"authInfo\": null,\"availableAmount\": null,\"assignedAmount\": null,\"mopType\": \"CREDITCARD\"}]}",
-    "request" : null,
+    "name" : null,
     "responce" : null,
     "futureParams" : [ ]
   } ],

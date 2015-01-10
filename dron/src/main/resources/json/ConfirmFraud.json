@@ -7,7 +7,7 @@
     "httpMethod" : "POST",
     "url" : "{{url}}:{{orderPort}}/order-api/rest/v2/order/CONFIRM_FRAUD",
     "postBody" : "{ \"orderId\":{{orderId}} }",
-    "request" : null,
+    "name" : null,
     "responce" : null,
     "futureParams" : [ ]
   } ],

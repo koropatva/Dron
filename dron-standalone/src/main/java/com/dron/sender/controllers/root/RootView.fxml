@@ -8,68 +8,57 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane layoutX="1.0" layoutY="1.0"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane layoutX="1.0" layoutY="1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<VBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-			AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+		<HBox>
 			<children>
-				<HBox>
+				<VBox>
 					<children>
-						<TextField fx:id="tfSequenceName" prefHeight="16.0"
-							prefWidth="448.0" promptText="Sequence Name" />
-						<Button fx:id="btnPrepareSequence" mnemonicParsing="false"
-							onAction="#prepareSequence" text="Prepare Sequence" />
-					</children>
-				</HBox>
-				<AnchorPane prefHeight="0.0">
-					<children>
-						<ToolBar AnchorPane.bottomAnchor="5.0"
-							AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-							AnchorPane.topAnchor="5.0">
-							<items>
-								<TextField fx:id="tfUrl" prefHeight="16.0" prefWidth="448.0"
-									promptText="URL">
-									<padding>
-										<Insets left="10.0" />
-									</padding>
-								</TextField>
-								<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
-								<ToggleButton fx:id="tbtnHeaders" mnemonicParsing="false"
-									text="Headers" />
-								<Button fx:id="btnSend" mnemonicParsing="false" onAction="#send"
-									text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0" />
-							</items>
-						</ToolBar>
-					</children>
-				</AnchorPane>
-				<VBox maxHeight="600" prefHeight="600">
-					<children>
-						<AnchorPane>
+						<HBox>
 							<children>
-								<TableView fx:id="tblHeaders" prefWidth="320.0"
-									AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-									AnchorPane.topAnchor="5.0" />
+								<TextField fx:id="tfSequenceName" prefHeight="16.0" prefWidth="448.0" promptText="Sequence Name" />
+								<Button fx:id="btnPrepareSequence" mnemonicParsing="false" onAction="#prepareSequence" text="Prepare Sequence" />
+							</children>
+						</HBox>
+						<AnchorPane prefHeight="0.0">
+							<children>
+								<ToolBar AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+									<items>
+										<TextField fx:id="tfUrl" prefHeight="16.0" prefWidth="448.0" promptText="URL">
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</TextField>
+										<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
+										<ToggleButton fx:id="tbtnHeaders" mnemonicParsing="false" text="Headers" />
+										<Button fx:id="btnSend" mnemonicParsing="false" onAction="#send" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0" />
+									</items>
+								</ToolBar>
 							</children>
 						</AnchorPane>
-						<AnchorPane>
+						<VBox maxHeight="600" prefHeight="600">
 							<children>
-								<TextArea fx:id="txaPostBody" AnchorPane.bottomAnchor="5.0"
-									AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-									AnchorPane.topAnchor="5.0" promptText="Post body" />
+								<AnchorPane>
+									<children>
+										<TableView fx:id="tblHeaders" prefWidth="320.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+									</children>
+								</AnchorPane>
+								<AnchorPane>
+									<children>
+										<TextArea fx:id="txaPostBody" promptText="Post body" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+									</children>
+								</AnchorPane>
+								<AnchorPane>
+									<children>
+										<TextArea fx:id="txaResponce" editable="false" promptText="Responce" text="" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+									</children>
+								</AnchorPane>
 							</children>
-						</AnchorPane>
-						<AnchorPane>
-							<children>
-								<TextArea fx:id="txaResponce" editable="false" text=""
-									AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-									AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"
-									promptText="Responce" />
-							</children>
-						</AnchorPane>
+						</VBox>
 					</children>
 				</VBox>
+				<Accordion fx:id="accPlugins" minWidth="300.0" />
 			</children>
-		</VBox>
+		</HBox>
 	</children>
 </AnchorPane>

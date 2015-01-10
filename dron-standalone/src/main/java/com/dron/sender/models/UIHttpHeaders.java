@@ -1,43 +1,48 @@
 package com.dron.sender.models;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class UIHttpHeaders {
 
-	public static final String PROPERTY_VALUE = "value";
-	public static final String PROPERTY_HEADER = "header";
+	public static final String PROPERTY_VALUE = "Value";
+	public static final String PROPERTY_HEADER = "Header";
+
+	public UIHttpHeaders() {
+		this("", "");
+	}
 
 	public UIHttpHeaders(String header, String value) {
-		this.header = headerProperty();
-		this.header.set(header);
-		this.value = valueProperty();
-		this.value.set(value);
+		headerProperty(header);
+		valueProperty(value);
 	}
 
 	private StringProperty header;
 
 	private StringProperty value;
 
-	public boolean isEmpty() {
-		return StringUtils.isBlank(header.get())
-				&& StringUtils.isBlank(value.get());
+	public StringProperty headerProperty() {
+		return headerProperty(null);
 	}
 
-	public StringProperty headerProperty() {
-		if (header == null) {
-			header = new SimpleStringProperty(this, PROPERTY_HEADER);
+	public StringProperty headerProperty(String initialValue) {
+		if (this.header == null) {
+			this.header = new SimpleStringProperty(this, PROPERTY_HEADER,
+					initialValue);
 		}
-		return header;
+		return this.header;
 	}
 
 	public StringProperty valueProperty() {
-		if (value == null) {
-			value = new SimpleStringProperty(this, PROPERTY_VALUE);
+		return valueProperty(null);
+	}
+
+	public StringProperty valueProperty(String initialValue) {
+		if (this.value == null) {
+			this.value = new SimpleStringProperty(this, PROPERTY_VALUE,
+					initialValue);
 		}
-		return value;
+		return this.value;
 	}
 
 	public String getHeader() {

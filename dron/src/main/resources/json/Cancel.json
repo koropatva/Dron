@@ -7,7 +7,7 @@
     "httpMethod" : "POST",
     "url" : "{{url}}:{{orderPort}}/order-api/rest/v2/order/CANCEL",
     "postBody" : "{\"orderId\":{{orderId}},\"orderLineIds\": {{orderLineIds}},\"inputData\": { \"confirm.CANCEL\" : true, \"skipChangeWindow\" : true}}",
-    "request" : null,
+    "name" : null,
     "responce" : null,
     "futureParams" : [ ]
   } ],

@@ -15,6 +15,10 @@ import com.dron.sender.sequence.utils.ParamsUtils;
 
 public class Plugin implements IBaseObserver {
 
+	public static final String PROPERTY_NAME = "Name";
+
+	public static final String PROPERTY_HEADERS = "Headers";
+
 	public static final String PROPERTY_SEQUENCE = "Sequence";
 
 	public static final String PROPERTY_URL = "Url";
@@ -58,7 +62,8 @@ public class Plugin implements IBaseObserver {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(mediaTypes);
 
-		notifyListeners(this, "Headers", this.headers, this.headers = headers);
+		notifyListeners(this, PROPERTY_HEADERS, this.headers,
+				this.headers = headers);
 	}
 
 	private Sequence sequence;
@@ -73,8 +78,8 @@ public class Plugin implements IBaseObserver {
 
 	private String responce;
 
-	private String request;
-	
+	private String name;
+
 	/**
 	 * Structure of parameter way looks like: names of JSON object separated by
 	 * dot. If you need to select someone object from the list you should to use
@@ -144,12 +149,12 @@ public class Plugin implements IBaseObserver {
 		return futureParams;
 	}
 
-	public String getRequest() {
-		return request;
+	public String getName() {
+		return name;
 	}
 
-	public void setRequest(String request) {
-		this.request = request;
+	public void setName(String name) {
+		notifyListeners(this, PROPERTY_NAME, this.name, this.name = name);
 	}
 
 }

@@ -36,7 +36,13 @@ public class HeaderTableView extends BasePropertyTableView<UIHttpHeaders> {
 
 	@Override
 	protected UIHttpHeaders getEmptyInstance() {
-		return new UIHttpHeaders("", "");
+		return new UIHttpHeaders();
+	}
+
+	@Override
+	protected boolean isEmpty(UIHttpHeaders row) {
+		return StringUtils.isBlank(row.getHeader())
+				&& StringUtils.isBlank(row.getValue());
 	}
 
 	@Override
@@ -47,11 +53,5 @@ public class HeaderTableView extends BasePropertyTableView<UIHttpHeaders> {
 	@Override
 	protected void updateValue(UIHttpHeaders row, String newValue) {
 		row.setValue(newValue);
-	}
-
-	@Override
-	protected boolean isEmpty(UIHttpHeaders row) {
-		return StringUtils.isBlank(row.getHeader())
-				&& StringUtils.isBlank(row.getValue());
 	}
 }

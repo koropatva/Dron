@@ -8,11 +8,13 @@ public class UIHttpHeaders {
 	public static final String PROPERTY_VALUE = "Value";
 	public static final String PROPERTY_HEADER = "Header";
 
+	public UIHttpHeaders() {
+		this("", "");
+	}
+
 	public UIHttpHeaders(String header, String value) {
-		this.header = headerProperty();
-		this.header.set(header);
-		this.value = valueProperty();
-		this.value.set(value);
+		headerProperty(header);
+		valueProperty(value);
 	}
 
 	private StringProperty header;
@@ -20,17 +22,27 @@ public class UIHttpHeaders {
 	private StringProperty value;
 
 	public StringProperty headerProperty() {
-		if (header == null) {
-			header = new SimpleStringProperty(this, PROPERTY_HEADER);
+		return headerProperty(null);
+	}
+
+	public StringProperty headerProperty(String initialValue) {
+		if (this.header == null) {
+			this.header = new SimpleStringProperty(this, PROPERTY_HEADER,
+					initialValue);
 		}
-		return header;
+		return this.header;
 	}
 
 	public StringProperty valueProperty() {
-		if (value == null) {
-			value = new SimpleStringProperty(this, PROPERTY_VALUE);
+		return valueProperty(null);
+	}
+
+	public StringProperty valueProperty(String initialValue) {
+		if (this.value == null) {
+			this.value = new SimpleStringProperty(this, PROPERTY_VALUE,
+					initialValue);
 		}
-		return value;
+		return this.value;
 	}
 
 	public String getHeader() {

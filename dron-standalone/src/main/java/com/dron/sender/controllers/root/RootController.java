@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -27,8 +27,10 @@ import org.springframework.stereotype.Component;
 
 import com.dron.sender.actions.interfaces.IStageService;
 import com.dron.sender.controllers.base.BaseController;
+import com.dron.sender.controllers.root.controls.FutureParamTableView;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
+import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.controllers.root.observers.BaseLoggerObserver;
 import com.dron.sender.controllers.root.service.UISequenceService;
 import com.dron.sender.controllers.root.tasks.SequenceTask;
@@ -42,6 +44,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class RootController extends BaseController implements Initializable {
+
+	private static final double FUTURE_PARAM_TBL_PREF_WIDTH = 320.0;
 
 	@Autowired
 	private IStageService iStageService;
@@ -92,6 +96,7 @@ public class RootController extends BaseController implements Initializable {
 				.getHeadersList(), tblHeaders);
 
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
+		txaPostBody.setEditable(true);
 
 		cbMethods.getItems().addAll(new UIHttpMethod(""),
 				new UIHttpMethod(HttpMethod.GET.name()),
@@ -146,21 +151,30 @@ public class RootController extends BaseController implements Initializable {
 	private void fillAccordion() {
 		List<TitledPane> titledPanes = new ArrayList<TitledPane>();
 
-		uiSequence.getPlugins().forEach(
-				plugin -> {
-					List<Label> labels = new ArrayList<>();
-					plugin.getFutureParams().forEach(
-							futureParam -> labels.add(new Label(futureParam
-									.getKey())));
-					AnchorPane anchorPane = new AnchorPane();
-					anchorPane.getChildren().addAll(labels);
-					TitledPane pluginTitle = new TitledPane(plugin.getName(),
-							anchorPane);
-					titledPanes.add(pluginTitle);
-				});
+		uiSequence
+				.getMapFutureParams()
+				.forEach(
+						(plugin, futureParams) -> {
+							AnchorPane anchorPane = new AnchorPane();
+							TableView<UIFutureParam> tblFutureParams = new TableView<>();
+							tblFutureParams
+									.setPrefWidth(FUTURE_PARAM_TBL_PREF_WIDTH);
+							tblFutureParams = new FutureParamTableView()
+									.initialize(futureParams, tblFutureParams);
+
+							anchorPane.getChildren().addAll(tblFutureParams);
+							TitledPane pluginTitle = new TitledPane(plugin
+									.getName(), anchorPane);
+							titledPanes.add(pluginTitle);
+						});
 		accPlugins.getPanes().clear();
 		accPlugins.getPanes().addAll(titledPanes);
 		accPlugins.setExpandedPane(accPlugins.getPanes().get(0));
+		accPlugins.expandedPaneProperty().addListener(
+				(ObservableValue<? extends TitledPane> observable,
+						TitledPane oldValue, TitledPane newValue) -> {
+					System.out.println(newValue);
+				});
 	}
 
 	@FXML

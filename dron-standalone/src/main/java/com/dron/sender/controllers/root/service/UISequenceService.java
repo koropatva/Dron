@@ -1,12 +1,15 @@
 package com.dron.sender.controllers.root.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.models.UIHttpMethod;
 import com.dron.sender.sequence.models.Plugin;
@@ -19,7 +22,7 @@ public class UISequenceService {
 		uiPlugin = new UIPlugin(tfUrl, txaPostBody, cbMethods);
 	}
 
-	private final List<Plugin> plugins = new ArrayList<Plugin>();
+	private final Map<Plugin, ObservableList<UIFutureParam>> mapFutureParams = new LinkedHashMap<>();
 
 	private final UIPlugin uiPlugin;
 
@@ -27,8 +30,18 @@ public class UISequenceService {
 
 	public void fillSequence(Sequence sequence) {
 		this.sequence = sequence;
-		plugins.addAll(sequence.getPlugins());
-		uiPlugin.fillPlugin(plugins.get(0));
+		mapFutureParams.clear();
+		sequence.getPlugins().forEach(
+				plugin -> {
+					ObservableList<UIFutureParam> futureParams = FXCollections
+							.observableArrayList();
+					plugin.getFutureParams().forEach(
+							futureParam -> futureParams.add(new UIFutureParam(
+									futureParam)));
+					futureParams.add(new UIFutureParam());
+					mapFutureParams.put(plugin, futureParams);
+				});
+		uiPlugin.fillPlugin(sequence.getPlugins().get(0));
 	}
 
 	public UIPlugin getUiPlugin() {
@@ -39,8 +52,7 @@ public class UISequenceService {
 		return sequence;
 	}
 
-	public List<Plugin> getPlugins() {
-		return plugins;
+	public Map<Plugin, ObservableList<UIFutureParam>> getMapFutureParams() {
+		return mapFutureParams;
 	}
-
 }

@@ -17,13 +17,13 @@ public class UIPlugin {
 
 	public UIPlugin(final TextField tfUrl, final TextArea txaPostBody,
 			final ChoiceBox<UIHttpMethod> cbMethods) {
-		headersList.add(new UIHttpHeaders("", ""));
+		headersList.add(new UIHttpHeaders());
 
 		spUrl = new SimpleStringProperty();
-		tfUrl.textProperty().bind(spUrl);
+		tfUrl.textProperty().bindBidirectional(spUrl);
 
 		spPostBody = new SimpleStringProperty();
-		txaPostBody.textProperty().bind(spPostBody);
+		txaPostBody.textProperty().bindBidirectional(spPostBody);
 
 		ssmMethod = cbMethods;
 	}
@@ -34,8 +34,7 @@ public class UIPlugin {
 
 	private ChoiceBox<UIHttpMethod> ssmMethod;
 
-	private final ObservableList<UIFutureParam> futureParams = FXCollections
-			.observableArrayList();
+
 
 	private final ObservableList<UIHttpHeaders> headersList = FXCollections
 			.observableArrayList();
@@ -50,19 +49,9 @@ public class UIPlugin {
 			}
 		});
 
-		futureParams.clear();
-		plugin.getFutureParams()
-				.forEach(
-						futureParam -> futureParams.add(new UIFutureParam(
-								futureParam)));
-
 		headersList.clear();
 		TransformerFactory.transformEntity(plugin.getHeaders(), headersList);
-		headersList.add(new UIHttpHeaders("", ""));
-	}
-
-	public ObservableList<UIFutureParam> getFutureParams() {
-		return futureParams;
+		headersList.add(new UIHttpHeaders());
 	}
 
 	public ObservableList<UIHttpHeaders> getHeadersList() {

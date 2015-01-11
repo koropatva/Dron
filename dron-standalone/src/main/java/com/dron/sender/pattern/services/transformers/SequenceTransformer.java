@@ -21,7 +21,6 @@ public class SequenceTransformer implements
 				uiSequence.getMapFutureParams(),
 				TransformKey.FILL_PLUGIN_FUTURE_PARAMS);
 
-		uiSequence.getUiPlugin().fillPlugin(sequence.getPlugins().get(0));
 		return uiSequence;
 	}
 
@@ -36,6 +35,7 @@ public class SequenceTransformer implements
 		TransformerFactory.reverseTransformEntity(sequence.getPlugins(),
 				uiSequence.getMapFutureParams(),
 				TransformKey.FILL_PLUGIN_FUTURE_PARAMS);
+
 		return sequence;
 	}
 

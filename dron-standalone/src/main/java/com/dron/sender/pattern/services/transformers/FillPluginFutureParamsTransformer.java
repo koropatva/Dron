@@ -42,7 +42,7 @@ public class FillPluginFutureParamsTransformer
 			List<FutureParam> futureParams = new ArrayList<>();
 
 			TransformerFactory.reverseTransformEntity(futureParams,
-					plugin.getFutureParams(), TransformKey.FUTURE_PARAMS);
+					uiFutureParams, TransformKey.FUTURE_PARAMS);
 
 			plugin.getFutureParams().clear();
 			plugin.getFutureParams().addAll(futureParams);

@@ -29,8 +29,7 @@ public class BaseLoggerObserver implements PropertyChangeListener {
 	public void propertyChange(final PropertyChangeEvent evt) {
 		if (property == null || evt.getPropertyName().equals(property)) {
 			Platform.runLater(() -> {
-				txaLogger.setText(txaLogger.getText() + "\n"
-						+ evt.getNewValue());
+				txaLogger.setText((String) evt.getNewValue());
 			});
 		}
 	}

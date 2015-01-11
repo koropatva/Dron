@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -29,9 +28,11 @@ import org.springframework.stereotype.Component;
 import com.dron.sender.controllers.base.BaseController;
 import com.dron.sender.controllers.base.interfaces.IStageService;
 import com.dron.sender.controllers.base.models.ControllerEnum;
+import com.dron.sender.controllers.root.controls.FutureParamTableView;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
 import com.dron.sender.controllers.root.controls.ParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
+import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.controllers.root.models.UIHttpHeaders;
 import com.dron.sender.controllers.root.models.UIHttpMethod;
 import com.dron.sender.controllers.root.models.UIParam;
@@ -58,6 +59,9 @@ public class RootController extends BaseController implements Initializable {
 	private TextField tfSequenceName;
 
 	@FXML
+	private TextField tfNewPluginName;
+
+	@FXML
 	private TextArea txaResponce;
 
 	@FXML
@@ -80,9 +84,6 @@ public class RootController extends BaseController implements Initializable {
 
 	@FXML
 	private ChoiceBox<UIHttpMethod> cbMethods;
-
-	@FXML
-	private Button btnSend;
 
 	@FXML
 	private Accordion accPlugins;
@@ -111,8 +112,7 @@ public class RootController extends BaseController implements Initializable {
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
 		txaPostBody.setEditable(true);
 
-		cbMethods.getItems().addAll(new UIHttpMethod(""),
-				new UIHttpMethod(HttpMethod.GET.name()),
+		cbMethods.getItems().addAll(new UIHttpMethod(HttpMethod.GET.name()),
 				new UIHttpMethod(HttpMethod.POST.name()),
 				new UIHttpMethod(HttpMethod.PUT.name()),
 				new UIHttpMethod(HttpMethod.DELETE.name()));
@@ -164,20 +164,40 @@ public class RootController extends BaseController implements Initializable {
 			Sequence sequence = mapper
 					.readValue(new File(path), Sequence.class);
 
-			TransformerFactory.transformEntity(sequence, uiSequence,
-					TransformKey.SEQUENCE);
-
-			fillAccordion();
+			fillUiSequence(sequence);
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
+	private void fillUiSequence(Sequence sequence) {
+		TransformerFactory.transformEntity(sequence, uiSequence,
+				TransformKey.SEQUENCE);
+
+		uiSequence.getUiPlugin().fillPlugin(
+				uiSequence.getMapFutureParams().keySet().iterator().next());
+
+		fillAccordion();
+	}
+
 	private void fillAccordion() {
 		List<TitledPane> titledPanes = new ArrayList<TitledPane>();
 
-		TransformerFactory.transformEntity(uiSequence.getMapFutureParams(),
-				titledPanes, TransformKey.FILL_TITLED_PANES_WITH_FUTURE_PARAMS);
+		uiSequence
+				.getMapFutureParams()
+				.forEach(
+						(plugin, futureParams) -> {
+							AnchorPane anchorPane = new AnchorPane();
+							TableView<UIFutureParam> tblFutureParams = new TableView<>();
+							tblFutureParams.setPrefWidth(320);
+							tblFutureParams = new FutureParamTableView()
+									.initialize(futureParams, tblFutureParams);
+
+							anchorPane.getChildren().addAll(tblFutureParams);
+							TitledPane pluginTitle = new TitledPane(plugin
+									.getName(), anchorPane);
+							titledPanes.add(pluginTitle);
+						});
 
 		accPlugins.getPanes().clear();
 		accPlugins.getPanes().addAll(titledPanes);
@@ -186,16 +206,36 @@ public class RootController extends BaseController implements Initializable {
 				(ObservableValue<? extends TitledPane> observable,
 						TitledPane oldValue, TitledPane newValue) -> {
 					// TODO
-					System.out.println(newValue);
 				});
 	}
 
 	@FXML
 	protected void send(final ActionEvent actionEvent) {
-		initLogging(uiSequence.getSequence());
+		Sequence sequence = fillRootSequence();
+		initLogging(sequence);
 
-		SequenceTask sequenceTask = new SequenceTask(uiSequence.getSequence());
+		SequenceTask sequenceTask = new SequenceTask(sequence);
 		sequenceTask.start();
+	}
+
+	private Sequence fillRootSequence() {
+		Sequence sequence = new Sequence();
+		TransformerFactory.reverseTransformEntity(sequence, uiSequence,
+				TransformKey.SEQUENCE);
+		return sequence;
+	}
+
+	@FXML
+	protected void addNewPlugin(final ActionEvent event) {
+		Sequence sequence = fillRootSequence();
+
+		Plugin plugin = new Plugin();
+		plugin.setName(tfNewPluginName.getText());
+
+		sequence.getPlugins().add(plugin);
+
+		fillUiSequence(sequence);
+
 	}
 
 	private void initLogging(Sequence sequence) {

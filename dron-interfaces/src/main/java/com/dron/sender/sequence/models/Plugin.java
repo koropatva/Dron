@@ -30,6 +30,7 @@ public class Plugin implements IBaseObserver {
 	public static final String PROPERTY_HTTP_METHOD = "HttpMethod";
 
 	public Plugin() {
+		this(HttpMethod.GET);
 	}
 
 	public Plugin(HttpMethod httpMethod) {

@@ -55,12 +55,14 @@ public class TransformerFactory {
 			return (IBaseTransformer<F, T>) new ParamTransformer();
 		case FUTURE_PARAMS:
 			return (IBaseTransformer<F, T>) new FutureParamTransformer();
+		case PLUGIN:
+			return (IBaseTransformer<F, T>) new PluginTransformer();
+		case ROOT_UI_PLUGIN:
+			return (IBaseTransformer<F, T>) new RootUIPluginTransformer();
 		case SEQUENCE:
 			return (IBaseTransformer<F, T>) new SequenceTransformer();
 		case FILL_PLUGIN_FUTURE_PARAMS:
 			return (IBaseTransformer<F, T>) new FillPluginFutureParamsTransformer();
-		case FILL_TITLED_PANES_WITH_FUTURE_PARAMS:
-			return (IBaseTransformer<F, T>) new FillTitledPanesWithFutureParamsTransformer();
 		default:
 			return null;
 		}

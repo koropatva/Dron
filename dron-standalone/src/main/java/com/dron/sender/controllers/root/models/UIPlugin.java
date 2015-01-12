@@ -1,57 +1,72 @@
 package com.dron.sender.controllers.root.models;
 
+import org.springframework.http.HttpMethod;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-
-import com.dron.sender.pattern.models.transformers.TransformKey;
-import com.dron.sender.pattern.services.transformers.TransformerFactory;
-import com.dron.sender.sequence.models.Plugin;
 
 public class UIPlugin {
 
-	public UIPlugin(final TextField tfUrl, final TextArea txaPostBody,
-			final ChoiceBox<UIHttpMethod> cbMethods) {
+	public UIPlugin() {
+		method.set(HttpMethod.GET.name());
 		headersList.add(new UIHttpHeaders());
-
-		spUrl = new SimpleStringProperty();
-		tfUrl.textProperty().bindBidirectional(spUrl);
-
-		spPostBody = new SimpleStringProperty();
-		txaPostBody.textProperty().bindBidirectional(spPostBody);
-
-		ssmMethod = cbMethods;
+		futureParams.add(new UIFutureParam());
 	}
 
-	private StringProperty spUrl;
+	protected final StringProperty url = new SimpleStringProperty();
 
-	private StringProperty spPostBody;
+	protected final StringProperty postBody = new SimpleStringProperty();
 
-	private ChoiceBox<UIHttpMethod> ssmMethod;
+	protected final StringProperty method = new SimpleStringProperty();
 
-	private final ObservableList<UIHttpHeaders> headersList = FXCollections
+	protected final StringProperty name = new SimpleStringProperty();
+
+	protected final ObservableList<UIHttpHeaders> headersList = FXCollections
 			.observableArrayList();
 
-	public void fillPlugin(Plugin plugin) {
-		spUrl.set(plugin.getUrl());
-		spPostBody.set(plugin.getPostBody());
-		ssmMethod.getItems().forEach(method -> {
-			if (method.getMethod().equals(plugin.getHttpMethod().name())) {
-				ssmMethod.getSelectionModel().select(method);
-				return;
-			}
-		});
-
-		TransformerFactory.transformEntity(plugin.getHeaders(), headersList,
-				TransformKey.HTTP_HEADERS);
-
-	}
+	protected final ObservableList<UIFutureParam> futureParams = FXCollections
+			.observableArrayList();
 
 	public ObservableList<UIHttpHeaders> getHeadersList() {
 		return headersList;
 	}
+
+	public ObservableList<UIFutureParam> getFutureParams() {
+		return futureParams;
+	}
+
+	public StringProperty getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url.set(url);
+	}
+
+	public StringProperty getPostBody() {
+		return postBody;
+	}
+
+	public void setPostBody(String postBody) {
+		this.postBody.set(postBody);
+	}
+
+	public StringProperty getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method.set(method);
+	}
+
+	public StringProperty getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name.set(name);
+	}
+
 }

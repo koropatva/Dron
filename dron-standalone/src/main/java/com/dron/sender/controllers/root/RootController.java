@@ -32,10 +32,11 @@ import com.dron.sender.controllers.root.controls.FutureParamTableView;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
 import com.dron.sender.controllers.root.controls.ParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
+import com.dron.sender.controllers.root.models.RootUIPlugin;
 import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.controllers.root.models.UIHttpHeaders;
-import com.dron.sender.controllers.root.models.UIHttpMethod;
 import com.dron.sender.controllers.root.models.UIParam;
+import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.controllers.root.models.UISequence;
 import com.dron.sender.controllers.root.tasks.SequenceTask;
 import com.dron.sender.pattern.models.transformers.TransformKey;
@@ -83,12 +84,14 @@ public class RootController extends BaseController implements Initializable {
 	private TextArea txaPostBody;
 
 	@FXML
-	private ChoiceBox<UIHttpMethod> cbMethods;
+	private ChoiceBox<String> cbMethods;
 
 	@FXML
 	private Accordion accPlugins;
 
 	private UISequence uiSequence;
+
+	private RootUIPlugin rootUiPlugin;
 
 	@Override
 	protected ControllerEnum getControllerEnum() {
@@ -97,14 +100,13 @@ public class RootController extends BaseController implements Initializable {
 
 	@Override
 	public void initialize(final URL url, final ResourceBundle resource) {
-		uiSequence = new UISequence(tfUrl, txaPostBody, cbMethods);
 
-		TitledPane emptyPane = new TitledPane("Plugins", new AnchorPane());
-		accPlugins.getPanes().add(emptyPane);
-		accPlugins.setExpandedPane(emptyPane);
+		uiSequence = new UISequence();
+		rootUiPlugin = new RootUIPlugin(tfUrl, txaPostBody, cbMethods);
+		fillAccordion();
 
-		tblHeaders = new HeaderTableView().initialize(uiSequence.getUiPlugin()
-				.getHeadersList(), tblHeaders);
+		tblHeaders = new HeaderTableView().initialize(
+				rootUiPlugin.getHeadersList(), tblHeaders);
 
 		tblParams = new ParamTableView().initialize(uiSequence.getUIParams(),
 				tblParams);
@@ -112,10 +114,9 @@ public class RootController extends BaseController implements Initializable {
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
 		txaPostBody.setEditable(true);
 
-		cbMethods.getItems().addAll(new UIHttpMethod(HttpMethod.GET.name()),
-				new UIHttpMethod(HttpMethod.POST.name()),
-				new UIHttpMethod(HttpMethod.PUT.name()),
-				new UIHttpMethod(HttpMethod.DELETE.name()));
+		cbMethods.getItems().addAll(HttpMethod.GET.name(),
+				HttpMethod.POST.name(), HttpMethod.PUT.name(),
+				HttpMethod.DELETE.name());
 		cbMethods.getSelectionModel().selectedItemProperty()
 				.addListener((observableValue, oldChoice, newChoise) -> {
 					cbMethods.getSelectionModel().select(newChoise);
@@ -171,11 +172,13 @@ public class RootController extends BaseController implements Initializable {
 	}
 
 	private void fillUiSequence(Sequence sequence) {
+		uiSequence.getUIParams().clear();
+		uiSequence.getUiPlugins().clear();
 		TransformerFactory.transformEntity(sequence, uiSequence,
 				TransformKey.SEQUENCE);
 
-		uiSequence.getUiPlugin().fillPlugin(
-				uiSequence.getMapFutureParams().keySet().iterator().next());
+		TransformerFactory.transformEntity(uiSequence.getUiPlugins().get(0),
+				rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
 
 		fillAccordion();
 	}
@@ -184,18 +187,19 @@ public class RootController extends BaseController implements Initializable {
 		List<TitledPane> titledPanes = new ArrayList<TitledPane>();
 
 		uiSequence
-				.getMapFutureParams()
+				.getUiPlugins()
 				.forEach(
-						(plugin, futureParams) -> {
+						uiPlugin -> {
 							AnchorPane anchorPane = new AnchorPane();
 							TableView<UIFutureParam> tblFutureParams = new TableView<>();
 							tblFutureParams.setPrefWidth(320);
 							tblFutureParams = new FutureParamTableView()
-									.initialize(futureParams, tblFutureParams);
+									.initialize(uiPlugin.getFutureParams(),
+											tblFutureParams);
 
 							anchorPane.getChildren().addAll(tblFutureParams);
-							TitledPane pluginTitle = new TitledPane(plugin
-									.getName(), anchorPane);
+							TitledPane pluginTitle = new TitledPane(uiPlugin
+									.getName().get(), anchorPane);
 							titledPanes.add(pluginTitle);
 						});
 
@@ -205,7 +209,20 @@ public class RootController extends BaseController implements Initializable {
 		accPlugins.expandedPaneProperty().addListener(
 				(ObservableValue<? extends TitledPane> observable,
 						TitledPane oldValue, TitledPane newValue) -> {
-					// TODO
+					if (oldValue != null) {
+						TransformerFactory.reverseTransformEntity(
+								uiSequence.getUiPlugins().get(
+										accPlugins.getChildrenUnmodifiable()
+												.indexOf(oldValue)),
+								rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
+					}
+					if (newValue != null) {
+						TransformerFactory.transformEntity(
+								uiSequence.getUiPlugins().get(
+										accPlugins.getChildrenUnmodifiable()
+												.indexOf(newValue)),
+								rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
+					}
 				});
 	}
 
@@ -227,15 +244,11 @@ public class RootController extends BaseController implements Initializable {
 
 	@FXML
 	protected void addNewPlugin(final ActionEvent event) {
-		Sequence sequence = fillRootSequence();
+		UIPlugin uiPlugin = new UIPlugin();
+		uiPlugin.setName(tfNewPluginName.getText());
 
-		Plugin plugin = new Plugin();
-		plugin.setName(tfNewPluginName.getText());
-
-		sequence.getPlugins().add(plugin);
-
-		fillUiSequence(sequence);
-
+		uiSequence.getUiPlugins().add(uiPlugin);
+		fillAccordion();
 	}
 
 	private void initLogging(Sequence sequence) {

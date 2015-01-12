@@ -5,8 +5,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.TextArea;
 
-import com.dron.sender.controllers.root.models.UIHttpMethod;
-
 public class RootConfig {
 
 	private static final double HB_HEADERS_PARAMS_HEIGHT = 170.0;
@@ -44,8 +42,8 @@ public class RootConfig {
 		}
 	}
 
-	public static void bindPostBody(TextArea txaPostBody, UIHttpMethod method) {
-		switch (method.getMethod()) {
+	public static void bindPostBody(TextArea txaPostBody, String method) {
+		switch (method) {
 		case "POST":
 			txaPostBody.setVisible(true);
 			postBodyHeight.set(TXA_POST_BODY_HEIGHT);

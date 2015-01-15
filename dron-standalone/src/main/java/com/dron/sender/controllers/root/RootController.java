@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -20,6 +21,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -186,22 +188,12 @@ public class RootController extends BaseController implements Initializable {
 	private void fillAccordion() {
 		List<TitledPane> titledPanes = new ArrayList<TitledPane>();
 
-		uiSequence
-				.getUiPlugins()
-				.forEach(
-						uiPlugin -> {
-							AnchorPane anchorPane = new AnchorPane();
-							TableView<UIFutureParam> tblFutureParams = new TableView<>();
-							tblFutureParams.setPrefWidth(320);
-							tblFutureParams = new FutureParamTableView()
-									.initialize(uiPlugin.getFutureParams(),
-											tblFutureParams);
-
-							anchorPane.getChildren().addAll(tblFutureParams);
-							TitledPane pluginTitle = new TitledPane(uiPlugin
-									.getName().get(), anchorPane);
-							titledPanes.add(pluginTitle);
-						});
+		if (uiSequence.getUiPlugins().isEmpty()) {
+			uiSequence.getUiPlugins().add(new UIPlugin());
+		}
+		uiSequence.getUiPlugins().forEach(uiPlugin -> {
+			titledPanes.add(createPluginTitlePane(uiPlugin));
+		});
 
 		accPlugins.getPanes().clear();
 		accPlugins.getPanes().addAll(titledPanes);
@@ -209,14 +201,20 @@ public class RootController extends BaseController implements Initializable {
 		accPlugins.expandedPaneProperty().addListener(
 				(ObservableValue<? extends TitledPane> observable,
 						TitledPane oldValue, TitledPane newValue) -> {
-					if (oldValue != null) {
+					if (oldValue != null
+							&& uiSequence.getUiPlugins().size() > accPlugins
+									.getChildrenUnmodifiable()
+									.indexOf(oldValue)) {
 						TransformerFactory.reverseTransformEntity(
 								uiSequence.getUiPlugins().get(
 										accPlugins.getChildrenUnmodifiable()
 												.indexOf(oldValue)),
 								rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
 					}
-					if (newValue != null) {
+					if (newValue != null
+							&& uiSequence.getUiPlugins().size() > accPlugins
+									.getChildrenUnmodifiable()
+									.indexOf(newValue)) {
 						TransformerFactory.transformEntity(
 								uiSequence.getUiPlugins().get(
 										accPlugins.getChildrenUnmodifiable()
@@ -224,6 +222,40 @@ public class RootController extends BaseController implements Initializable {
 								rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
 					}
 				});
+	}
+
+	private TitledPane createPluginTitlePane(UIPlugin uiPlugin) {
+		AnchorPane anchorPane = new AnchorPane();
+
+		TableView<UIFutureParam> tblFutureParams = new TableView<>();
+		tblFutureParams.setPrefWidth(300.0);
+		tblFutureParams = new FutureParamTableView().initialize(
+				uiPlugin.getFutureParams(), tblFutureParams);
+
+		TextField tfPluginName = new TextField();
+		tfPluginName.setPrefHeight(16.0);
+		tfPluginName.setPrefWidth(300.0);
+		tfPluginName.textProperty().bindBidirectional(uiPlugin.getName());
+
+		Button btnRemove = new Button("Remove");
+		btnRemove.setOnAction(listener -> {
+			uiSequence.getUiPlugins().remove(
+					uiSequence.getUiPlugins().get(getExpantedUIPluginIndex()));
+			fillAccordion();
+		});
+
+		anchorPane.getChildren().addAll(
+				new VBox(tfPluginName, tblFutureParams, btnRemove));
+		anchorPane.setPrefWidth(300.0);
+
+		TitledPane pluginTitle = new TitledPane("", anchorPane);
+		pluginTitle.textProperty().bindBidirectional(uiPlugin.getName());
+		return pluginTitle;
+	}
+
+	private int getExpantedUIPluginIndex() {
+		return accPlugins.getChildrenUnmodifiable().indexOf(
+				accPlugins.getExpandedPane());
 	}
 
 	@FXML
@@ -246,9 +278,12 @@ public class RootController extends BaseController implements Initializable {
 	protected void addNewPlugin(final ActionEvent event) {
 		UIPlugin uiPlugin = new UIPlugin();
 		uiPlugin.setName(tfNewPluginName.getText());
-
 		uiSequence.getUiPlugins().add(uiPlugin);
+
+		tfNewPluginName.setText("");
 		fillAccordion();
+		accPlugins.setExpandedPane(accPlugins.getPanes().get(
+				accPlugins.getPanes().size() - 1));
 	}
 
 	private void initLogging(Sequence sequence) {

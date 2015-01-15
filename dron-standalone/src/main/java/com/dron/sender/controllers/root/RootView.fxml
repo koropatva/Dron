@@ -79,18 +79,22 @@
 						</VBox>
 					</children>
 				</VBox>
-				<VBox>
-					<children>
-						<Accordion fx:id="accPlugins" minWidth="300.0" />
-						<HBox minWidth="300.0">
+				<ScrollPane prefWidth="325.0" prefHeight="680">
+					<content>
+						<VBox>
 							<children>
-								<TextField fx:id="tfNewPluginName" />
-								<Button onAction="#addNewPlugin" mnemonicParsing="false"
-									text="Add" />
+								<Accordion fx:id="accPlugins" minWidth="300.0" />
+								<HBox minWidth="300.0">
+									<children>
+										<TextField fx:id="tfNewPluginName" />
+										<Button mnemonicParsing="false" onAction="#addNewPlugin"
+											text="Add" />
+									</children>
+								</HBox>
 							</children>
-						</HBox>
-					</children>
-				</VBox>
+						</VBox>
+					</content>
+				</ScrollPane>
 			</children>
 		</HBox>
 	</children>

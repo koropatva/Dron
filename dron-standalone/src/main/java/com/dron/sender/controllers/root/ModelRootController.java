@@ -17,8 +17,6 @@ import com.dron.sender.controllers.root.models.UISequence;
 
 public abstract class ModelRootController extends Parent {
 
-	protected static final int DEFAULT_SELECTED_HTTP_METHOD = 0;
-
 	protected static final int DEFAULT_SELECTED_UI_PLUGIN = 0;
 
 	protected static final double DEFAULT_ACCORDION_WIDTH = 300.0;

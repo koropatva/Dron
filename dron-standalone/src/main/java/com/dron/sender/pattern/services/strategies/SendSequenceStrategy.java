@@ -1,5 +1,7 @@
 package com.dron.sender.pattern.services.strategies;
 
+import org.springframework.stereotype.Component;
+
 import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
@@ -13,6 +15,7 @@ import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Plugin;
 import com.dron.sender.sequence.models.Sequence;
 
+@Component
 public class SendSequenceStrategy extends ModelRootController implements
 		IControllerStrategy {
 

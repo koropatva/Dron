@@ -1,7 +1,5 @@
 package com.dron.sender.pattern.services.strategies;
 
-import javafx.beans.value.ObservableValue;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -34,26 +32,28 @@ public class InitializeStrategy extends ModelRootController implements
 		RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
-		tfNewPluginName.textProperty().bindBidirectional(uiSequence.getName());
 		uiSequence.getUIParams().add(new UIParam());
 		uiSequence.getUiPlugins().add(new UIPlugin());
+		rootUiPlugin.setMethod(HttpMethod.GET.name());
+
+		tfNewPluginName.textProperty().bindBidirectional(uiSequence.getName());
 
 		tfUrl.textProperty().bindBidirectional(rootUiPlugin.getUrl());
 
 		txaPostBody.textProperty()
 				.bindBidirectional(rootUiPlugin.getPostBody());
 
-		cbMethods
-				.getSelectionModel()
-				.selectedItemProperty()
-				.addListener(
-						(ObservableValue<? extends String> observable,
-								String oldValue, String newValue) -> {
-							if (newValue != null) {
-								rootUiPlugin.setMethod(newValue);
-							}
-						});
 		cbMethods.getSelectionModel().select(rootUiPlugin.getMethod().get());
+		cbMethods.getItems().addAll(HttpMethod.GET.name(),
+				HttpMethod.POST.name(), HttpMethod.PUT.name(),
+				HttpMethod.DELETE.name());
+		cbMethods.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> {
+					cbMethods.getSelectionModel().select(newValue);
+					RootConfig.bindPostBody(txaPostBody, newValue);
+
+					updateControls();
+				});
 
 		context.execute(controller, ControllerActionStrategy.NEW_UI_SEQUENCE);
 
@@ -65,18 +65,6 @@ public class InitializeStrategy extends ModelRootController implements
 
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
 		txaPostBody.setEditable(true);
-
-		cbMethods.getItems().addAll(HttpMethod.GET.name(),
-				HttpMethod.POST.name(), HttpMethod.PUT.name(),
-				HttpMethod.DELETE.name());
-		cbMethods.getSelectionModel().selectedItemProperty()
-				.addListener((observableValue, oldChoice, newChoise) -> {
-					cbMethods.getSelectionModel().select(newChoise);
-					RootConfig.bindPostBody(txaPostBody, newChoise);
-
-					updateControls();
-				});
-		cbMethods.getSelectionModel().select(DEFAULT_SELECTED_HTTP_METHOD);
 
 		tbtnHeaders.setOnAction(event -> {
 			tblHeaders.setVisible(!tblHeaders.isVisible());
@@ -94,6 +82,7 @@ public class InitializeStrategy extends ModelRootController implements
 			updateControls();
 		});
 
+		RootConfig.bindPostBody(txaPostBody, rootUiPlugin.getMethod().get());
 		updateControls();
 	}
 

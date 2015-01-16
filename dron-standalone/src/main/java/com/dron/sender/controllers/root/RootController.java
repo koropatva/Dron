@@ -174,6 +174,7 @@ public class RootController extends BaseController implements Initializable {
 		rootUiPlugin.getUrl().set("");
 
 		fillAccordion();
+		
 	}
 
 	@FXML

@@ -1,11 +1,17 @@
 package com.dron.sender.controllers.root.models;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
 
 public class UISequence {
 
-	public UISequence() {
+	private final StringProperty name = new SimpleStringProperty();
+
+	public UISequence(TextField tfName) {
+		tfName.textProperty().bindBidirectional(name);
 		uiParams.add(new UIParam());
 		uiPlugins.add(new UIPlugin());
 	}
@@ -22,6 +28,10 @@ public class UISequence {
 
 	public ObservableList<UIPlugin> getUiPlugins() {
 		return uiPlugins;
+	}
+
+	public StringProperty getName() {
+		return name;
 	}
 
 }

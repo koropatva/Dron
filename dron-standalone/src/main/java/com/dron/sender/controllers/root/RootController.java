@@ -52,6 +52,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class RootController extends BaseController implements Initializable {
 
+	private static final double DEFAULT_ACCORDION_WIDTH = 300.0;
+
+	private static final int DEFAULT_SELECTED_HTTP_METHOD = 0;
+
+	private static final int DEFAULT_SELECTED_UI_PLUGIN = 0;
+
 	@Autowired
 	private IStageService iStageService;
 
@@ -102,10 +108,10 @@ public class RootController extends BaseController implements Initializable {
 
 	@Override
 	public void initialize(final URL url, final ResourceBundle resource) {
-
-		uiSequence = new UISequence();
+		uiSequence = new UISequence(tfSequenceName);
 		rootUiPlugin = new RootUIPlugin(tfUrl, txaPostBody, cbMethods);
-		fillAccordion();
+
+		createNewSequence();
 
 		tblHeaders = new HeaderTableView().initialize(
 				rootUiPlugin.getHeadersList(), tblHeaders);
@@ -126,7 +132,7 @@ public class RootController extends BaseController implements Initializable {
 
 					updateControls();
 				});
-		cbMethods.getSelectionModel().select(0);
+		cbMethods.getSelectionModel().select(DEFAULT_SELECTED_HTTP_METHOD);
 
 		tbtnHeaders.setOnAction(event -> {
 			tblHeaders.setVisible(!tblHeaders.isVisible());
@@ -145,7 +151,6 @@ public class RootController extends BaseController implements Initializable {
 		});
 
 		updateControls();
-
 	}
 
 	private void updateControls() {
@@ -153,6 +158,22 @@ public class RootController extends BaseController implements Initializable {
 				.getHbHeadersParamsHeight());
 		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
 		txaResponce.setPrefHeight(RootConfig.getResponceHeight());
+	}
+
+	@FXML
+	protected void createNewSequence() {
+		uiSequence.getUIParams().clear();
+		uiSequence.getUiPlugins().clear();
+		uiSequence.getName().set("");
+
+		rootUiPlugin.getFutureParams().clear();
+		rootUiPlugin.getHeadersList().clear();
+		rootUiPlugin.getMethod().set(HttpMethod.GET.name());
+		rootUiPlugin.getName().set("");
+		rootUiPlugin.getPostBody().set("");
+		rootUiPlugin.getUrl().set("");
+
+		fillAccordion();
 	}
 
 	@FXML
@@ -179,7 +200,8 @@ public class RootController extends BaseController implements Initializable {
 		TransformerFactory.transformEntity(sequence, uiSequence,
 				TransformKey.SEQUENCE);
 
-		TransformerFactory.transformEntity(uiSequence.getUiPlugins().get(0),
+		TransformerFactory.transformEntity(
+				uiSequence.getUiPlugins().get(DEFAULT_SELECTED_UI_PLUGIN),
 				rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
 
 		fillAccordion();
@@ -197,7 +219,8 @@ public class RootController extends BaseController implements Initializable {
 
 		accPlugins.getPanes().clear();
 		accPlugins.getPanes().addAll(titledPanes);
-		accPlugins.setExpandedPane(accPlugins.getPanes().get(0));
+		accPlugins.setExpandedPane(accPlugins.getPanes().get(
+				DEFAULT_SELECTED_UI_PLUGIN));
 		accPlugins.expandedPaneProperty().addListener(
 				(ObservableValue<? extends TitledPane> observable,
 						TitledPane oldValue, TitledPane newValue) -> {
@@ -228,25 +251,31 @@ public class RootController extends BaseController implements Initializable {
 		AnchorPane anchorPane = new AnchorPane();
 
 		TableView<UIFutureParam> tblFutureParams = new TableView<>();
-		tblFutureParams.setPrefWidth(300.0);
+		tblFutureParams.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
 		tblFutureParams = new FutureParamTableView().initialize(
 				uiPlugin.getFutureParams(), tblFutureParams);
 
 		TextField tfPluginName = new TextField();
 		tfPluginName.setPrefHeight(16.0);
-		tfPluginName.setPrefWidth(300.0);
+		tfPluginName.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
 		tfPluginName.textProperty().bindBidirectional(uiPlugin.getName());
 
 		Button btnRemove = new Button("Remove");
 		btnRemove.setOnAction(listener -> {
+			int expantedIndex = getExpantedUIPluginIndex();
 			uiSequence.getUiPlugins().remove(
-					uiSequence.getUiPlugins().get(getExpantedUIPluginIndex()));
+					uiSequence.getUiPlugins().get(expantedIndex));
+
 			fillAccordion();
+			if (expantedIndex > 0) {
+				accPlugins.setExpandedPane(accPlugins.getPanes().get(
+						expantedIndex - 1));
+			}
 		});
 
 		anchorPane.getChildren().addAll(
 				new VBox(tfPluginName, tblFutureParams, btnRemove));
-		anchorPane.setPrefWidth(300.0);
+		anchorPane.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
 
 		TitledPane pluginTitle = new TitledPane("", anchorPane);
 		pluginTitle.textProperty().bindBidirectional(uiPlugin.getName());

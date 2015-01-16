@@ -18,7 +18,6 @@ import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.FutureParamTableView;
-import com.dron.sender.controllers.root.models.RootUIPlugin;
 import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
@@ -31,7 +30,7 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 		implements IControllerStrategy {
 
 	@Autowired
-	private ControllerStrategyContext contex;
+	private ControllerStrategyContext context;
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
@@ -57,7 +56,7 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 		accPlugins.getPanes().addAll(titledPanes);
 		accPlugins.setExpandedPane(accPlugins.getPanes().get(
 				RootController.DEFAULT_SELECTED_UI_PLUGIN));
-		final RootUIPlugin uiPlugin = rootUiPlugin;
+		final UIPlugin uiPlugin = rootUiPlugin;
 		accPlugins.expandedPaneProperty().addListener(
 				(ObservableValue<? extends TitledPane> observable,
 						TitledPane oldValue, TitledPane newValue) -> {
@@ -105,7 +104,7 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 			uiSequence.getUiPlugins().remove(
 					uiSequence.getUiPlugins().get(expantedIndex));
 
-			contex.execute(controller,
+			context.execute(controller,
 					ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
 
 			if (expantedIndex > 0) {

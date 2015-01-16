@@ -15,7 +15,7 @@ public class NewUIPluginStrategy extends ModelRootController implements
 		IControllerStrategy {
 
 	@Autowired
-	private ControllerStrategyContext contex;
+	private ControllerStrategyContext context;
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
@@ -29,11 +29,11 @@ public class NewUIPluginStrategy extends ModelRootController implements
 
 		UIPlugin uiPlugin = new UIPlugin();
 		uiPlugin.setName(tfNewPluginName.getText());
-		getUiSequence().getUiPlugins().add(uiPlugin);
+		uiSequence.getUiPlugins().add(uiPlugin);
 
 		tfNewPluginName.setText("");
 
-		contex.execute(controller,
+		context.execute(controller,
 				ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
 
 		accPlugins.setExpandedPane(accPlugins.getPanes().get(

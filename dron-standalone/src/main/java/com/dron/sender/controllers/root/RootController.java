@@ -41,6 +41,7 @@ public class RootController extends ModelRootController implements
 		loader.setController(this);
 	}
 
+	@Override
 	public FXMLLoader getLoader() {
 		return loader;
 	}
@@ -53,7 +54,7 @@ public class RootController extends ModelRootController implements
 	@Override
 	public void initialize(final URL url, final ResourceBundle resource) {
 		uiSequence = new UISequence();
-		rootUiPlugin = new RootUIPlugin();
+		rootUiPlugin = new RootUIPlugin(cbMethods);
 		strategy.execute(this, ControllerActionStrategy.INITIALIZE);
 	}
 

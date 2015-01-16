@@ -24,7 +24,7 @@ public class RootUIPluginTransformer implements
 		uiPlugin.setUrl(rootUIPlugin.getUrl().get());
 		uiPlugin.setPostBody(rootUIPlugin.getPostBody().get());
 		uiPlugin.setMethod(rootUIPlugin.getMethod().get());
-		
+
 		uiPlugin.getHeadersList().clear();
 		uiPlugin.getHeadersList().addAll(rootUIPlugin.getHeadersList());
 

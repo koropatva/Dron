@@ -38,6 +38,8 @@ public class NewUISequenceStrategy extends ModelRootController implements
 		rootUiPlugin.getFutureParams().add(new UIFutureParam());
 		rootUiPlugin.getHeadersList().add(new UIHttpHeaders());
 
+		tfSequenceName.setText("");
+
 		context.execute(iBaseController,
 				ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
 	}

@@ -45,6 +45,7 @@ public class RootConfig {
 	public static void bindPostBody(TextArea txaPostBody, String method) {
 		switch (method) {
 		case "POST":
+		case "PUT":
 			txaPostBody.setVisible(true);
 			postBodyHeight.set(TXA_POST_BODY_HEIGHT);
 			break;

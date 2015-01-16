@@ -49,7 +49,7 @@ public class SceneService implements ISceneService {
 				// Add new scene to the list
 				scenes.put(controllerEnum, scene);
 			} catch (IOException e) {
-				throw new RuntimeException(e.getMessage());
+				throw new RuntimeException(e.getMessage(), e);
 			}
 		}
 		return scene;

@@ -29,6 +29,15 @@ public class UIPlugin {
 	protected final ObservableList<UIFutureParam> futureParams = FXCollections
 			.observableArrayList();
 
+	public void clear() {
+		url.set("");
+		postBody.set("");
+		method.set(HttpMethod.GET.name());
+		name.set("");
+		headersList.clear();
+		futureParams.clear();
+	}
+	
 	public ObservableList<UIHttpHeaders> getHeadersList() {
 		return headersList;
 	}

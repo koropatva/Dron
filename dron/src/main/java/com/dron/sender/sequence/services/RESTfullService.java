@@ -7,27 +7,28 @@ import com.dron.sender.sequence.models.Plugin;
 
 public class RESTfullService {
 
-    private static RESTfullService resTfullService = new RESTfullService();
+	private static RESTfullService resTfullService = new RESTfullService();
 
-    public static RESTfullService getInstance() {
-        return resTfullService;
-    }
+	public static RESTfullService getInstance() {
+		return resTfullService;
+	}
 
-    private RestTemplate restTemplate = new RestTemplate();
+	private RestTemplate restTemplate = new RestTemplate();
 
-    public String run(Plugin plugin) throws EmptyDataException {
-        return run(plugin, String.class);
-    }
+	public String run(Plugin plugin) throws EmptyDataException {
+		return run(plugin, String.class);
+	}
 
-    public <T> T run(Plugin plugin, Class<T> type) throws EmptyDataException {
-        switch (plugin.getHttpMethod()) {
-            case POST:
-                return restTemplate.postForObject(plugin.fillUrl(), plugin.fillEntity(), type);
-            case GET:
-                return restTemplate.getForObject(plugin.fillUrl(), type);
-            default:
-                throw new EmptyDataException("");
-        }
-    }
+	public <T> T run(Plugin plugin, Class<T> type) throws EmptyDataException {
+		switch (plugin.getHttpMethod()) {
+		case POST:
+			return restTemplate.postForObject(plugin.fillUrl(),
+					plugin.fillEntity(), type);
+		case GET:
+			return restTemplate.getForObject(plugin.fillUrl(), type);
+		default:
+			throw new EmptyDataException("");
+		}
+	}
 
 }

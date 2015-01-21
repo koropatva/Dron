@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exceptions.EmptyDataException;
+import com.dron.sender.exim.ExImService;
 import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Sequence;
 import com.dron.sender.sequence.services.SequenceService;
@@ -29,20 +31,16 @@ public class Application {
     private static final List<Param> params = new ArrayList<Param>();
 
     /**
-     * @param args
-     * @throws IOException
-     * @throws JsonProcessingException
-     * @throws EmptyDataException
-     * @throws PayPalRESTException
-     */
+	 * @param args
+	 * @throws IOException
+	 * @throws JsonProcessingException
+	 * @throws DronSenderException
+	 * @throws PayPalRESTException
+	 */
     public static void main(String[] args) throws JsonProcessingException, IOException,
-            EmptyDataException {
+            DronSenderException {
 
         Sequence sequence;
-        // sequence =
-        // Sequences
-        // .createConfirmFraudSequence(LOCALHOST_TEST3, LOCAL_ORDER_PORT, "220584167");
-        ObjectMapper mapper = new ObjectMapper();
 
         // Create new configuration file for new sequence
         // mapper.writerWithDefaultPrettyPrinter()
@@ -51,11 +49,11 @@ public class Application {
         // "/Users/admin/Documents/spring/gs-rest-service/initial/src/main/resources/json/ConfirmFraud.json"),
         // sequence);
 
-        sequence =
-                mapper.readValue(
-                        new File(
-                                "/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json"),
-                        Sequence.class);
+        sequence =ExImService.getInstance().imports("/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json"); 
+		// mapper.readValue(
+		// new File(
+		// ),
+		// Sequence.class);
 //                            sequence.updateParam(new Param("{{userEmail}}", "andrij" + new Date().getTime()
 //                                    + "@email.com"));
 //        sequence.updateParam(new Param(ORDER_ID, "220586551"));

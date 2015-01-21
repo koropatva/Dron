@@ -20,13 +20,12 @@
 								<MenuItem mnemonicParsing="false" text="New"
 									onAction="#createNewSequence" />
 								<SeparatorMenuItem mnemonicParsing="false" />
-								<MenuItem mnemonicParsing="false" text="Open" />
-								<SeparatorMenuItem mnemonicParsing="false" />
 								<MenuItem mnemonicParsing="false" text="Save" />
-								<MenuItem mnemonicParsing="false" text="Save as..." />
 								<SeparatorMenuItem mnemonicParsing="false" />
-								<MenuItem mnemonicParsing="false" text="Import" />
-								<MenuItem mnemonicParsing="false" text="Export" />
+								<MenuItem mnemonicParsing="false" text="Import"
+									onAction="#importSequence" />
+								<MenuItem mnemonicParsing="false" text="Export"
+									onAction="#exportSequence" />
 							</items>
 						</Menu>
 					</menus>

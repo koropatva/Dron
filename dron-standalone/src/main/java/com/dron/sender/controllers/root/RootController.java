@@ -69,18 +69,22 @@ public class RootController extends ModelRootController implements
 	}
 
 	@FXML
-	protected void send(final ActionEvent actionEvent) {
-		strategy.execute(this, ControllerActionStrategy.SEND_SEQUENCE);
-	}
-
-	@FXML
 	protected void addNewPlugin(final ActionEvent event) {
 		strategy.execute(this, ControllerActionStrategy.NEW_UI_PLUGIN);
 	}
 
 	@FXML
-	private void swatSequenceScene(final ActionEvent event) {
-		iStageService.showController(ControllerEnum.SEQUENCE);
+	protected void exportSequence() {
+		strategy.execute(this, ControllerActionStrategy.EXPORT_SEQUENCE);
+	}
+	
+	@FXML
+	protected void importSequence() {
+		strategy.execute(this, ControllerActionStrategy.IMPORT_SEQUENCE);
 	}
 
+	@FXML
+	protected void send(final ActionEvent actionEvent) {
+		strategy.execute(this, ControllerActionStrategy.SEND_SEQUENCE);
+	}
 }

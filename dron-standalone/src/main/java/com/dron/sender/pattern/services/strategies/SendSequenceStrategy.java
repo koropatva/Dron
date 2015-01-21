@@ -38,7 +38,7 @@ public class SendSequenceStrategy extends ModelRootController implements
 
 	private Sequence fillRootSequence() {
 		Sequence sequence = new Sequence();
-		TransformerFactory.reverseTransformEntity(sequence, getUiSequence(),
+		TransformerFactory.reverseTransformEntity(sequence, uiSequence,
 				TransformKey.SEQUENCE);
 		return sequence;
 	}

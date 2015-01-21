@@ -14,6 +14,7 @@ import com.dron.sender.controllers.root.models.RootUIPlugin;
 import com.dron.sender.controllers.root.models.UIHttpHeaders;
 import com.dron.sender.controllers.root.models.UIParam;
 import com.dron.sender.controllers.root.models.UISequence;
+import com.dron.sender.sequence.models.Sequence;
 
 public abstract class ModelRootController extends Parent {
 
@@ -59,6 +60,10 @@ public abstract class ModelRootController extends Parent {
 
 	protected UISequence uiSequence;
 
+	// Sequence that uses for share sequence between IMPORT_SEQUENCE and
+	// PREPARE_SEQUENCE strategies
+	private Sequence tmpImportSequence;
+
 	protected RootUIPlugin rootUiPlugin;
 
 	public void setUp(ModelRootController modelRootController) {
@@ -77,6 +82,7 @@ public abstract class ModelRootController extends Parent {
 		this.tblParams = modelRootController.getTblParams();
 		this.uiSequence = modelRootController.getUiSequence();
 		this.rootUiPlugin = modelRootController.getRootUiPlugin();
+		this.tmpImportSequence = modelRootController.getTmpImportSequence();
 	}
 
 	public TextField getTfUrl() {
@@ -133,6 +139,14 @@ public abstract class ModelRootController extends Parent {
 
 	public RootUIPlugin getRootUiPlugin() {
 		return rootUiPlugin;
+	}
+
+	public Sequence getTmpImportSequence() {
+		return tmpImportSequence;
+	}
+
+	public void setTmpImportSequence(Sequence sequence) {
+		this.tmpImportSequence = sequence;
 	}
 
 }

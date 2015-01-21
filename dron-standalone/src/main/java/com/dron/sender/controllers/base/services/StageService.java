@@ -30,4 +30,8 @@ public class StageService implements IStageService {
 		primaryStage.show();
 	}
 
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
 }

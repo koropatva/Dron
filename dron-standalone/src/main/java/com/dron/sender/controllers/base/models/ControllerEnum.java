@@ -1,8 +1,7 @@
 package com.dron.sender.controllers.base.models;
 
 public enum ControllerEnum {
-	ROOT("RootView", "rootController"), SEQUENCE("SequenceView",
-			"sequenceController");
+	ROOT("RootView", "rootController");
 
 	private String controllerName;
 	private String viewName;

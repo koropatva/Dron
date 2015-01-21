@@ -7,9 +7,19 @@ import com.dron.sender.sequence.models.Plugin;
 
 public class RESTfullService {
 
-	private static RESTfullService resTfullService = new RESTfullService();
+	private static RESTfullService resTfullService;
+
+	private RESTfullService() {
+	}
 
 	public static RESTfullService getInstance() {
+		if (resTfullService == null) {
+			synchronized (RESTfullService.class) {
+				if (resTfullService == null) {
+					resTfullService = new RESTfullService();
+				}
+			}
+		}
 		return resTfullService;
 	}
 

@@ -1,15 +1,11 @@
 package com.dron.sender.exceptions;
 
-public class EmptyDataException extends Exception {
+public class EmptyDataException extends DronSenderException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public EmptyDataException(String e) {
-        super(e);
-    }
-
-    public EmptyDataException(String e, Throwable t) {
-        super(e, t);
-    }
+	public EmptyDataException(String e) {
+		super(e);
+	}
 
 }

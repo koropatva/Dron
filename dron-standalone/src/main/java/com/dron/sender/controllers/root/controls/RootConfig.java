@@ -67,5 +67,4 @@ public class RootConfig {
 	public static double getResponceHeight() {
 		return responceBind.get();
 	}
-
 }

@@ -64,11 +64,6 @@ public class RootController extends ModelRootController implements
 	}
 
 	@FXML
-	protected void prepareSequence() {
-		strategy.execute(this, ControllerActionStrategy.PREPARE_SEQUENCE);
-	}
-
-	@FXML
 	protected void addNewPlugin(final ActionEvent event) {
 		strategy.execute(this, ControllerActionStrategy.NEW_UI_PLUGIN);
 	}

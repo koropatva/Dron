@@ -10,8 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DefaultStringConverter;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.dron.sender.controllers.base.interfaces.IModelTableView;
 
 public abstract class BasePropertyTableView<T extends IModelTableView> {

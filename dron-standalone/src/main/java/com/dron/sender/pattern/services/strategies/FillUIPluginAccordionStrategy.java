@@ -57,28 +57,37 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 		accPlugins.setExpandedPane(accPlugins.getPanes().get(
 				RootController.DEFAULT_SELECTED_UI_PLUGIN));
 
-		accPlugins.expandedPaneProperty().addListener(
-				(ObservableValue<? extends TitledPane> observable,
-						TitledPane oldValue, TitledPane newValue) -> {
-					if (oldValue != null) {
-						int index = accPlugins.getChildrenUnmodifiable()
-								.indexOf(oldValue);
-						if (uiSequence.getUiPlugins().size() > index) {
-							TransformerFactory.reverseTransformEntity(
-									uiSequence.getUiPlugins().get(index),
-									rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
-						}
-					}
-					if (newValue != null) {
-						int index = accPlugins.getChildrenUnmodifiable()
-								.indexOf(newValue);
-						if (uiSequence.getUiPlugins().size() > index) {
-							TransformerFactory.transformEntity(uiSequence
-									.getUiPlugins().get(index), rootUiPlugin,
-									TransformKey.ROOT_UI_PLUGIN);
-						}
-					}
-				});
+		accPlugins.expandedPaneProperty()
+				.addListener(
+						(ObservableValue<? extends TitledPane> observable,
+								TitledPane oldValue, TitledPane newValue) -> {
+							if (oldValue != null) {
+								int index = accPlugins
+										.getChildrenUnmodifiable().indexOf(
+												oldValue);
+								if (uiSequence.getUiPlugins().size() > index) {
+									TransformerFactory.reverseTransformEntity(
+											uiSequence.getUiPlugins()
+													.get(index), rootUiPlugin,
+											TransformKey.ROOT_UI_PLUGIN);
+								}
+							}
+							if (newValue != null) {
+								int index = accPlugins
+										.getChildrenUnmodifiable().indexOf(
+												newValue);
+								// if (uiSequence.getUiPlugins().size() > index)
+								// {
+
+								TransformerFactory.transformEntity(uiSequence
+										.getUiPlugins().get(index),
+										rootUiPlugin,
+										TransformKey.ROOT_UI_PLUGIN);
+								uiSequence.selectedUIPLugin(index, context,
+										controller);
+								// }
+							}
+						});
 
 	}
 
@@ -106,19 +115,17 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 		tfPluginName.textProperty().bindBidirectional(uiPlugin.getName());
 
 		Button btnRemove = new Button("Remove");
-		btnRemove.setOnAction(listener -> {
-			int expantedIndex = getExpantedUIPluginIndex();
-			uiSequence.getUiPlugins().remove(
-					uiSequence.getUiPlugins().get(expantedIndex));
+		btnRemove
+				.setOnAction(listener -> {
+					int expantedIndex = getExpantedUIPluginIndex();
+					uiSequence.getUiPlugins().remove(
+							uiSequence.getUiPlugins().get(expantedIndex));
 
-			context.execute(controller,
-					ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
-
-			if (expantedIndex > 0) {
-				accPlugins.setExpandedPane(accPlugins.getPanes().get(
-						expantedIndex - 1));
-			}
-		});
+					context.execute(controller,
+							ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
+					uiSequence.selectedUIPLugin(expantedIndex - 1, context,
+							controller);
+				});
 
 		AnchorPane anchorPane = new AnchorPane();
 		anchorPane.getChildren().addAll(

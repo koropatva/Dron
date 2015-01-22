@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
-import com.dron.sender.controllers.root.controls.HeaderTableView;
 import com.dron.sender.controllers.root.controls.ParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
@@ -55,11 +54,6 @@ public class InitializeStrategy extends ModelRootController implements
 					updateControls();
 				});
 
-		context.execute(controller, ControllerActionStrategy.NEW_UI_SEQUENCE);
-
-		tblHeaders = new HeaderTableView().initialize(
-				rootUiPlugin.getHeadersList(), tblHeaders);
-
 		tblParams = new ParamTableView().initialize(uiSequence.getUIParams(),
 				tblParams);
 
@@ -84,6 +78,10 @@ public class InitializeStrategy extends ModelRootController implements
 
 		RootConfig.bindPostBody(txaPostBody, rootUiPlugin.getMethod().get());
 		updateControls();
+
+		context.execute(controller, ControllerActionStrategy.NEW_UI_SEQUENCE);
+
+		context.execute(controller, ControllerActionStrategy.FILL_UI_HEADERS);
 	}
 
 	private void updateControls() {

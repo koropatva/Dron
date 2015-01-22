@@ -56,29 +56,27 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 		accPlugins.getPanes().addAll(titledPanes);
 		accPlugins.setExpandedPane(accPlugins.getPanes().get(
 				RootController.DEFAULT_SELECTED_UI_PLUGIN));
-		final UIPlugin uiPlugin = rootUiPlugin;
+
 		accPlugins.expandedPaneProperty().addListener(
 				(ObservableValue<? extends TitledPane> observable,
 						TitledPane oldValue, TitledPane newValue) -> {
-					if (oldValue != null
-							&& uiSequence.getUiPlugins().size() > accPlugins
-									.getChildrenUnmodifiable()
-									.indexOf(oldValue)) {
-						TransformerFactory.reverseTransformEntity(
-								uiSequence.getUiPlugins().get(
-										accPlugins.getChildrenUnmodifiable()
-												.indexOf(oldValue)), uiPlugin,
-								TransformKey.ROOT_UI_PLUGIN);
+					if (oldValue != null) {
+						int index = accPlugins.getChildrenUnmodifiable()
+								.indexOf(oldValue);
+						if (uiSequence.getUiPlugins().size() > index) {
+							TransformerFactory.reverseTransformEntity(
+									uiSequence.getUiPlugins().get(index),
+									rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
+						}
 					}
-					if (newValue != null
-							&& uiSequence.getUiPlugins().size() > accPlugins
-									.getChildrenUnmodifiable()
-									.indexOf(newValue)) {
-						TransformerFactory.transformEntity(
-								uiSequence.getUiPlugins().get(
-										accPlugins.getChildrenUnmodifiable()
-												.indexOf(newValue)), uiPlugin,
-								TransformKey.ROOT_UI_PLUGIN);
+					if (newValue != null) {
+						int index = accPlugins.getChildrenUnmodifiable()
+								.indexOf(newValue);
+						if (uiSequence.getUiPlugins().size() > index) {
+							TransformerFactory.transformEntity(uiSequence
+									.getUiPlugins().get(index), rootUiPlugin,
+									TransformKey.ROOT_UI_PLUGIN);
+						}
 					}
 				});
 
@@ -86,8 +84,17 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 
 	private TitledPane createPluginTitlePane(UIPlugin uiPlugin,
 			RootController controller) {
-		AnchorPane anchorPane = new AnchorPane();
 
+		AnchorPane anchorPane = createAnchorPane(uiPlugin, controller);
+
+		TitledPane pluginTitle = new TitledPane(uiPlugin.getName().get(),
+				anchorPane);
+		pluginTitle.textProperty().bindBidirectional(uiPlugin.getName());
+		return pluginTitle;
+	}
+
+	private AnchorPane createAnchorPane(UIPlugin uiPlugin,
+			RootController controller) {
 		TableView<UIFutureParam> tblFutureParams = new TableView<>();
 		tblFutureParams.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
 		tblFutureParams = new FutureParamTableView().initialize(
@@ -113,13 +120,11 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 			}
 		});
 
+		AnchorPane anchorPane = new AnchorPane();
 		anchorPane.getChildren().addAll(
 				new VBox(tfPluginName, tblFutureParams, btnRemove));
 		anchorPane.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
-
-		TitledPane pluginTitle = new TitledPane("", anchorPane);
-		pluginTitle.textProperty().bindBidirectional(uiPlugin.getName());
-		return pluginTitle;
+		return anchorPane;
 	}
 
 	private int getExpantedUIPluginIndex() {

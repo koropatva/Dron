@@ -31,12 +31,10 @@ public class NewUISequenceStrategy extends ModelRootController implements
 		setUp(controller);
 		// Clear all data
 		uiSequence.clear();
-		uiSequence.getUIParams().add(new UIParam());
-		uiSequence.getUiPlugins().add(new UIPlugin());
+		uiSequence.prepareEmptySequence();
 
 		rootUiPlugin.clear();
-		rootUiPlugin.getFutureParams().add(new UIFutureParam());
-		rootUiPlugin.getHeadersList().add(new UIHttpHeaders());
+		rootUiPlugin.prepareEmptyPlugin();
 
 		tfSequenceName.setText("");
 

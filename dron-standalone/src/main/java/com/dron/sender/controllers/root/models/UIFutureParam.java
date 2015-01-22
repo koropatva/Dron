@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 import com.dron.sender.controllers.base.interfaces.IModelTableView;
 import com.dron.sender.sequence.models.FutureParam;
 
-public class UIFutureParam implements IModelTableView {
+public class UIFutureParam implements IModelTableView, Cloneable {
 
 	public UIFutureParam() {
 		this("", "");
@@ -84,6 +84,11 @@ public class UIFutureParam implements IModelTableView {
 
 	public void setDependence(String dependence) {
 		this.dependence.set(dependence);
+	}
+
+	@Override
+	public UIFutureParam clone() {
+		return new UIFutureParam(this.getKey(), this.getDependence());
 	}
 
 }

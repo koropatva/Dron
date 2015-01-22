@@ -1,43 +1,46 @@
 package com.dron.sender.controllers.root.models;
 
-import org.springframework.http.HttpMethod;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class UIPlugin {
+import org.springframework.http.HttpMethod;
+
+public class UIPlugin implements Cloneable {
+
+	private final StringProperty url = new SimpleStringProperty();
+
+	private final StringProperty postBody = new SimpleStringProperty();
+
+	private final StringProperty method = new SimpleStringProperty();
+
+	private final StringProperty name = new SimpleStringProperty();
+
+	private final ObservableList<UIHttpHeaders> headersList = FXCollections
+			.observableArrayList();
+
+	private final ObservableList<UIFutureParam> futureParams = FXCollections
+			.observableArrayList();
 
 	public UIPlugin() {
+		prepareEmptyPlugin();
+	}
+
+	public void clear() {
+		url.set("");
+		postBody.set("");
+		name.set("");
+		headersList.clear();
+		futureParams.clear();
+	}
+
+	public void prepareEmptyPlugin() {
 		method.set(HttpMethod.GET.name());
 		headersList.add(new UIHttpHeaders());
 		futureParams.add(new UIFutureParam());
 	}
 
-	protected final StringProperty url = new SimpleStringProperty();
-
-	protected final StringProperty postBody = new SimpleStringProperty();
-
-	protected final StringProperty method = new SimpleStringProperty();
-
-	protected final StringProperty name = new SimpleStringProperty();
-
-	protected final ObservableList<UIHttpHeaders> headersList = FXCollections
-			.observableArrayList();
-
-	protected final ObservableList<UIFutureParam> futureParams = FXCollections
-			.observableArrayList();
-
-	public void clear() {
-		url.set("");
-		postBody.set("");
-		method.set(HttpMethod.GET.name());
-		name.set("");
-		headersList.clear();
-		futureParams.clear();
-	}
-	
 	public ObservableList<UIHttpHeaders> getHeadersList() {
 		return headersList;
 	}
@@ -78,4 +81,20 @@ public class UIPlugin {
 		this.name.set(name);
 	}
 
+	@Override
+	public UIPlugin clone() {
+		UIPlugin plugin = new UIPlugin();
+		plugin.setMethod(method.get());
+		plugin.setName(name.get());
+		plugin.setPostBody(postBody.get());
+		plugin.setUrl(url.get());
+		headersList.forEach(header -> {
+			plugin.getHeadersList().add(header.clone());
+		});
+		futureParams.forEach(futureParam -> {
+			plugin.getFutureParams().add(futureParam.clone());
+		});
+
+		return plugin;
+	}
 }

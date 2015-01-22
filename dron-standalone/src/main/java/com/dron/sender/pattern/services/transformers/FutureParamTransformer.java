@@ -28,8 +28,10 @@ public class FutureParamTransformer implements
 			final ObservableList<UIFutureParam> uiFutureParams) {
 		futureParams.clear();
 		uiFutureParams.forEach(uiFutureParam -> {
-			futureParams.add(new FutureParam(uiFutureParam.getKey(),
-					uiFutureParam.getDependence()));
+			if (!uiFutureParam.isEmpty()) {
+				futureParams.add(new FutureParam(uiFutureParam.getKey(),
+						uiFutureParam.getDependence()));
+			}
 		});
 		return null;
 	}

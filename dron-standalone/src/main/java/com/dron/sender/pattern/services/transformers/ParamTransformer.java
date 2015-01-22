@@ -27,7 +27,9 @@ public class ParamTransformer implements
 			final ObservableList<UIParam> uiParams) {
 		params.clear();
 		uiParams.forEach(uiParam -> {
-			params.add(new Param(uiParam.getKey(), uiParam.getValue()));
+			if (!uiParam.isEmpty()) {
+				params.add(new Param(uiParam.getKey(), uiParam.getValue()));
+			}
 		});
 		return params;
 	}

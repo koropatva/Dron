@@ -1,6 +1,7 @@
 package com.dron.sender.pattern.services.transformers;
 
 import com.dron.sender.controllers.root.models.RootUIPlugin;
+import com.dron.sender.controllers.root.models.UIHttpHeaders;
 import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IBaseTransformer;
 
@@ -14,7 +15,11 @@ public class RootUIPluginTransformer implements
 		rootUIPlugin.setMethod(uiPlugin.getMethod().get());
 
 		rootUIPlugin.getHeadersList().clear();
-		rootUIPlugin.getHeadersList().addAll(uiPlugin.getHeadersList());
+		uiPlugin.getHeadersList().forEach(header -> {
+			rootUIPlugin.getHeadersList().add(header.clone());
+		});
+		rootUIPlugin.getHeadersList().add(new UIHttpHeaders());
+
 		return rootUIPlugin;
 	}
 
@@ -26,7 +31,11 @@ public class RootUIPluginTransformer implements
 		uiPlugin.setMethod(rootUIPlugin.getMethod().get());
 
 		uiPlugin.getHeadersList().clear();
-		uiPlugin.getHeadersList().addAll(rootUIPlugin.getHeadersList());
+		rootUIPlugin.getHeadersList().forEach(header -> {
+			if (!header.isEmpty()) {
+				uiPlugin.getHeadersList().add(header.clone());
+			}
+		});
 
 		return uiPlugin;
 	}

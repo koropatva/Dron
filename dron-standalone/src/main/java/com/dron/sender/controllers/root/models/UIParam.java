@@ -13,8 +13,7 @@ public class UIParam implements IModelTableView {
 	}
 
 	public UIParam(Param param) {
-		keyProperty(param.getKey());
-		valueProperty(param.getValue());
+		this(param.getKey(), param.getValue());
 	}
 
 	public UIParam(String key, String value) {

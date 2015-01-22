@@ -5,7 +5,7 @@ import com.dron.sender.controllers.base.interfaces.IModelTableView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class UIHttpHeaders implements IModelTableView {
+public class UIHttpHeaders implements IModelTableView, Cloneable {
 
 	public static final String PROPERTY_VALUE = "Value";
 	public static final String PROPERTY_HEADER = "Header";
@@ -83,4 +83,8 @@ public class UIHttpHeaders implements IModelTableView {
 		this.value.set(value);
 	}
 
+	@Override
+	public UIHttpHeaders clone() {
+		return new UIHttpHeaders(this.header.get(), this.value.get());
+	}
 }

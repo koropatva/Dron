@@ -10,8 +10,6 @@ import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
 import com.dron.sender.controllers.root.controls.ParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
-import com.dron.sender.controllers.root.models.UIParam;
-import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 
@@ -32,9 +30,11 @@ public class InitializeStrategy extends ModelRootController implements
 		RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
-		uiSequence.getUIParams().add(new UIParam());
-		uiSequence.getUiPlugins().add(new UIPlugin());
-		rootUiPlugin.setMethod(HttpMethod.GET.name());
+		uiSequence.clear();
+		uiSequence.prepareEmptySequence();
+
+		rootUiPlugin.clear();
+		rootUiPlugin.prepareEmptyPlugin();
 
 		tfNewPluginName.textProperty().bindBidirectional(uiSequence.getName());
 

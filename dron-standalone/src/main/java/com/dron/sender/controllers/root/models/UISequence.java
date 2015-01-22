@@ -20,7 +20,12 @@ public class UISequence {
 		uiPlugins.clear();
 		name.set("");
 	}
-	
+
+	public void prepareEmptySequence() {
+		uiParams.add(new UIParam());
+		uiPlugins.add(new UIPlugin());
+	}
+
 	public ObservableList<UIParam> getUIParams() {
 		return uiParams;
 	}

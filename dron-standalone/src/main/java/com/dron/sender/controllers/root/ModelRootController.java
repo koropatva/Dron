@@ -26,9 +26,6 @@ public abstract class ModelRootController extends Parent {
 	protected TextField tfUrl;
 
 	@FXML
-	protected TextField tfSequenceName;
-
-	@FXML
 	protected TextField tfNewPluginName;
 
 	@FXML
@@ -69,7 +66,6 @@ public abstract class ModelRootController extends Parent {
 	public void setUp(ModelRootController modelRootController) {
 		this.tfUrl = modelRootController.getTfUrl();
 		this.tfNewPluginName = modelRootController.getTfNewPluginName();
-		this.tfSequenceName = modelRootController.getTfSequenceName();
 		this.txaResponce = modelRootController.getTxaResponce();
 		this.txaPostBody = modelRootController.getTxaPostBody();
 		this.hbHeadersParamsTable = modelRootController
@@ -87,10 +83,6 @@ public abstract class ModelRootController extends Parent {
 
 	public TextField getTfUrl() {
 		return tfUrl;
-	}
-
-	public TextField getTfSequenceName() {
-		return tfSequenceName;
 	}
 
 	public TextField getTfNewPluginName() {

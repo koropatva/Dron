@@ -34,14 +34,6 @@
 					<children>
 						<VBox>
 							<children>
-								<HBox>
-									<children>
-										<TextField fx:id="tfSequenceName" prefHeight="16.0"
-											prefWidth="448.0" promptText="Sequence Name" />
-										<Button fx:id="btnPrepareSequence" mnemonicParsing="false"
-											onAction="#prepareSequence" text="Prepare Sequence" />
-									</children>
-								</HBox>
 								<AnchorPane prefHeight="0.0">
 									<children>
 										<ToolBar AnchorPane.bottomAnchor="5.0"

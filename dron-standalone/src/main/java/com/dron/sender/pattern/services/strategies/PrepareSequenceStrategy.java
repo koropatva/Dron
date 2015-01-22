@@ -36,12 +36,17 @@ public class PrepareSequenceStrategy extends ModelRootController implements
 		TransformerFactory.transformEntity(getTmpImportSequence(), uiSequence,
 				TransformKey.SEQUENCE);
 
-		TransformerFactory.transformEntity(
-				uiSequence.getUiPlugins().get(DEFAULT_SELECTED_UI_PLUGIN),
-				rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
-
 		context.execute(controller,
 				ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
+
+		uiSequence.selectedUIPLugin(0, context, controller);
+
+		TransformerFactory
+				.transformEntity(
+						uiSequence.getUiPlugins().get(
+								uiSequence.getSelectedUIPLugin()),
+						rootUiPlugin, TransformKey.ROOT_UI_PLUGIN);
+
 	}
 
 }

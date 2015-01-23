@@ -32,23 +32,22 @@ public class InitializeStrategy extends ModelRootController implements
 		uiSequence.clear();
 		uiSequence.prepareEmptySequence();
 
-		rootUiPlugin.clear();
-		rootUiPlugin.prepareEmptyPlugin();
-
 		tfNewPluginName.textProperty().bindBidirectional(uiSequence.getName());
 
-		tfUrl.textProperty().bindBidirectional(rootUiPlugin.getUrl());
+		tfUrl.disableProperty().bind(RootConfig.getDisableRootProperty());
+		tfUrl.textProperty().addListener((observer, oldValue, newValue) -> {
+			uiSequence.getSelectedUIPLugin().setUrl(newValue);
+		});
 
-		txaPostBody.textProperty()
-				.bindBidirectional(rootUiPlugin.getPostBody());
-
-		cbMethods.getSelectionModel().select(rootUiPlugin.getMethod().get());
+		cbMethods.disableProperty().bind(RootConfig.getDisableRootProperty());
 		cbMethods.getItems().addAll(HttpMethod.GET.name(),
 				HttpMethod.POST.name(), HttpMethod.PUT.name(),
 				HttpMethod.DELETE.name());
 		cbMethods.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
 					cbMethods.getSelectionModel().select(newValue);
+					uiSequence.getSelectedUIPLugin().setMethod(newValue);
+
 					RootConfig.bindPostBody(txaPostBody, newValue);
 
 					updateControls();
@@ -58,8 +57,13 @@ public class InitializeStrategy extends ModelRootController implements
 				tblParams);
 
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
-		txaPostBody.setEditable(true);
+		txaPostBody.disableProperty().bind(RootConfig.getDisableRootProperty());
+		txaPostBody.textProperty().addListener(
+				(observer, oldValue, newValue) -> {
+					uiSequence.getSelectedUIPLugin().setPostBody(newValue);
+				});
 
+		tbtnHeaders.disableProperty().bind(RootConfig.getDisableRootProperty());
 		tbtnHeaders.setOnAction(event -> {
 			tblHeaders.setVisible(!tblHeaders.isVisible());
 			RootConfig.bindHeaders(tblHeaders.isVisible()
@@ -76,19 +80,10 @@ public class InitializeStrategy extends ModelRootController implements
 			updateControls();
 		});
 
-		RootConfig.bindPostBody(txaPostBody, rootUiPlugin.getMethod().get());
-		updateControls();
+		tblHeaders.disableProperty().bind(RootConfig.getDisableRootProperty());
 
 		context.execute(controller, ControllerActionStrategy.NEW_UI_SEQUENCE);
 
-		context.execute(controller, ControllerActionStrategy.FILL_UI_HEADERS);
+		context.execute(controller, ControllerActionStrategy.FILL_ROOT_CONTROLS);
 	}
-
-	private void updateControls() {
-		hbHeadersParamsTable.setPrefHeight(RootConfig
-				.getHbHeadersParamsHeight());
-		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
-		txaResponce.setPrefHeight(RootConfig.getResponceHeight());
-	}
-
 }

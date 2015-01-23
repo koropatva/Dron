@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.base.interfaces.IStageService;
 import com.dron.sender.controllers.base.models.ControllerEnum;
-import com.dron.sender.controllers.root.models.RootUIPlugin;
 import com.dron.sender.controllers.root.models.UISequence;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
@@ -54,7 +53,6 @@ public class RootController extends ModelRootController implements
 	@Override
 	public void initialize(final URL url, final ResourceBundle resource) {
 		uiSequence = new UISequence();
-		rootUiPlugin = new RootUIPlugin(cbMethods);
 		strategy.execute(this, ControllerActionStrategy.INITIALIZE);
 	}
 

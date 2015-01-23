@@ -29,9 +29,6 @@ public class NewUISequenceStrategy extends ModelRootController implements
 		uiSequence.clear();
 		uiSequence.prepareEmptySequence();
 
-		rootUiPlugin.clear();
-		rootUiPlugin.prepareEmptyPlugin();
-
 		context.execute(controller,
 				ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
 		uiSequence.selectedUIPLugin(0, context, controller);

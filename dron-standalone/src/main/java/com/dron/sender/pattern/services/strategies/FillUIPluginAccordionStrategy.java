@@ -18,12 +18,11 @@ import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.FutureParamTableView;
+import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
-import com.dron.sender.pattern.models.transformers.TransformKey;
-import com.dron.sender.pattern.services.transformers.TransformerFactory;
 
 @Component
 public class FillUIPluginAccordionStrategy extends ModelRootController
@@ -62,30 +61,16 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 						(ObservableValue<? extends TitledPane> observable,
 								TitledPane oldValue, TitledPane newValue) -> {
 							if (oldValue != null) {
-								int index = accPlugins
-										.getChildrenUnmodifiable().indexOf(
-												oldValue);
-								if (uiSequence.getUiPlugins().size() > index) {
-									TransformerFactory.reverseTransformEntity(
-											uiSequence.getUiPlugins()
-													.get(index), rootUiPlugin,
-											TransformKey.ROOT_UI_PLUGIN);
-								}
+								RootConfig.setDisableRootProperty(true);
 							}
 							if (newValue != null) {
 								int index = accPlugins
 										.getChildrenUnmodifiable().indexOf(
 												newValue);
-								// if (uiSequence.getUiPlugins().size() > index)
-								// {
 
-								TransformerFactory.transformEntity(uiSequence
-										.getUiPlugins().get(index),
-										rootUiPlugin,
-										TransformKey.ROOT_UI_PLUGIN);
 								uiSequence.selectedUIPLugin(index, context,
 										controller);
-								// }
+								RootConfig.setDisableRootProperty(false);
 							}
 						});
 

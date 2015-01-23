@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
-import com.dron.sender.controllers.root.models.RootUIPlugin;
+import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.UIHttpHeaders;
 import com.dron.sender.controllers.root.models.UIParam;
 import com.dron.sender.controllers.root.models.UISequence;
@@ -61,8 +61,6 @@ public abstract class ModelRootController extends Parent {
 	// PREPARE_SEQUENCE strategies
 	private Sequence tmpImportSequence;
 
-	protected RootUIPlugin rootUiPlugin;
-
 	public void setUp(ModelRootController modelRootController) {
 		this.tfUrl = modelRootController.getTfUrl();
 		this.tfNewPluginName = modelRootController.getTfNewPluginName();
@@ -77,8 +75,14 @@ public abstract class ModelRootController extends Parent {
 		this.tblHeaders = modelRootController.getTblHeaders();
 		this.tblParams = modelRootController.getTblParams();
 		this.uiSequence = modelRootController.getUiSequence();
-		this.rootUiPlugin = modelRootController.getRootUiPlugin();
 		this.tmpImportSequence = modelRootController.getTmpImportSequence();
+	}
+
+	protected void updateControls() {
+		hbHeadersParamsTable.setPrefHeight(RootConfig
+				.getHbHeadersParamsHeight());
+		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
+		txaResponce.setPrefHeight(RootConfig.getResponceHeight());
 	}
 
 	public TextField getTfUrl() {
@@ -127,10 +131,6 @@ public abstract class ModelRootController extends Parent {
 
 	public UISequence getUiSequence() {
 		return uiSequence;
-	}
-
-	public RootUIPlugin getRootUiPlugin() {
-		return rootUiPlugin;
 	}
 
 	public Sequence getTmpImportSequence() {

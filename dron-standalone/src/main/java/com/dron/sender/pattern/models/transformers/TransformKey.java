@@ -6,6 +6,5 @@ public enum TransformKey {
 	FUTURE_PARAMS,
 	SEQUENCE,
 	PLUGIN,
-	ROOT_UI_PLUGIN,
 	FILL_PLUGIN_FUTURE_PARAMS;
 }

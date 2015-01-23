@@ -6,16 +6,17 @@ import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
+import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 
 @Component
-public class FillUIHeadersStrategy extends ModelRootController implements
+public class FillRootControlsStrategy extends ModelRootController implements
 		IControllerStrategy {
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.FILL_UI_HEADERS;
+		return ControllerActionStrategy.FILL_ROOT_CONTROLS;
 	}
 
 	@Override
@@ -23,9 +24,21 @@ public class FillUIHeadersStrategy extends ModelRootController implements
 		final RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
-		tblHeaders = new HeaderTableView().initialize(uiSequence.getUiPlugins()
-				.get(uiSequence.getSelectedUIPLugin()).getHeadersList(),
-				tblHeaders);
+		tfUrl.setText(uiSequence.getSelectedUIPLugin().getUrl().get());
+
+		cbMethods.getSelectionModel().select(
+				uiSequence.getSelectedUIPLugin().getMethod().get());
+
+		txaPostBody.setText(uiSequence.getSelectedUIPLugin().getPostBody()
+				.get());
+
+		RootConfig.bindPostBody(txaPostBody, uiSequence.getSelectedUIPLugin()
+				.getMethod().get());
+
+		tblHeaders = new HeaderTableView().initialize(uiSequence
+				.getSelectedUIPLugin().getHeadersList(), tblHeaders);
+
+		updateControls();
 	}
 
 }

@@ -46,8 +46,8 @@ public class UISequence {
 		return name;
 	}
 
-	public int getSelectedUIPLugin() {
-		return selectedUIPLugin;
+	public UIPlugin getSelectedUIPLugin() {
+		return uiPlugins.get(this.selectedUIPLugin);
 	}
 
 	public void selectedUIPLugin(int selectedUIPLugin,
@@ -56,9 +56,10 @@ public class UISequence {
 			selectedUIPLugin = 1;
 		}
 		this.selectedUIPLugin = selectedUIPLugin;
-		context.execute(controller, ControllerActionStrategy.FILL_UI_HEADERS);
+		context.execute(controller, ControllerActionStrategy.FILL_ROOT_CONTROLS);
 		controller.getAccPlugins().setExpandedPane(
-				controller.getAccPlugins().getPanes().get(selectedUIPLugin));
+				controller.getAccPlugins().getPanes()
+						.get(this.selectedUIPLugin));
 	}
 
 }

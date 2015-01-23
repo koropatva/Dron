@@ -57,8 +57,6 @@ public class TransformerFactory {
 			return (IBaseTransformer<F, T>) new FutureParamTransformer();
 		case PLUGIN:
 			return (IBaseTransformer<F, T>) new PluginTransformer();
-		case ROOT_UI_PLUGIN:
-			return (IBaseTransformer<F, T>) new RootUIPluginTransformer();
 		case SEQUENCE:
 			return (IBaseTransformer<F, T>) new SequenceTransformer();
 		case FILL_PLUGIN_FUTURE_PARAMS:

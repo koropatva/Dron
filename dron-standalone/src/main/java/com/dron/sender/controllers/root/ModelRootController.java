@@ -3,6 +3,7 @@ package com.dron.sender.controllers.root;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -44,6 +45,9 @@ public abstract class ModelRootController extends Parent {
 	protected ToggleButton tbtnParams;
 
 	@FXML
+	protected Button btnSend;
+
+	@FXML
 	protected ChoiceBox<String> cbMethods;
 
 	@FXML
@@ -75,6 +79,7 @@ public abstract class ModelRootController extends Parent {
 		this.tblHeaders = modelRootController.getTblHeaders();
 		this.tblParams = modelRootController.getTblParams();
 		this.uiSequence = modelRootController.getUiSequence();
+		this.btnSend = modelRootController.getBtnSend();
 		this.tmpImportSequence = modelRootController.getTmpImportSequence();
 	}
 
@@ -131,6 +136,10 @@ public abstract class ModelRootController extends Parent {
 
 	public UISequence getUiSequence() {
 		return uiSequence;
+	}
+
+	public Button getBtnSend() {
+		return btnSend;
 	}
 
 	public Sequence getTmpImportSequence() {

@@ -34,6 +34,8 @@ public class InitializeStrategy extends ModelRootController implements
 
 		tfNewPluginName.textProperty().bindBidirectional(uiSequence.getName());
 
+		btnSend.disableProperty().bind(RootConfig.getDisableRootProperty());
+		
 		tfUrl.disableProperty().bind(RootConfig.getDisableRootProperty());
 		tfUrl.textProperty().addListener((observer, oldValue, newValue) -> {
 			uiSequence.getSelectedUIPLugin().setUrl(newValue);

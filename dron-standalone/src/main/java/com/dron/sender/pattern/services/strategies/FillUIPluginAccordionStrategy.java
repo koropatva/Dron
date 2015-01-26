@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -89,10 +91,15 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 
 	private AnchorPane createAnchorPane(UIPlugin uiPlugin,
 			RootController controller) {
+		final ObservableList<String> keys = FXCollections.observableArrayList();
+		uiSequence.getUIParams().forEach(param -> {
+			keys.add(param.getKey());
+		});
+
 		TableView<UIFutureParam> tblFutureParams = new TableView<>();
 		tblFutureParams.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
-		tblFutureParams = new FutureParamTableView().initialize(
-				uiPlugin.getFutureParams(), tblFutureParams);
+		tblFutureParams = new FutureParamTableView().initializeWithKeyList(
+				uiPlugin.getFutureParams(), keys, tblFutureParams);
 
 		TextField tfPluginName = new TextField();
 		tfPluginName.setPrefHeight(16.0);

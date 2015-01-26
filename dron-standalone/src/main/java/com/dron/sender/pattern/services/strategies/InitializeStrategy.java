@@ -35,7 +35,7 @@ public class InitializeStrategy extends ModelRootController implements
 		tfNewPluginName.textProperty().bindBidirectional(uiSequence.getName());
 
 		btnSend.disableProperty().bind(RootConfig.getDisableRootProperty());
-		
+
 		tfUrl.disableProperty().bind(RootConfig.getDisableRootProperty());
 		tfUrl.textProperty().addListener((observer, oldValue, newValue) -> {
 			uiSequence.getSelectedUIPLugin().setUrl(newValue);
@@ -57,6 +57,11 @@ public class InitializeStrategy extends ModelRootController implements
 
 		tblParams = new ParamTableView().initialize(uiSequence.getUIParams(),
 				tblParams);
+		tblParams.editableProperty().addListener(
+				(observer, oldValue, newValue) -> {
+					context.execute(controller,
+							ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
+				});
 
 		txaPostBody.managedProperty().bind(txaPostBody.visibleProperty());
 		txaPostBody.disableProperty().bind(RootConfig.getDisableRootProperty());
@@ -65,6 +70,7 @@ public class InitializeStrategy extends ModelRootController implements
 					uiSequence.getSelectedUIPLugin().setPostBody(newValue);
 				});
 
+		tbtnHeaders.setSelected(true);
 		tbtnHeaders.disableProperty().bind(RootConfig.getDisableRootProperty());
 		tbtnHeaders.setOnAction(event -> {
 			tblHeaders.setVisible(!tblHeaders.isVisible());
@@ -74,8 +80,10 @@ public class InitializeStrategy extends ModelRootController implements
 			updateControls();
 		});
 
+		tbtnParams.setSelected(true);
 		tbtnParams.setOnAction(event -> {
 			tblParams.setVisible(!tblParams.isVisible());
+
 			RootConfig.bindHeaders(tblHeaders.isVisible()
 					|| tblParams.isVisible());
 

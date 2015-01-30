@@ -4,3 +4,7 @@
 	-fx-skin:
 		"com.dron.sender.controllers.base.controls.AutoFillTextBoxSkin";
 }
+.autofill-tablecell {
+	-fx-skin:
+		"com.dron.sender.controllers.base.controls.AutoFillTextTableCellSkin";
+}

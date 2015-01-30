@@ -48,6 +48,9 @@ public abstract class ModelRootController extends Parent {
 	protected Button btnSend;
 
 	@FXML
+	protected Button btnAddNewPlugin;
+
+	@FXML
 	protected ChoiceBox<String> cbMethods;
 
 	@FXML
@@ -80,6 +83,7 @@ public abstract class ModelRootController extends Parent {
 		this.tblParams = modelRootController.getTblParams();
 		this.uiSequence = modelRootController.getUiSequence();
 		this.btnSend = modelRootController.getBtnSend();
+		this.btnAddNewPlugin = modelRootController.getBtnAddNewPlugin();
 		this.tmpImportSequence = modelRootController.getTmpImportSequence();
 	}
 
@@ -148,6 +152,10 @@ public abstract class ModelRootController extends Parent {
 
 	public void setTmpImportSequence(Sequence sequence) {
 		this.tmpImportSequence = sequence;
+	}
+
+	public Button getBtnAddNewPlugin() {
+		return btnAddNewPlugin;
 	}
 
 }

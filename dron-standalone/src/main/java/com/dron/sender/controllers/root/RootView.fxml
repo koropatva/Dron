@@ -98,7 +98,7 @@
 										<HBox minWidth="300.0">
 											<children>
 												<TextField fx:id="tfNewPluginName" />
-												<Button mnemonicParsing="false" onAction="#addNewPlugin"
+												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false" onAction="#addNewPlugin"
 													text="Add" />
 											</children>
 										</HBox>

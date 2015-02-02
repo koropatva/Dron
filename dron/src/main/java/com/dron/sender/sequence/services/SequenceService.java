@@ -29,7 +29,8 @@ public class SequenceService {
 	}
 
 	public void runSequence() throws EmptyDataException {
-		for (Plugin plugin : sequence.getPlugins()) {
+		for (int i = 0; i < sequence.getPlugins().size(); i++) {
+			Plugin plugin = sequence.getPlugins().get(i);
 			plugin.setSequence(sequence);
 			String response = restFullService.run(plugin);
 			plugin.setResponce(response);

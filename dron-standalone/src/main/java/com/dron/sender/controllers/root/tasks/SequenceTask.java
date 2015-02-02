@@ -35,7 +35,6 @@ public class SequenceTask extends Task<String> {
 		try {
 			SequenceService sequenceService = new SequenceService(sequence);
 			sequenceService.runSequence();
-
 			Platform.runLater(new Runnable() {
 				public void run() {
 					context.execute(controller,

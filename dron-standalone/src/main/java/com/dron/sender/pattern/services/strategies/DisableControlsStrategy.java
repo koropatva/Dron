@@ -20,7 +20,7 @@ public class DisableControlsStrategy extends ModelRootController implements
 
 	@Override
 	public void execute(IBaseController iBaseController) {
-		RootController controller = (RootController) iBaseController;
+		final RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
 		RootConfig.setDisableRootProperty(true);

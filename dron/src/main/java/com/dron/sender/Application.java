@@ -1,19 +1,15 @@
 package com.dron.sender;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.dron.sender.exceptions.DronSenderException;
-import com.dron.sender.exceptions.EmptyDataException;
 import com.dron.sender.exim.ExImService;
 import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Sequence;
 import com.dron.sender.sequence.services.SequenceService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Application {
 

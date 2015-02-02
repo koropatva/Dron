@@ -26,7 +26,7 @@ public class RootController extends ModelRootController implements
 	private IStageService iStageService;
 
 	@Autowired
-	private ControllerStrategyContext strategy;
+	private ControllerStrategyContext context;
 
 	private FXMLLoader loader;
 
@@ -53,31 +53,31 @@ public class RootController extends ModelRootController implements
 	@Override
 	public void initialize(final URL url, final ResourceBundle resource) {
 		uiSequence = new UISequence();
-		strategy.execute(this, ControllerActionStrategy.INITIALIZE);
+		context.execute(this, ControllerActionStrategy.INITIALIZE);
 	}
 
 	@FXML
 	protected void createNewSequence() {
-		strategy.execute(this, ControllerActionStrategy.NEW_UI_SEQUENCE);
+		context.execute(this, ControllerActionStrategy.NEW_UI_SEQUENCE);
 	}
 
 	@FXML
 	protected void addNewPlugin(final ActionEvent event) {
-		strategy.execute(this, ControllerActionStrategy.NEW_UI_PLUGIN);
+		context.execute(this, ControllerActionStrategy.NEW_UI_PLUGIN);
 	}
 
 	@FXML
 	protected void exportSequence() {
-		strategy.execute(this, ControllerActionStrategy.EXPORT_SEQUENCE);
+		context.execute(this, ControllerActionStrategy.EXPORT_SEQUENCE);
 	}
-	
+
 	@FXML
 	protected void importSequence() {
-		strategy.execute(this, ControllerActionStrategy.IMPORT_SEQUENCE);
+		context.execute(this, ControllerActionStrategy.IMPORT_SEQUENCE);
 	}
 
 	@FXML
 	protected void send(final ActionEvent actionEvent) {
-		strategy.execute(this, ControllerActionStrategy.SEND_SEQUENCE);
+		context.execute(this, ControllerActionStrategy.SEND_SEQUENCE);
 	}
 }

@@ -39,7 +39,7 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 	}
 
 	@Override
-	public void execute(IBaseController iBaseController) {
+	public void execute(final IBaseController iBaseController) {
 		final RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
@@ -89,8 +89,8 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 		return pluginTitle;
 	}
 
-	private AnchorPane createAnchorPane(UIPlugin uiPlugin,
-			RootController controller) {
+	private AnchorPane createAnchorPane(final UIPlugin uiPlugin,
+			final RootController controller) {
 		final ObservableList<String> keys = FXCollections.observableArrayList();
 		uiSequence.getUIParams().forEach(param -> {
 			keys.add(param.getKey());
@@ -102,7 +102,6 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 				uiPlugin.getFutureParams(), keys, tblFutureParams);
 
 		TextField tfPluginName = new TextField();
-		tfPluginName.setPrefHeight(16.0);
 		tfPluginName.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
 		tfPluginName.textProperty().bindBidirectional(uiPlugin.getName());
 
@@ -122,7 +121,6 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 		AnchorPane anchorPane = new AnchorPane();
 		anchorPane.getChildren().addAll(
 				new VBox(tfPluginName, tblFutureParams, btnRemove));
-		anchorPane.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
 		return anchorPane;
 	}
 

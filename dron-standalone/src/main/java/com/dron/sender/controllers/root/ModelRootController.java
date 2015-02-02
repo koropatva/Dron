@@ -36,6 +36,9 @@ public abstract class ModelRootController extends Parent {
 	protected TextArea txaPostBody;
 
 	@FXML
+	protected TextArea txaConsole;
+
+	@FXML
 	protected HBox hbHeadersParamsTable;
 
 	@FXML
@@ -73,6 +76,7 @@ public abstract class ModelRootController extends Parent {
 		this.tfNewPluginName = modelRootController.getTfNewPluginName();
 		this.txaResponce = modelRootController.getTxaResponce();
 		this.txaPostBody = modelRootController.getTxaPostBody();
+		this.txaConsole = modelRootController.getTxaConsole();
 		this.hbHeadersParamsTable = modelRootController
 				.getHbHeadersParamsTable();
 		this.tbtnHeaders = modelRootController.getTbtnHeaders();
@@ -104,6 +108,10 @@ public abstract class ModelRootController extends Parent {
 
 	public TextArea getTxaResponce() {
 		return txaResponce;
+	}
+
+	public TextArea getTxaConsole() {
+		return txaConsole;
 	}
 
 	public TableView<UIHttpHeaders> getTblHeaders() {

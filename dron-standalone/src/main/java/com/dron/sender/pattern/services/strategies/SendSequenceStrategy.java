@@ -10,6 +10,7 @@ import com.dron.sender.controllers.root.tasks.SequenceTask;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.models.transformers.TransformKey;
+import com.dron.sender.pattern.services.observers.BaseFormatLoggerObserver;
 import com.dron.sender.pattern.services.observers.BaseLoggerObserver;
 import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Param;
@@ -56,6 +57,8 @@ public class SendSequenceStrategy extends ModelRootController implements
 	private void initLogging(Sequence sequence) {
 		for (Plugin plugin : sequence.getPlugins()) {
 			new BaseLoggerObserver(plugin, txaResponce,
+					Plugin.PROPERTY_RESPONCE);
+			new BaseFormatLoggerObserver(plugin, txaConsole,
 					Plugin.PROPERTY_RESPONCE);
 		}
 

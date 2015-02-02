@@ -7,6 +7,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.TextArea?>
 
 <AnchorPane layoutX="1.0" layoutY="1.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -34,35 +37,24 @@
 					<children>
 						<VBox>
 							<children>
-								<AnchorPane prefHeight="0.0">
+								<ToolBar>
+									<items>
+										<TextField fx:id="tfUrl" prefWidth="448.0"
+											promptText="URL" />
+										<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
+										<ToggleButton fx:id="tbtnHeaders"
+											mnemonicParsing="false" text="Headers" />
+										<ToggleButton fx:id="tbtnParams" mnemonicParsing="false"
+											text="Params" />
+										<Button fx:id="btnSend" mnemonicParsing="false"
+											onAction="#send" text="Send" />
+									</items>
+								</ToolBar>
+								<VBox>
 									<children>
-										<ToolBar AnchorPane.bottomAnchor="5.0"
-											AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-											AnchorPane.topAnchor="5.0">
-											<items>
-												<TextField fx:id="tfUrl" prefHeight="16.0"
-													prefWidth="448.0" promptText="URL">
-													<padding>
-														<Insets left="10.0" />
-													</padding>
-												</TextField>
-												<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
-												<ToggleButton fx:id="tbtnHeaders"
-													mnemonicParsing="false" text="Headers" />
-												<ToggleButton fx:id="tbtnParams"
-													mnemonicParsing="false" text="Params" />
-												<Button fx:id="btnSend" mnemonicParsing="false"
-													onAction="#send" text="Send" AnchorPane.bottomAnchor="5.0"
-													AnchorPane.topAnchor="5.0" />
-											</items>
-										</ToolBar>
-									</children>
-								</AnchorPane>
-								<VBox maxHeight="600" prefHeight="600">
-									<children>
-										<AnchorPane>
+										<GridPane>
 											<children>
-												<HBox fx:id="hbHeadersParamsTable" prefWidth="820.0"
+												<HBox fx:id="hbHeadersParamsTable"
 													AnchorPane.leftAnchor="5.0">
 													<children>
 														<TableView fx:id="tblHeaders" prefWidth="320.0" />
@@ -70,7 +62,7 @@
 													</children>
 												</HBox>
 											</children>
-										</AnchorPane>
+										</GridPane>
 										<AnchorPane>
 											<children>
 												<TextArea fx:id="txaPostBody" promptText="Post body"
@@ -90,16 +82,16 @@
 								</VBox>
 							</children>
 						</VBox>
-						<ScrollPane prefHeight="680" prefWidth="325.0">
+						<ScrollPane prefHeight="500" prefWidth="325.0">
 							<content>
 								<VBox>
 									<children>
-										<Accordion fx:id="accPlugins" minWidth="300.0" />
-										<HBox minWidth="300.0">
+										<Accordion fx:id="accPlugins" />
+										<HBox>
 											<children>
 												<TextField fx:id="tfNewPluginName" />
-												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false" onAction="#addNewPlugin"
-													text="Add" />
+												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false"
+													onAction="#addNewPlugin" text="Add" />
 											</children>
 										</HBox>
 									</children>
@@ -108,6 +100,7 @@
 						</ScrollPane>
 					</children>
 				</HBox>
+				<TextArea fx:id="txaConsole" />
 			</children>
 		</VBox>
 	</children>

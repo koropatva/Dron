@@ -9,7 +9,7 @@ import javafx.scene.control.TextArea;
 import com.dron.sender.pattern.interfaces.IBaseObserver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class BaseLoggerObserver implements PropertyChangeListener {
+public class BaseFormatLoggerObserver implements PropertyChangeListener {
 
 	private TextArea txaLogger;
 
@@ -17,11 +17,11 @@ public class BaseLoggerObserver implements PropertyChangeListener {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
-	public BaseLoggerObserver(IBaseObserver observer, TextArea txaLogger) {
+	public BaseFormatLoggerObserver(IBaseObserver observer, TextArea txaLogger) {
 		this(observer, txaLogger, null);
 	}
 
-	public BaseLoggerObserver(IBaseObserver observer, TextArea txaLogger,
+	public BaseFormatLoggerObserver(IBaseObserver observer, TextArea txaLogger,
 			String property) {
 		observer.addChangeListener(this);
 		this.txaLogger = txaLogger;
@@ -35,8 +35,10 @@ public class BaseLoggerObserver implements PropertyChangeListener {
 				try {
 					Object json = mapper.readValue(
 							evt.getNewValue().toString(), Object.class);
-					txaLogger.setText(mapper.writerWithDefaultPrettyPrinter()
-							.writeValueAsString(json));
+					txaLogger.setText(txaLogger.getText()
+							+ "\n"
+							+ mapper.writerWithDefaultPrettyPrinter()
+									.writeValueAsString(json) + "\n");
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}

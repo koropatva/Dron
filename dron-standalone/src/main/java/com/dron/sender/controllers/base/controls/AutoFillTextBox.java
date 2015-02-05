@@ -1,5 +1,7 @@
 package com.dron.sender.controllers.base.controls;
 
+import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
@@ -50,10 +52,18 @@ public class AutoFillTextBox extends Control {
 	 */
 	private ObservableList<String> data;
 
+	private static ObservableList<String> list = FXCollections
+			.emptyObservableList();
+
+	public AutoFillTextBox() {
+		this(list);
+	}
+
 	public AutoFillTextBox(ObservableList<String> data) {
 		setUp();
 		this.data = data;
-		FXCollections.sort(data);
+		if (!data.isEmpty())
+			FXCollections.sort(data);
 	}
 
 	private void setUp() {

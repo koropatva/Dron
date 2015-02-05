@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
+import com.dron.sender.controllers.base.controls.AutoFillTextBox;
 import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.UIHttpHeaders;
 import com.dron.sender.controllers.root.models.UIParam;
@@ -65,6 +66,9 @@ public abstract class ModelRootController extends Parent {
 	@FXML
 	protected TableView<UIParam> tblParams;
 
+	@FXML
+	protected AutoFillTextBox autoFillTextBox;
+	
 	protected UISequence uiSequence;
 
 	// Sequence that uses for share sequence between IMPORT_SEQUENCE and

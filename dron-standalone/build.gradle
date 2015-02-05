@@ -1,9 +1,12 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
+apply plugin : 'application'
+
 
 group = 'com.dron'
 version = '14.12.16'
+mainClassName = "com.dron.sender.MainApp"
 
 jar {
 	baseName = 'dron-standalone'

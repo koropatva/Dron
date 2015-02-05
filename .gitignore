@@ -9,6 +9,7 @@ dron-interfaces/.gradle/
 dron-interfaces/.project
 dron-interfaces/.settings/
 dron-interfaces/build/
+dron-standalone/build/
 dron/.classpath
 dron/.gradle/
 dron/.project

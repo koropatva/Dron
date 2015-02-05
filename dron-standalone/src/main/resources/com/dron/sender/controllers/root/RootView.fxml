@@ -10,12 +10,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.TextArea?>
+<?import com.dron.sender.controllers.base.controls.AutoFillTextBox?>
 
 <AnchorPane layoutX="1.0" layoutY="1.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<VBox>
 			<children>
+				<HBox>
+					<children>
+						<AutoFillTextBox fx:id="autoFillTextBox"/>
+					</children>
+				</HBox>
 				<MenuBar>
 					<menus>
 						<Menu mnemonicParsing="false" text="File">

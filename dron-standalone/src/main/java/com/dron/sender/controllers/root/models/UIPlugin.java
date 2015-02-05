@@ -1,5 +1,7 @@
 package com.dron.sender.controllers.root.models;
 
+import java.io.IOException;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -7,7 +9,11 @@ import javafx.collections.ObservableList;
 
 import org.springframework.http.HttpMethod;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class UIPlugin implements Cloneable {
+
+	private ObjectMapper mapper = new ObjectMapper();
 
 	private final StringProperty url = new SimpleStringProperty();
 
@@ -62,6 +68,14 @@ public class UIPlugin implements Cloneable {
 	}
 
 	public void setPostBody(String postBody) {
+		if (postBody != null) {
+			try {
+				Object json = mapper.readValue(postBody, Object.class);
+				postBody = mapper.writerWithDefaultPrettyPrinter()
+						.writeValueAsString(json);
+			} catch (IOException e) {
+			}
+		}
 		this.postBody.set(postBody);
 	}
 

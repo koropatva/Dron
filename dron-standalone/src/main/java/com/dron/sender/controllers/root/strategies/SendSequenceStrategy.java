@@ -1,4 +1,4 @@
-package com.dron.sender.pattern.services.strategies;
+package com.dron.sender.controllers.root.strategies;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +12,7 @@ import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.models.transformers.TransformKey;
 import com.dron.sender.pattern.services.observers.BaseFormatLoggerObserver;
 import com.dron.sender.pattern.services.observers.BaseLoggerObserver;
+import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Plugin;
@@ -26,7 +27,7 @@ public class SendSequenceStrategy extends ModelRootController implements
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.SEND_SEQUENCE;
+		return ControllerActionStrategy.ROOT_SEND_SEQUENCE;
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class SendSequenceStrategy extends ModelRootController implements
 		initLogging(sequence);
 
 		txaResponce.setText("");
-		context.execute(controller, ControllerActionStrategy.DISABLE_CONTROLS);
+		context.execute(controller, ControllerActionStrategy.ROOT_DISABLE_CONTROLS);
 
 		SequenceTask sequenceTask = new SequenceTask(sequence);
 		sequenceTask.setContext(context);
@@ -50,7 +51,7 @@ public class SendSequenceStrategy extends ModelRootController implements
 	private Sequence fillRootSequence() {
 		Sequence sequence = new Sequence();
 		TransformerFactory.reverseTransformEntity(sequence, uiSequence,
-				TransformKey.SEQUENCE);
+				TransformKey.ROOT_SEQUENCE);
 		return sequence;
 	}
 

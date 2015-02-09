@@ -1,5 +1,7 @@
 package com.dron.sender.controllers.root;
 
+import java.io.File;
+
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
@@ -11,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
-import com.dron.sender.controllers.base.controls.AutoFillTextBox;
+import com.dron.sender.controllers.root.controls.AutoFillSequenceTextBox;
 import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.UIHttpHeaders;
 import com.dron.sender.controllers.root.models.UIParam;
@@ -49,7 +51,10 @@ public abstract class ModelRootController extends Parent {
 	protected ToggleButton tbtnParams;
 
 	@FXML
-	protected Button btnSend;
+	protected Button btnSendActivePlugin;
+
+	@FXML
+	protected Button btnSendSequence;
 
 	@FXML
 	protected Button btnAddNewPlugin;
@@ -67,13 +72,17 @@ public abstract class ModelRootController extends Parent {
 	protected TableView<UIParam> tblParams;
 
 	@FXML
-	protected AutoFillTextBox autoFillTextBox;
-	
+	protected AutoFillSequenceTextBox autoFillSequenceTextBox;
+
 	protected UISequence uiSequence;
 
-	// Sequence that uses for share sequence between IMPORT_SEQUENCE and
+	// The sequence is used for share sequence between IMPORT_SEQUENCE and
 	// PREPARE_SEQUENCE strategies
 	private Sequence tmpImportSequence;
+
+	// The File is used for share file between SHOW_IMPORT_DIALOG_SEQUENCE and
+	// IMPORT_SEQUENCE strategies
+	private File tmpImportFile;
 
 	public void setUp(ModelRootController modelRootController) {
 		this.tfUrl = modelRootController.getTfUrl();
@@ -90,9 +99,13 @@ public abstract class ModelRootController extends Parent {
 		this.tblHeaders = modelRootController.getTblHeaders();
 		this.tblParams = modelRootController.getTblParams();
 		this.uiSequence = modelRootController.getUiSequence();
-		this.btnSend = modelRootController.getBtnSend();
+		this.btnSendActivePlugin = modelRootController.getBtnSendActivePlugin();
+		this.btnSendSequence = modelRootController.getBtnSendSequence();
 		this.btnAddNewPlugin = modelRootController.getBtnAddNewPlugin();
+		this.autoFillSequenceTextBox = modelRootController
+				.getAutoFillSequenceTextBox();
 		this.tmpImportSequence = modelRootController.getTmpImportSequence();
+		this.tmpImportFile = modelRootController.getTmpImportFile();
 	}
 
 	protected void updateControls() {
@@ -154,20 +167,36 @@ public abstract class ModelRootController extends Parent {
 		return uiSequence;
 	}
 
-	public Button getBtnSend() {
-		return btnSend;
+	public Button getBtnSendActivePlugin() {
+		return btnSendActivePlugin;
+	}
+
+	public Button getBtnSendSequence() {
+		return btnSendSequence;
+	}
+
+	public Button getBtnAddNewPlugin() {
+		return btnAddNewPlugin;
+	}
+
+	public AutoFillSequenceTextBox getAutoFillSequenceTextBox() {
+		return autoFillSequenceTextBox;
 	}
 
 	public Sequence getTmpImportSequence() {
 		return tmpImportSequence;
 	}
 
-	public void setTmpImportSequence(Sequence sequence) {
-		this.tmpImportSequence = sequence;
+	public File getTmpImportFile() {
+		return tmpImportFile;
 	}
 
-	public Button getBtnAddNewPlugin() {
-		return btnAddNewPlugin;
+	public void setTmpImportSequence(Sequence tmpImportSequence) {
+		this.tmpImportSequence = tmpImportSequence;
+	}
+
+	public void setTmpImportFile(File tmpImportFile) {
+		this.tmpImportFile = tmpImportFile;
 	}
 
 }

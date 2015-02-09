@@ -1,4 +1,4 @@
-package com.dron.sender.pattern.services.strategies;
+package com.dron.sender.controllers.root.strategies;
 
 import java.io.File;
 
@@ -17,11 +17,12 @@ import com.dron.sender.exim.ExImService;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.models.transformers.TransformKey;
+import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Sequence;
 
 @Component
-public class ImportSequenceStrategy extends ModelRootController implements
+public class ExportSequenceStrategy extends ModelRootController implements
 		IControllerStrategy {
 
 	@Autowired
@@ -35,7 +36,7 @@ public class ImportSequenceStrategy extends ModelRootController implements
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.IMPORT_SEQUENCE;
+		return ControllerActionStrategy.ROOT_EXPORT_SEQUENCE;
 	}
 
 	@Override
@@ -50,18 +51,15 @@ public class ImportSequenceStrategy extends ModelRootController implements
 					.getPrimaryStage());
 
 			if (choosenFile != null) {
-				Sequence sequence = ExImService.getInstance().imports(
-						choosenFile);
-				TransformerFactory.transformEntity(sequence, uiSequence,
-						TransformKey.SEQUENCE);
+				Sequence sequence = new Sequence();
+				TransformerFactory.reverseTransformEntity(sequence, uiSequence,
+						TransformKey.ROOT_SEQUENCE);
 
-				controller.setTmpImportSequence(sequence);
-
-				context.execute(controller,
-						ControllerActionStrategy.PREPARE_SEQUENCE);
+				ExImService.getInstance().exports(sequence, choosenFile);
 			}
 		} catch (DronSenderException e) {
 			System.out.println(e.getMessage());
 		}
+
 	}
 }

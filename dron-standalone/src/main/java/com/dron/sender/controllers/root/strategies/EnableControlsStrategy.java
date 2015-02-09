@@ -1,4 +1,4 @@
-package com.dron.sender.pattern.services.strategies;
+package com.dron.sender.controllers.root.strategies;
 
 import org.springframework.stereotype.Component;
 
@@ -10,12 +10,12 @@ import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 
 @Component
-public class DisableControlsStrategy extends ModelRootController implements
+public class EnableControlsStrategy extends ModelRootController implements
 		IControllerStrategy {
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.DISABLE_CONTROLS;
+		return ControllerActionStrategy.ROOT_ENABLE_CONTROLS;
 	}
 
 	@Override
@@ -23,11 +23,11 @@ public class DisableControlsStrategy extends ModelRootController implements
 		final RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
-		RootConfig.setDisableRootProperty(true);
-		tblParams.disableProperty().set(true);
-		tbtnParams.disableProperty().set(true);
-		accPlugins.disableProperty().set(true);
-		tfNewPluginName.disableProperty().set(true);
-		btnAddNewPlugin.disableProperty().set(true);
+		RootConfig.setDisableRootProperty(false);
+		tblParams.disableProperty().set(false);
+		tbtnParams.disableProperty().set(false);
+		accPlugins.disableProperty().set(false);
+		tfNewPluginName.disableProperty().set(false);
+		btnAddNewPlugin.disableProperty().set(false);
 	}
 }

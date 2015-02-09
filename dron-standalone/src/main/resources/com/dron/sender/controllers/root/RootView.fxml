@@ -10,18 +10,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.TextArea?>
-<?import com.dron.sender.controllers.base.controls.AutoFillTextBox?>
+<?import com.dron.sender.controllers.root.controls.AutoFillSequenceTextBox?>
 
 <AnchorPane layoutX="1.0" layoutY="1.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<VBox>
 			<children>
-				<HBox>
-					<children>
-						<AutoFillTextBox fx:id="autoFillTextBox"/>
-					</children>
-				</HBox>
 				<MenuBar>
 					<menus>
 						<Menu mnemonicParsing="false" text="File">
@@ -45,15 +40,24 @@
 							<children>
 								<ToolBar>
 									<items>
+										<AutoFillSequenceTextBox fx:id="autoFillSequenceTextBox"
+											prefWidth="300" focusTraversable="true" />
+										<Button fx:id="btnSendSequence" onAction="#sendSequence"
+											text="Send sequence" focusTraversable="true" />
+									</items>
+								</ToolBar>
+								<ToolBar>
+									<items>
 										<TextField fx:id="tfUrl" prefWidth="448.0"
-											promptText="URL" />
+											promptText="URL" focusTraversable="true" />
 										<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
 										<ToggleButton fx:id="tbtnHeaders"
-											mnemonicParsing="false" text="Headers" />
+											mnemonicParsing="false" text="Headers" focusTraversable="true" />
 										<ToggleButton fx:id="tbtnParams" mnemonicParsing="false"
-											text="Params" />
-										<Button fx:id="btnSend" mnemonicParsing="false"
-											onAction="#send" text="Send" />
+											text="Params" focusTraversable="true" />
+										<Button fx:id="btnSendActivePlugin" mnemonicParsing="false"
+											onAction="#sendActivePlugin" text="Send plugin"
+											focusTraversable="true" />
 									</items>
 								</ToolBar>
 								<VBox>

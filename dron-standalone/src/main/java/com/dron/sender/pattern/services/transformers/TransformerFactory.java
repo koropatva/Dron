@@ -2,6 +2,12 @@ package com.dron.sender.pattern.services.transformers;
 
 import org.springframework.util.Assert;
 
+import com.dron.sender.controllers.root.models.transformers.FillPluginFutureParamsTransformer;
+import com.dron.sender.controllers.root.models.transformers.FutureParamTransformer;
+import com.dron.sender.controllers.root.models.transformers.HttpHeaderTransformer;
+import com.dron.sender.controllers.root.models.transformers.ParamTransformer;
+import com.dron.sender.controllers.root.models.transformers.PluginTransformer;
+import com.dron.sender.controllers.root.models.transformers.SequenceTransformer;
 import com.dron.sender.pattern.interfaces.IBaseTransformer;
 import com.dron.sender.pattern.models.transformers.TransformKey;
 
@@ -49,17 +55,17 @@ public class TransformerFactory {
 	private static <F, T> IBaseTransformer<F, T> getTransformer(F from, T to,
 			TransformKey key) {
 		switch (key) {
-		case HTTP_HEADERS:
+		case ROOT_HTTP_HEADERS:
 			return (IBaseTransformer<F, T>) new HttpHeaderTransformer();
-		case PARAMS:
+		case ROOT_PARAMS:
 			return (IBaseTransformer<F, T>) new ParamTransformer();
-		case FUTURE_PARAMS:
+		case ROOT_FUTURE_PARAMS:
 			return (IBaseTransformer<F, T>) new FutureParamTransformer();
-		case PLUGIN:
+		case ROOT_PLUGIN:
 			return (IBaseTransformer<F, T>) new PluginTransformer();
-		case SEQUENCE:
+		case ROOT_SEQUENCE:
 			return (IBaseTransformer<F, T>) new SequenceTransformer();
-		case FILL_PLUGIN_FUTURE_PARAMS:
+		case ROOT_FILL_PLUGIN_FUTURE_PARAMS:
 			return (IBaseTransformer<F, T>) new FillPluginFutureParamsTransformer();
 		default:
 			return null;

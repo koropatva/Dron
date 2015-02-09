@@ -1,8 +1,4 @@
-package com.dron.sender.pattern.services.strategies;
-
-import java.io.File;
-
-import javafx.stage.FileChooser;
+package com.dron.sender.controllers.root.strategies;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,16 +8,18 @@ import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.base.interfaces.IStageService;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
+import com.dron.sender.controllers.root.controls.AutoFillSequenceHelper;
 import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exim.ExImService;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.models.transformers.TransformKey;
+import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Sequence;
 
 @Component
-public class ExportSequenceStrategy extends ModelRootController implements
+public class ImportSequenceStrategy extends ModelRootController implements
 		IControllerStrategy {
 
 	@Autowired
@@ -35,7 +33,7 @@ public class ExportSequenceStrategy extends ModelRootController implements
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.EXPORT_SEQUENCE;
+		return ControllerActionStrategy.ROOT_IMPORT_SEQUENCE;
 	}
 
 	@Override
@@ -44,17 +42,19 @@ public class ExportSequenceStrategy extends ModelRootController implements
 		setUp(controller);
 
 		try {
-			FileChooser fileChooser = new FileChooser();
-			fileChooser.setInitialFileName(appProperties.getFilePath());
-			File choosenFile = fileChooser.showOpenDialog(iStageService
-					.getPrimaryStage());
+			if (getTmpImportFile() != null) {
+				Sequence sequence = ExImService.getInstance().imports(
+						getTmpImportFile());
+				TransformerFactory.transformEntity(sequence, uiSequence,
+						TransformKey.ROOT_SEQUENCE);
 
-			if (choosenFile != null) {
-				Sequence sequence = new Sequence();
-				TransformerFactory.reverseTransformEntity(sequence, uiSequence,
-						TransformKey.SEQUENCE);
+				controller.setTmpImportSequence(sequence);
 
-				ExImService.getInstance().exports(sequence, choosenFile);
+				autoFillSequenceTextBox.setItems(AutoFillSequenceHelper
+						.getFiles(getTmpImportFile()));
+
+				context.execute(controller,
+						ControllerActionStrategy.ROOT_PREPARE_SEQUENCE);
 			}
 		} catch (DronSenderException e) {
 			System.out.println(e.getMessage());

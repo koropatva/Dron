@@ -46,8 +46,14 @@ public class InitializeStrategy extends ModelRootController implements
 
 		tfNewPluginName.textProperty().bindBidirectional(uiSequence.getName());
 
-		btnSendSequence.disableProperty().bind(RootConfig.getDisableRootProperty());
-		btnSendActivePlugin.disableProperty().bind(RootConfig.getDisableRootProperty());
+		btnSendSequence.disableProperty().bind(
+				RootConfig.getDisableRootProperty());
+		btnSendSequence.defaultButtonProperty().bind(
+				btnSendSequence.focusedProperty());
+		btnSendActivePlugin.disableProperty().bind(
+				RootConfig.getDisableRootProperty());
+		btnSendActivePlugin.defaultButtonProperty().bind(
+				btnSendActivePlugin.focusedProperty());
 
 		tfUrl.disableProperty().bind(RootConfig.getDisableRootProperty());
 		tfUrl.textProperty().addListener((observer, oldValue, newValue) -> {
@@ -111,7 +117,7 @@ public class InitializeStrategy extends ModelRootController implements
 		autoFillSequenceTextBox.setUp(ctx, controller);
 		autoFillSequenceTextBox.setItems(AutoFillSequenceHelper
 				.getFiles(appProperties.getFilePath()));
-		
+
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_NEW_UI_SEQUENCE);
 

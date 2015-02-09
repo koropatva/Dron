@@ -1,4 +1,4 @@
-package com.dron.sender.pattern.services.strategies;
+package com.dron.sender.controllers.root.strategies;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,6 +9,7 @@ import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.models.transformers.TransformKey;
+import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 import com.dron.sender.pattern.services.transformers.TransformerFactory;
 
 @Component
@@ -22,7 +23,7 @@ public class PrepareSequenceStrategy extends ModelRootController implements
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.PREPARE_SEQUENCE;
+		return ControllerActionStrategy.ROOT_PREPARE_SEQUENCE;
 	}
 
 	@Override
@@ -33,10 +34,10 @@ public class PrepareSequenceStrategy extends ModelRootController implements
 		uiSequence.clear();
 
 		TransformerFactory.transformEntity(getTmpImportSequence(), uiSequence,
-				TransformKey.SEQUENCE);
+				TransformKey.ROOT_SEQUENCE);
 
 		context.execute(controller,
-				ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
+				ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
 
 		uiSequence.selectedUIPLugin(0, context, controller);
 	}

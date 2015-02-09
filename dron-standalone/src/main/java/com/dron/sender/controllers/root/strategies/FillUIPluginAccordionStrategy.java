@@ -1,4 +1,4 @@
-package com.dron.sender.pattern.services.strategies;
+package com.dron.sender.controllers.root.strategies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,7 @@ import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
+import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 
 @Component
 public class FillUIPluginAccordionStrategy extends ModelRootController
@@ -35,7 +36,7 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION;
+		return ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION;
 	}
 
 	@Override
@@ -113,7 +114,7 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 							uiSequence.getUiPlugins().get(expantedIndex));
 
 					context.execute(controller,
-							ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
+							ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
 					uiSequence.selectedUIPLugin(expantedIndex - 1, context,
 							controller);
 				});

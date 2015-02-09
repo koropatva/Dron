@@ -38,7 +38,7 @@ public class SequenceTask extends Task<String> {
 			Platform.runLater(new Runnable() {
 				public void run() {
 					context.execute(controller,
-							ControllerActionStrategy.ENABLE_CONTROLS);
+							ControllerActionStrategy.ROOT_ENABLE_CONTROLS);
 				}
 			});
 		} catch (EmptyDataException e) {

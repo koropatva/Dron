@@ -56,7 +56,7 @@ public class UISequence {
 			selectedUIPLugin = 1;
 		}
 		this.selectedUIPLugin = selectedUIPLugin;
-		context.execute(controller, ControllerActionStrategy.FILL_ROOT_CONTROLS);
+		context.execute(controller, ControllerActionStrategy.ROOT_FILL_ROOT_CONTROLS);
 		controller.getAccPlugins().setExpandedPane(
 				controller.getAccPlugins().getPanes()
 						.get(this.selectedUIPLugin));

@@ -1,4 +1,4 @@
-package com.dron.sender.pattern.services.strategies;
+package com.dron.sender.controllers.root.strategies;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
-import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
+import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 
 @Component
-public class NewUIPluginStrategy extends ModelRootController implements
+public class NewUISequenceStrategy extends ModelRootController implements
 		IControllerStrategy {
 
 	@Autowired
@@ -19,23 +19,20 @@ public class NewUIPluginStrategy extends ModelRootController implements
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.NEW_UI_PLUGIN;
+		return ControllerActionStrategy.ROOT_NEW_UI_SEQUENCE;
 	}
 
 	@Override
 	public void execute(IBaseController iBaseController) {
 		RootController controller = (RootController) iBaseController;
 		setUp(controller);
-
-		UIPlugin uiPlugin = new UIPlugin();
-		uiPlugin.setName(tfNewPluginName.getText());
-		uiSequence.getUiPlugins().add(uiPlugin);
-		tfNewPluginName.setText("");
+		// Clear all data
+		uiSequence.clear();
+		uiSequence.prepareEmptySequence();
 
 		context.execute(controller,
-				ControllerActionStrategy.FILL_UI_PLUGIN_ACCORDION);
-		uiSequence.selectedUIPLugin(uiSequence.getUiPlugins().size() - 1,
-				context, controller);
+				ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
+		uiSequence.selectedUIPLugin(0, context, controller);
 	}
 
 }

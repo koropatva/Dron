@@ -1,4 +1,4 @@
-package com.dron.sender.pattern.services.strategies;
+package com.dron.sender.controllers.root.strategies;
 
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ public class FillRootControlsStrategy extends ModelRootController implements
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
-		return ControllerActionStrategy.FILL_ROOT_CONTROLS;
+		return ControllerActionStrategy.ROOT_FILL_ROOT_CONTROLS;
 	}
 
 	@Override

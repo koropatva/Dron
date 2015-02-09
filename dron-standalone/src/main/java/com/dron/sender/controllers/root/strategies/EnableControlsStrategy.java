@@ -29,5 +29,6 @@ public class EnableControlsStrategy extends ModelRootController implements
 		accPlugins.disableProperty().set(false);
 		tfNewPluginName.disableProperty().set(false);
 		btnAddNewPlugin.disableProperty().set(false);
+		btnSendSequence.requestFocus();
 	}
 }

@@ -19,8 +19,6 @@ public class AutoFillTextBoxSkin extends SkinBase<AutoFillTextBoxBase>
 
 	private TextField textField;
 
-	private String tmpText;
-
 	public AutoFillTextBoxSkin(final AutoFillTextBoxBase autoFillTextBox) {
 		super(autoFillTextBox);
 
@@ -65,7 +63,6 @@ public class AutoFillTextBoxSkin extends SkinBase<AutoFillTextBoxBase>
 	@Override
 	public void changed(ObservableValue<? extends String> observable,
 			String oldValue, String newValue) {
-		tmpText = newValue.trim();
-		autoFillTextBox.showPopup(tmpText);
+		autoFillTextBox.showPopup(newValue);
 	}
 }

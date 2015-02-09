@@ -3,15 +3,22 @@ package com.dron.sender.controllers.root;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dron.sender.controllers.base.interfaces.IBaseController;
+import com.dron.sender.controllers.base.interfaces.ISceneService;
 import com.dron.sender.controllers.base.interfaces.IStageService;
 import com.dron.sender.controllers.base.models.ControllerEnum;
 import com.dron.sender.controllers.root.models.UISequence;
@@ -26,6 +33,9 @@ public class RootController extends ModelRootController implements
 	private IStageService iStageService;
 
 	@Autowired
+	private ISceneService iSceneService;
+
+	@Autowired
 	private ControllerStrategyContext context;
 
 	private FXMLLoader loader;
@@ -38,6 +48,24 @@ public class RootController extends ModelRootController implements
 		loader = new FXMLLoader(RootController.class.getResource("/" + viewPath
 				+ "/" + getControllerEnum().getViewName() + ".fxml"));
 		loader.setController(this);
+	}
+
+	@PostConstruct
+	private void setUp() {
+		Scene scene = iSceneService.findScene(getControllerEnum());
+		scene.getAccelerators().put(
+				new KeyCodeCombination(KeyCode.L, KeyCombination.META_DOWN),
+				() -> {
+					autoFillSequenceTextBox.requestFocus();
+				});
+		scene.getAccelerators().put(
+				new KeyCodeCombination(KeyCode.F11, KeyCombination.META_DOWN,
+						KeyCombination.SHIFT_DOWN),
+				() -> {
+					context.execute(this,
+							ControllerActionStrategy.ROOT_SEND_SEQUENCE);
+				});
+
 	}
 
 	@Override

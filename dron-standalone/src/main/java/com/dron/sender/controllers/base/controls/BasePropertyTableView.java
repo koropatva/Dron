@@ -1,5 +1,6 @@
 package com.dron.sender.controllers.base.controls;
 
+import java.awt.color.CMMException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,13 @@ import javafx.util.converter.DefaultStringConverter;
 
 import com.dron.sender.controllers.base.interfaces.IModelTableView;
 
+/**
+ * Base structure of TableView that have possibility to add/edit and remove
+ * rows.
+ * 
+ * @author Andrii Koropatva
+ * @param <T>
+ */
 public abstract class BasePropertyTableView<T extends IModelTableView> {
 
 	protected abstract int getMinWidth();

@@ -15,7 +15,7 @@ import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 
-public class AutoFillSequenceTextBox extends AutoFillTextBoxBase {
+public class AutoFillSequenceTextBox extends AutoFillTextBoxBase<String> {
 
 	private ApplicationContext ctx;
 

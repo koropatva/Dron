@@ -8,7 +8,7 @@ import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.base.interfaces.IStageService;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
-import com.dron.sender.controllers.root.controls.AutoFillSequenceHelper;
+import com.dron.sender.controllers.root.helpers.AutoFillSequenceHelper;
 import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exim.ExImService;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;

@@ -1,4 +1,4 @@
-package com.dron.sender.controllers.root.controls;
+package com.dron.sender.controllers.root.helpers;
 
 import java.io.File;
 import java.util.Arrays;

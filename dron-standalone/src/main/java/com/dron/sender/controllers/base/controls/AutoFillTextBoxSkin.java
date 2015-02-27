@@ -10,16 +10,16 @@ import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextField;
 import javafx.stage.Popup;
 
-public class AutoFillTextBoxSkin extends SkinBase<AutoFillTextBoxBase>
+public class AutoFillTextBoxSkin extends SkinBase<AutoFillTextBoxBase<String>>
 		implements ChangeListener<String> {
 
-	private AutoFillTextBoxBase autoFillTextBox;
+	private AutoFillTextBoxBase<String> autoFillTextBox;
 
 	private Popup popup;
 
 	private TextField textField;
 
-	public AutoFillTextBoxSkin(final AutoFillTextBoxBase autoFillTextBox) {
+	public AutoFillTextBoxSkin(final AutoFillTextBoxBase<String> autoFillTextBox) {
 		super(autoFillTextBox);
 
 		this.autoFillTextBox = autoFillTextBox;

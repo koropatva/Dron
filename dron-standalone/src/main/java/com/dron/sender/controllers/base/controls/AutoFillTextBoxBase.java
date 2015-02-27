@@ -3,13 +3,19 @@ package com.dron.sender.controllers.base.controls;
 import java.util.Arrays;
 import java.util.List;
 
+import com.dron.sender.controllers.base.helpers.CellUtils;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+import javafx.util.StringConverter;
 
 /**
  * This class is main Control class which extends from Control <br>
@@ -17,7 +23,7 @@ import javafx.stage.Window;
  *
  * You can easily utilize the AutoFillTextBox in your application<br>
  */
-public abstract class AutoFillTextBoxBase extends Control {
+public abstract class AutoFillTextBoxBase<T> extends Control {
 
 	/**
 	 * Default pref width for base TextField and ListView
@@ -43,11 +49,49 @@ public abstract class AutoFillTextBoxBase extends Control {
 
 	protected Popup popup;
 
-	protected List<String> items;
+	protected List<T> items;
 
-	public abstract ObservableList<String> searchItems(String value);
+	protected final StringConverter<T> converter = CellUtils
+			.defaultStringConverter();
 
-	public abstract void onSelectAction(String fileNam);
+	public abstract ObservableList<T> searchItems(T value);
+
+	public abstract void onSelectAction(T fileName);
+
+	// --- value
+	/**
+	 * The value of this ComboBox is defined as the selected item if the input
+	 * is not editable, or if it is editable, the most recent user action:
+	 * either the value input by the user, or the last selected item.
+	 */
+	public ObjectProperty<T> valueProperty() {
+		return value;
+	}
+
+	private ObjectProperty<T> value = new SimpleObjectProperty<T>(this, "value") {
+		T oldValue;
+
+		@Override
+		protected void invalidated() {
+			super.invalidated();
+			T newValue = get();
+
+			if ((oldValue == null && newValue != null) || oldValue != null
+					&& !oldValue.equals(newValue)) {
+				valueInvalidated();
+			}
+
+			oldValue = newValue;
+		}
+	};
+
+	public final void setValue(T value) {
+		valueProperty().set(value);
+	}
+
+	public final T getValue() {
+		return valueProperty().get();
+	}
 
 	public AutoFillTextBoxBase() {
 		getStyleClass().setAll("autofill-text");
@@ -91,8 +135,8 @@ public abstract class AutoFillTextBoxBase extends Control {
 	 * automatically resize it's height and width according to the width of
 	 * textbox and item's cell height
 	 */
-	public void showPopup(String newValue) {
-		ListView<String> listView = new ListView<>();
+	public void showPopup(T newValue) {
+		ListView<T> listView = new ListView<>();
 		listView.setPrefWidth(textField.getWidth());
 
 		listView.getSelectionModel().clearSelection();
@@ -110,7 +154,8 @@ public abstract class AutoFillTextBoxBase extends Control {
 		}
 
 		listView.setOnMouseReleased(event -> {
-			textField.setText(listView.getSelectionModel().getSelectedItem());
+			textField.setText(converter.toString(listView.getSelectionModel()
+					.getSelectedItem()));
 			textField.requestFocus();
 			textField.requestLayout();
 			textField.end();
@@ -121,8 +166,8 @@ public abstract class AutoFillTextBoxBase extends Control {
 		listView.setOnKeyReleased(event -> {
 			switch (event.getCode()) {
 				case ENTER:
-					textField.setText(listView.getSelectionModel()
-							.getSelectedItem());
+					textField.setText(converter.toString(listView
+							.getSelectionModel().getSelectedItem()));
 					textField.requestFocus();
 					textField.requestLayout();
 					textField.end();
@@ -139,10 +184,10 @@ public abstract class AutoFillTextBoxBase extends Control {
 		// when ever any cell is selected the textbox rawText must be changed
 		listView.setCellFactory(view -> {
 			// A simple ListCell containing only Label
-			final ListCell<String> cell = new ListCell<String>() {
-				public void updateItem(String item, boolean empty) {
+			final ListCell<T> cell = new ListCell<T>() {
+				public void updateItem(T item, boolean empty) {
 					super.updateItem(item, empty);
-					setText(item);
+					setText(converter.toString(item));
 				}
 			};
 
@@ -223,11 +268,11 @@ public abstract class AutoFillTextBoxBase extends Control {
 		return Math.max(getDefaultPrefWidth(), textField.getPrefWidth());
 	}
 
-	public void setItems(String[] items) {
+	public void setItems(T[] items) {
 		setItems(Arrays.asList(items));
 	}
 
-	public void setItems(List<String> items) {
+	public void setItems(List<T> items) {
 		this.items = items;
 	}
 
@@ -249,6 +294,10 @@ public abstract class AutoFillTextBoxBase extends Control {
 
 	public double getDefaultPrefWidth() {
 		return DEFAULT_PREF_WIDTH;
+	}
+
+	void valueInvalidated() {
+		fireEvent(new ActionEvent());
 	}
 
 }

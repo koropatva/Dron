@@ -1,61 +1,29 @@
 package com.dron.sender;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exim.ExImService;
-import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Sequence;
 import com.dron.sender.sequence.services.SequenceService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class Application {
 
-    private static final String ORDER_LINE_IDS = "{{orderLineIds}}";
-    private static final String ORDER_ID = "{{orderId}}";
-    private static final String COUPON_TYPE = "CPN-57740315";
-    private static final String CATALOG_TYPE = "LBP-45387878";
-    private static final String CATALOG_TEXTBOOK_TYPE = "LBP-33444327";
-    private static final String URL_TEST3 = "http://cops-web01.test3.cloud.cheggnet.com";
-    private static final String LOCALHOST_TEST3 = "http://localhost";
-    private static final String CATALOG_PORT = "6001";
-    private static final String ORDER_PORT = "6004";
-    private static final String LOCAL_ORDER_PORT = "8090";
-
-    private static final List<Param> params = new ArrayList<Param>();
-
-    /**
+	/**
 	 * @param args
 	 * @throws IOException
 	 * @throws JsonProcessingException
 	 * @throws DronSenderException
 	 * @throws PayPalRESTException
 	 */
-    public static void main(String[] args) throws JsonProcessingException, IOException,
-            DronSenderException {
+	public static void main(String[] args) throws JsonProcessingException,
+			IOException, DronSenderException {
 
-        Sequence sequence;
+		Sequence sequence = ExImService.getInstance().imports(
+				"/Users/admin/Documents/json/CreateUser.json");
+		SequenceService sequenceService = new SequenceService(sequence);
 
-        // Create new configuration file for new sequence
-        // mapper.writerWithDefaultPrettyPrinter()
-        // .writeValue(
-        // new File(
-        // "/Users/admin/Documents/spring/gs-rest-service/initial/src/main/resources/json/ConfirmFraud.json"),
-        // sequence);
-
-        sequence =ExImService.getInstance().imports("/Users/admin/Documents/dron-project/dron/src/main/resources/json/Test.json"); 
-		// mapper.readValue(
-		// new File(
-		// ),
-		// Sequence.class);
-//                            sequence.updateParam(new Param("{{userEmail}}", "andrij" + new Date().getTime()
-//                                    + "@email.com"));
-//        sequence.updateParam(new Param(ORDER_ID, "220586551"));
-        // sequence.updateParam(new Param(ORDER_LINE_IDS, "[747160613]"));
-        SequenceService sequenceService = new SequenceService(sequence);
-
-        sequenceService.runSequence();
-    }
+		sequenceService.runSequence();
+	}
 }

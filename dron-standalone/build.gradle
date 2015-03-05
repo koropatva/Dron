@@ -5,7 +5,7 @@ apply plugin : 'application'
 
 
 group = 'com.dron'
-version = '14.12.16'
+version = '05.03.15'
 mainClassName = "com.dron.sender.MainApp"
 
 jar {
@@ -21,7 +21,7 @@ dependencies {
 	compile("org.springframework:spring-web:4.0.3.RELEASE")
 	compile("com.fasterxml.jackson.core:jackson-databind:2.4.4")
 	compile("org.codehaus.jackson:jackson-mapper-asl:1.5.0")
-	compile("com.dron:dron-interfaces:14.12.16")
-	compile("com.dron:dron-service:14.12.16")
+	compile("com.dron:dron-interfaces:05.03.15")
+	compile("com.dron:dron-service:05.03.15")
 	compile("org.apache.commons:commons-lang3:3.0")
 }

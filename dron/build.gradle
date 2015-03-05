@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 group = 'com.dron'
-version = '14.12.16'
+version = '05.03.15'
 
 jar {
     baseName = 'dron-service'
@@ -17,5 +17,5 @@ repositories {
 dependencies {
     	compile("com.fasterxml.jackson.core:jackson-databind:2.4.4")
 	compile("org.springframework:spring-web:4.0.3.RELEASE")
-	compile("com.dron:dron-interfaces:14.12.16")
+	compile("com.dron:dron-interfaces:05.03.15")
 }

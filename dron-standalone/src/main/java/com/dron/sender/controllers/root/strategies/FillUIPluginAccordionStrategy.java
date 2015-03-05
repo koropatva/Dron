@@ -10,6 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -113,7 +116,8 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 					uiSequence.getUiPlugins().remove(
 							uiSequence.getUiPlugins().get(expantedIndex));
 
-					context.execute(controller,
+					context.execute(
+							controller,
 							ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
 					uiSequence.selectedUIPLugin(expantedIndex - 1, context,
 							controller);
@@ -122,6 +126,76 @@ public class FillUIPluginAccordionStrategy extends ModelRootController
 		AnchorPane anchorPane = new AnchorPane();
 		anchorPane.getChildren().addAll(
 				new VBox(tfPluginName, tblFutureParams, btnRemove));
+		anchorPane.setOnDragDetected(event -> {
+			System.out.println("anchorPane.setOnDragDetected "
+					+ getExpantedUIPluginIndex());
+			Dragboard db = anchorPane.startDragAndDrop(TransferMode.ANY);
+
+			/* Put a string on a dragboard */
+			ClipboardContent content = new ClipboardContent();
+			content.putString(Integer.toString(getExpantedUIPluginIndex()));
+			db.setContent(content);
+
+			event.consume();
+		});
+		anchorPane.setOnDragOver(event -> {
+			System.out.println("anchorPane.setOnDragOver "
+					+ getExpantedUIPluginIndex());
+			/* data is dragged over the target */
+			/*
+			 * accept it only if it is not dragged from the same node and if it
+			 * has a string data
+			 */
+			if (event.getGestureSource() != anchorPane
+					&& event.getDragboard().hasString()) {
+				/* allow for both copying and moving, whatever user chooses */
+				event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+			}
+
+			event.consume();
+		});
+		anchorPane.setOnDragEntered(event -> {
+			System.out.println("anchorPane.setOnDragEntered "
+					+ getExpantedUIPluginIndex());
+			/* the drag-and-drop gesture entered the target */
+			/* show to the user that it is an actual gesture target */
+			if (event.getGestureSource() != anchorPane
+					&& event.getDragboard().hasString()) {
+				anchorPane.setStyle("-fx-background-color: DAE6F3;");
+			}
+
+			event.consume();
+		});
+
+		anchorPane.setOnDragExited(event -> {
+			System.out.println("anchorPane.setOnDragExited "
+					+ getExpantedUIPluginIndex());
+			/* mouse moved away, remove the graphical cues */
+			anchorPane.setStyle("");
+
+			event.consume();
+		});
+
+		anchorPane.setOnDragDropped(event -> {
+			System.out.println("anchorPane.setOnDragDropped "
+					+ getExpantedUIPluginIndex());
+			/* data dropped */
+			/* if there is a string data on dragboard, read it and use it */
+			Dragboard db = event.getDragboard();
+			boolean success = false;
+			if (db.hasString()) {
+				tfPluginName.setText(db.getString());
+				success = true;
+			}
+			/*
+			 * let the source know whether the string was successfully
+			 * transferred and used
+			 */
+			event.setDropCompleted(success);
+
+			event.consume();
+		});
+
 		return anchorPane;
 	}
 

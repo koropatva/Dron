@@ -1,13 +1,21 @@
 package com.dron.sender.sequence.utils;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
+import nl.flotsam.xeger.Xeger;
+
+import com.dron.sender.sequence.enums.XegerTypes;
 import com.dron.sender.sequence.models.Param;
 
 public class ParamsUtils {
 
-	private static final int DEFAULT_RANDOM_LENGHT = 7;
+	private static final String DEFAULT_INT_REGEX = "[0-9]{1,5}";
+	private static final String EMAIL_REGEX = "[a-zA-Z0-9]{5,10}[@][a-zA-Z0-9]{3,8}[.][a-zA-Z]{3}";
+	private static final String TIME_REGEX = "([01][1-9]|2[0-3]|00):([0-5][0-9])";
+	private static final String DATE_REGEX = "(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/((19|20)[0-9][0-9])";
+	private static final String DEFAULT_STRING_REGEX = "[a-zA-Z]{5,10}";
 	private static final String PARAM_PREFIX = "{{";
 	private static final String PARAM_SUFIX = "}}";
 	private static final String RANDOM_VALUE_PREFIX = "{#";
@@ -36,11 +44,39 @@ public class ParamsUtils {
 	}
 
 	public static String getRandomValue() {
-		return getRandomValue(DEFAULT_RANDOM_LENGHT);
+		return getRandomValue(DEFAULT_STRING_REGEX);
 	}
 
-	private static String getRandomValue(Integer lenght) {
-		return UUID.randomUUID().toString().substring(0, lenght);
+	private static String getRandomValue(String regex) {
+		try {
+			if (XegerTypes.valueOf(regex) != null) {
+				switch (XegerTypes.valueOf(regex)) {
+					case DATE:
+						regex = DATE_REGEX;
+						break;
+					case TIME:
+						regex = TIME_REGEX;
+						break;
+					case DATETIME:
+						regex = DATE_REGEX + " " + TIME_REGEX;
+						break;
+					case EMAIL:
+						regex = EMAIL_REGEX;
+						break;
+					case INT:
+						regex = DEFAULT_INT_REGEX;
+						break;
+					case STRING:
+						regex = DEFAULT_STRING_REGEX;
+						break;
+				}
+			}
+			Pattern.compile(regex);
+		} catch (PatternSyntaxException e) {
+			regex = DEFAULT_STRING_REGEX;
+		}
+		Xeger generator = new Xeger(regex);
+		return generator.generate();
 	}
 
 	private static String getFirstParamFromData(String data) {

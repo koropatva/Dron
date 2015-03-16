@@ -20,7 +20,7 @@ repositories {
 dependencies {
     	compile("com.fasterxml.jackson.core:jackson-databind:2.4.4")
 	compile("org.springframework:spring-web:4.0.3.RELEASE")
-	compile("com.dron:dron-interfaces:05.03.15")
+	compile project(':dron-interfaces')
         compile("n1.flotsam:xeger:1.0-SNAPSHOT")
         compile("dk.brics:automaton:1.11")
 }

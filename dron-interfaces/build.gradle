@@ -11,7 +11,7 @@ jar {
 repositories {
     mavenCentral()
     flatDir {
-	dirs 'src/main/resources/libs'
+	dirs '../libs/'
     }
 }
 

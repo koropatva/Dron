@@ -13,7 +13,7 @@ import com.dron.sender.controllers.base.interfaces.IStageService;
 import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.exceptions.DronSenderException;
-import com.dron.sender.exim.ExImService;
+import com.dron.sender.exim.ExportService;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.models.transformers.TransformKey;
@@ -55,7 +55,7 @@ public class ExportSequenceStrategy extends ModelRootController implements
 				TransformerFactory.reverseTransformEntity(sequence, uiSequence,
 						TransformKey.ROOT_SEQUENCE);
 
-				ExImService.getInstance().exports(sequence, choosenFile);
+				ExportService.getInstance().exports(sequence, choosenFile);
 			}
 		} catch (DronSenderException e) {
 			System.out.println(e.getMessage());

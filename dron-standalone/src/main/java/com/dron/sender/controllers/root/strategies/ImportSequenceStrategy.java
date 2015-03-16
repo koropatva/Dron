@@ -10,7 +10,7 @@ import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.AutoFillSequenceHelper;
 import com.dron.sender.exceptions.DronSenderException;
-import com.dron.sender.exim.ExImService;
+import com.dron.sender.exim.ImportService;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.models.transformers.TransformKey;
@@ -43,7 +43,7 @@ public class ImportSequenceStrategy extends ModelRootController implements
 
 		try {
 			if (getTmpImportFile() != null) {
-				Sequence sequence = ExImService.getInstance().imports(
+				Sequence sequence = ImportService.getInstance().imports(
 						getTmpImportFile());
 				TransformerFactory.transformEntity(sequence, uiSequence,
 						TransformKey.ROOT_SEQUENCE);

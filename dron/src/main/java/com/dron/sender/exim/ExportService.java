@@ -15,54 +15,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Koropatva
  *
  */
-public class ExImService {
+public class ExportService {
 
-	public static ExImService INSTANCE;
+	public static ExportService INSTANCE;
 
 	private ObjectMapper mapper = new ObjectMapper();
 
-	private ExImService() {
+	private ExportService() {
 	}
 
-	public static ExImService getInstance() {
+	public static ExportService getInstance() {
 		if (INSTANCE == null) {
-			synchronized (ExImService.class) {
+			synchronized (ExportService.class) {
 				if (INSTANCE == null) {
-					INSTANCE = new ExImService();
+					INSTANCE = new ExportService();
 				}
 			}
 		}
 		return INSTANCE;
-	}
-
-	/**
-	 * Method for import sequence from the file
-	 * 
-	 * @param path
-	 *            path for the file to import
-	 * @return a sequence from the file
-	 * @throws DronSenderException
-	 */
-	public Sequence imports(String path) throws DronSenderException {
-		File file = getFile(path);
-		return imports(file);
-	}
-
-	/**
-	 * Method for import sequence from the file
-	 * 
-	 * @param file
-	 *            file to import
-	 * @return a sequence from the file
-	 * @throws DronSenderException
-	 */
-	public Sequence imports(File file) throws DronSenderException {
-		try {
-			Sequence sequence = mapper.readValue(file, Sequence.class);
-			return sequence;
-		} catch (IOException e) {
-			throw new DronSenderException(e.getMessage(), e);
-		}
 	}
 
 	/**

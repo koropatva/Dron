@@ -37,7 +37,7 @@ public class RESTfullService {
 		case GET:
 			return restTemplate.getForObject(plugin.fillUrl(), type);
 		default:
-			throw new EmptyDataException("");
+			throw new EmptyDataException(plugin.getHttpMethod() + " is not maintained for now");
 		}
 	}
 

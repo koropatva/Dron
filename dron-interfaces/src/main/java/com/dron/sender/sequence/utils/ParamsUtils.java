@@ -2,7 +2,6 @@ package com.dron.sender.sequence.utils;
 
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import nl.flotsam.xeger.Xeger;
 
@@ -72,7 +71,7 @@ public class ParamsUtils {
 				}
 			}
 			Pattern.compile(regex);
-		} catch (PatternSyntaxException e) {
+		} catch (Exception e) {
 			regex = DEFAULT_STRING_REGEX;
 		}
 		Xeger generator = new Xeger(regex);

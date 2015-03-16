@@ -15,6 +15,9 @@ jar {
 repositories {
 	mavenLocal()
 	mavenCentral()
+	flatDir {
+		dirs '../libs'
+	}
 }
 
 dependencies {
@@ -24,4 +27,6 @@ dependencies {
 	compile("com.dron:dron-interfaces:05.03.15")
 	compile("com.dron:dron-service:05.03.15")
 	compile("org.apache.commons:commons-lang3:3.0")
+        compile("n1.flotsam:xeger:1.0-SNAPSHOT")
+        compile("dk.brics:automaton:1.11")
 }

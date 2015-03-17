@@ -1,13 +1,7 @@
 package com.dron.sender.sequence.models;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.dron.sender.pattern.interfaces.IBaseObserver;
-
-public class Param implements IBaseObserver {
+public class Param extends BaseNotificationModel {
 
 	public static final String PROPERTY_ARRAY = "Array";
 
@@ -33,20 +27,6 @@ public class Param implements IBaseObserver {
 	private String value;
 
 	private boolean array;
-
-	private List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
-
-	public void addChangeListener(PropertyChangeListener newListener) {
-		listeners.add(newListener);
-	}
-
-	private void notifyListeners(Object object, String property,
-			Object oldValue, Object newValue) {
-		for (PropertyChangeListener listener : listeners) {
-			listener.propertyChange(new PropertyChangeEvent(object, property,
-					oldValue, newValue));
-		}
-	}
 
 	public String getKey() {
 		return key;

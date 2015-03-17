@@ -44,7 +44,7 @@ public class ImportSequenceStrategy extends ModelRootController implements
 		try {
 			if (getTmpImportFile() != null) {
 				Sequence sequence = ImportService.getInstance().imports(
-						getTmpImportFile());
+						getTmpImportFile(), Sequence.class);
 				TransformerFactory.transformEntity(sequence, uiSequence,
 						TransformKey.ROOT_SEQUENCE);
 

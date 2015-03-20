@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import com.dron.sender.exceptions.DronSenderException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -25,6 +26,9 @@ public class ImportService {
 	private ObjectMapper mapper = new ObjectMapper();
 
 	private ImportService() {
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+		mapper.configure(
+				JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
 	}
 
 	public static ImportService getInstance() {
@@ -36,6 +40,26 @@ public class ImportService {
 			}
 		}
 		return INSTANCE;
+	}
+
+	/**
+	 * Method for import sequence from the file
+	 * 
+	 * @param path
+	 *            path for the file to import
+	 * @return a sequence from the file
+	 * @throws DronSenderException
+	 */
+	public <T> T imports(Object object, Class<T> importClass)
+			throws DronSenderException {
+		if (object instanceof Path) {
+			return imports((Path) object, importClass);
+		} else if (object instanceof InputStream) {
+			return imports((InputStream) object, importClass);
+		} else {
+			throw new DronSenderException(
+					"Current import type doesn't support.");
+		}
 	}
 
 	/**

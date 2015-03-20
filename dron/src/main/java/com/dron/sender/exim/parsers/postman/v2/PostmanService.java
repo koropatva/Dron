@@ -6,6 +6,7 @@ import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exim.ImportService;
 import com.dron.sender.exim.parsers.postman.IPostmanService;
 import com.dron.sender.exim.parsers.postman.v2.models.PostmanModel;
+import com.dron.sender.exim.parsers.postman.v2.models.PostmanValueStructureModel;
 import com.dron.sender.sequence.models.Sequence;
 import com.dron.sender.transformers.TransformKey;
 import com.dron.sender.transformers.TransformerFactory;
@@ -22,13 +23,17 @@ public class PostmanService implements IPostmanService {
 
 		TransformerFactory.transformEntity(postmenModel, sequence,
 				TransformKey.POSTMAN_V2_TO_SEQUENCE);
-		return null;
+		return sequence;
 	}
 
 	@Override
 	public Sequence parseValues(Path path, Sequence sequence)
 			throws DronSenderException {
-		// TODO
-		return null;
+		PostmanValueStructureModel postmanValueStructureModel = importService
+				.imports(path, PostmanValueStructureModel.class);
+
+		TransformerFactory.transformEntity(postmanValueStructureModel,
+				sequence, TransformKey.POSTMAN_VALUE_V2_TO_SEQUENCE);
+		return sequence;
 	}
 }

@@ -5,12 +5,15 @@ import java.util.List;
 
 import org.springframework.http.HttpMethod;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Data model for parse export data from POSTman V2
  * 
  * @author Koropatva A.
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestModel {
 
 	private String collectionId;

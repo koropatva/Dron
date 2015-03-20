@@ -3,6 +3,7 @@ package com.dron.sender.transformers;
 import org.springframework.util.Assert;
 
 import com.dron.sender.exim.parsers.postman.v2.models.PostmanToSequenceTransformer;
+import com.dron.sender.exim.parsers.postman.v2.models.PostmanValueToSequenceTransformer;
 import com.dron.sender.exim.parsers.postman.v2.models.RequestToPluginTransformer;
 import com.dron.sender.pattern.interfaces.IBaseTransformer;
 
@@ -52,6 +53,8 @@ public class TransformerFactory {
 		switch (key) {
 			case POSTMAN_V2_TO_SEQUENCE:
 				return (IBaseTransformer<F, T>) new PostmanToSequenceTransformer();
+			case POSTMAN_VALUE_V2_TO_SEQUENCE:
+				return (IBaseTransformer<F, T>) new PostmanValueToSequenceTransformer();
 			case REQUEST_V2_TO_PLUGIN:
 				return (IBaseTransformer<F, T>) new RequestToPluginTransformer();
 			default:

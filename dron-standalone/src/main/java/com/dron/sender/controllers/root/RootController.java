@@ -21,12 +21,13 @@ import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.base.interfaces.ISceneService;
 import com.dron.sender.controllers.base.interfaces.IStageService;
 import com.dron.sender.controllers.base.models.ControllerEnum;
+import com.dron.sender.controllers.root.models.BaseRootController;
 import com.dron.sender.controllers.root.models.UISequence;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 
 @Component
-public class RootController extends ModelRootController implements
+public class RootController extends BaseRootController implements
 		Initializable, IBaseController {
 
 	@Autowired
@@ -64,6 +65,11 @@ public class RootController extends ModelRootController implements
 				() -> {
 					context.execute(this,
 							ControllerActionStrategy.ROOT_SEND_SEQUENCE);
+				});
+		scene.getAccelerators().put(
+				new KeyCodeCombination(KeyCode.P, KeyCombination.META_DOWN, KeyCombination.SHIFT_DOWN),
+				() -> {
+					iStageService.showDialog(ControllerEnum.IMPORT_POSTMAN);
 				});
 
 	}
@@ -103,6 +109,11 @@ public class RootController extends ModelRootController implements
 	protected void importSequence() {
 		context.execute(this,
 				ControllerActionStrategy.ROOT_SHOW_IMPORT_DIALOG_SEQUENCE);
+	}
+
+	@FXML
+	protected void importPostmanSequence() {
+		iStageService.showDialog(ControllerEnum.IMPORT_POSTMAN);
 	}
 
 	@FXML

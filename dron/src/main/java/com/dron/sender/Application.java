@@ -21,7 +21,7 @@ public class Application {
 			IOException, DronSenderException {
 
 		Sequence sequence = ImportService.getInstance().imports(
-				"/Users/admin/Documents/json/CreateUser.json");
+				"/Users/admin/Documents/json/CreateUser.json", Sequence.class);
 		SequenceService sequenceService = new SequenceService(sequence);
 
 		sequenceService.runSequence();

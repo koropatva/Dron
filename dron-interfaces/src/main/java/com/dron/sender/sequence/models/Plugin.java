@@ -1,7 +1,5 @@
 package com.dron.sender.sequence.models;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +8,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 
-import com.dron.sender.pattern.interfaces.IBaseObserver;
 import com.dron.sender.sequence.utils.ParamsUtils;
 
-public class Plugin implements IBaseObserver {
+public class Plugin extends BaseNotificationModel {
 
 	public static final String PROPERTY_NAME = "Name";
 
@@ -29,6 +26,8 @@ public class Plugin implements IBaseObserver {
 
 	public static final String PROPERTY_HTTP_METHOD = "HttpMethod";
 
+	public static final String PROPERTY_ID = "ID";
+
 	public Plugin() {
 		this(HttpMethod.GET);
 	}
@@ -38,20 +37,6 @@ public class Plugin implements IBaseObserver {
 		setHeaders(null);
 
 		futureParams = new ArrayList<FutureParam>();
-	}
-
-	private List<PropertyChangeListener> listeners = new ArrayList<>();
-
-	private void notifyListeners(final Object object, final String property,
-			final Object oldValue, final Object newValue) {
-		for (final PropertyChangeListener listener : listeners) {
-			listener.propertyChange(new PropertyChangeEvent(object, property,
-					oldValue, newValue));
-		}
-	}
-
-	public void addChangeListener(PropertyChangeListener newListener) {
-		listeners.add(newListener);
 	}
 
 	public void setHeaders(HttpHeaders headers) {
@@ -69,6 +54,10 @@ public class Plugin implements IBaseObserver {
 
 	private Sequence sequence;
 
+	private String id;
+
+	private String name;
+
 	private HttpHeaders headers;
 
 	private HttpMethod httpMethod;
@@ -78,8 +67,6 @@ public class Plugin implements IBaseObserver {
 	private String postBody;
 
 	private String responce;
-
-	private String name;
 
 	/**
 	 * Structure of parameter way looks like: names of JSON object separated by
@@ -156,6 +143,14 @@ public class Plugin implements IBaseObserver {
 
 	public void setName(String name) {
 		notifyListeners(this, PROPERTY_NAME, this.name, this.name = name);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		notifyListeners(this, PROPERTY_ID, this.id, this.id = id);
 	}
 
 }

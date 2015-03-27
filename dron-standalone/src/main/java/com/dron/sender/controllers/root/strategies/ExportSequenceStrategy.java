@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import com.dron.sender.config.AppProperties;
 import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.base.interfaces.IStageService;
-import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
+import com.dron.sender.controllers.root.models.BaseRootController;
 import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exim.ExportService;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
@@ -22,7 +22,7 @@ import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Sequence;
 
 @Component
-public class ExportSequenceStrategy extends ModelRootController implements
+public class ExportSequenceStrategy extends BaseRootController implements
 		IControllerStrategy {
 
 	@Autowired

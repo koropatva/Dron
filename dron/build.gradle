@@ -23,4 +23,6 @@ dependencies {
 	compile project(':dron-interfaces')
         compile("n1.flotsam:xeger:1.0-SNAPSHOT")
         compile("dk.brics:automaton:1.11")
+	compile('junit:junit:4.11')
+	compile('org.easytesting:fest-assert:1.4')
 }

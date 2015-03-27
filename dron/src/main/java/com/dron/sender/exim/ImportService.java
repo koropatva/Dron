@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import com.dron.sender.exceptions.DronSenderException;
-import com.dron.sender.sequence.models.Sequence;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -21,11 +21,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class ImportService {
 
-	public static ImportService INSTANCE;
+	private static ImportService INSTANCE;
 
 	private ObjectMapper mapper = new ObjectMapper();
 
 	private ImportService() {
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+		mapper.configure(
+				JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
 	}
 
 	public static ImportService getInstance() {
@@ -47,8 +50,29 @@ public class ImportService {
 	 * @return a sequence from the file
 	 * @throws DronSenderException
 	 */
-	public Sequence imports(File file) throws DronSenderException {
-		return imports(file.toURI());
+	public <T> T imports(Object object, Class<T> importClass)
+			throws DronSenderException {
+		if (object instanceof Path) {
+			return imports((Path) object, importClass);
+		} else if (object instanceof InputStream) {
+			return imports((InputStream) object, importClass);
+		} else {
+			throw new DronSenderException(
+					"Current import type doesn't support.");
+		}
+	}
+
+	/**
+	 * Method for import sequence from the file
+	 * 
+	 * @param path
+	 *            path for the file to import
+	 * @return a sequence from the file
+	 * @throws DronSenderException
+	 */
+	public <T> T imports(File file, Class<T> importClass)
+			throws DronSenderException {
+		return imports(file.toURI(), importClass);
 	}
 
 	/**
@@ -59,10 +83,11 @@ public class ImportService {
 	 * @return a sequence from the file
 	 * @throws DronSenderException
 	 */
-	public Sequence imports(String path) throws DronSenderException {
-		return imports(Paths.get(URI.create(path)));
+	public <T> T imports(String path, Class<T> importClass)
+			throws DronSenderException {
+		return imports(Paths.get(URI.create(path)), importClass);
 	}
-	
+
 	/**
 	 * Method for import sequence from the URI
 	 * 
@@ -71,8 +96,9 @@ public class ImportService {
 	 * @return a sequence from the file
 	 * @throws DronSenderException
 	 */
-	public Sequence imports(URI uri) throws DronSenderException {
-		return imports(Paths.get(uri));
+	public <T> T imports(URI uri, Class<T> importClass)
+			throws DronSenderException {
+		return imports(Paths.get(uri), importClass);
 	}
 
 	/**
@@ -83,9 +109,11 @@ public class ImportService {
 	 * @return a sequence from the file
 	 * @throws DronSenderException
 	 */
-	public Sequence imports(Path path) throws DronSenderException {
+	public <T> T imports(Path path, Class<T> importClass)
+			throws DronSenderException {
 		try {
-			return imports(Files.newInputStream(path, StandardOpenOption.READ));
+			return imports(Files.newInputStream(path, StandardOpenOption.READ),
+					importClass);
 		} catch (IOException e) {
 			throw new DronSenderException(e.getMessage());
 		}
@@ -94,14 +122,17 @@ public class ImportService {
 	/**
 	 * Method for import sequence from the InputStream
 	 * 
+	 * @param <T>
+	 * 
 	 * @param file
 	 *            file to import
 	 * @return a sequence from the file
 	 * @throws DronSenderException
 	 */
-	public Sequence imports(InputStream src) throws DronSenderException {
+	public <T> T imports(InputStream src, Class<T> importClass)
+			throws DronSenderException {
 		try {
-			Sequence sequence = mapper.readValue(src, Sequence.class);
+			T sequence = mapper.readValue(src, importClass);
 			return sequence;
 		} catch (IOException e) {
 			throw new DronSenderException(e.getMessage(), e);

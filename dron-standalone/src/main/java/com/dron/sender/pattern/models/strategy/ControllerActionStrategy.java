@@ -1,6 +1,7 @@
 package com.dron.sender.pattern.models.strategy;
 
 public enum ControllerActionStrategy {
+	EXIM_INITIALIZE,
 	ROOT_INITIALIZE,
 	ROOT_NEW_UI_SEQUENCE,
 	ROOT_FILL_ROOT_CONTROLS,

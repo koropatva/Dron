@@ -29,4 +29,5 @@ dependencies {
 	compile("org.apache.commons:commons-lang3:3.0")
         compile("n1.flotsam:xeger:1.0-SNAPSHOT")
         compile("dk.brics:automaton:1.11")
+	compile("org.controlsfx:controlsfx:8.20.8")
 }

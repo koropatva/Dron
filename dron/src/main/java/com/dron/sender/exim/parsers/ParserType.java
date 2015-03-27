@@ -1,6 +1,7 @@
 package com.dron.sender.exim.parsers;
 
 public enum ParserType {
-	POSTMAN,
+	POSTMAN_VALUES,
+	POSTMAN_REQUESTS,
 	DHC;
 }

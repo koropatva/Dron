@@ -1,8 +1,5 @@
 package com.dron.sender.controllers.root.strategies;
 
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +9,17 @@ import org.springframework.stereotype.Component;
 
 import com.dron.sender.config.AppProperties;
 import com.dron.sender.controllers.base.interfaces.IBaseController;
-import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.AutoFillSequenceHelper;
 import com.dron.sender.controllers.root.controls.ParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
+import com.dron.sender.controllers.root.models.BaseRootController;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 
 @Component
-public class InitializeStrategy extends ModelRootController implements
+public class InitializeStrategy extends BaseRootController implements
 		IControllerStrategy {
 
 	@Resource
@@ -120,60 +117,6 @@ public class InitializeStrategy extends ModelRootController implements
 		autoFillSequenceTextBox.setUp(ctx, controller);
 		autoFillSequenceTextBox.setItems(AutoFillSequenceHelper
 				.getFiles(appProperties.getFilePath()));
-
-//		accPlugins.setOnDragOver(event -> {
-//			System.out.println("accPlugins.setOnDragOver");
-//			/* data is dragged over the target */
-//			/*
-//			 * accept it only if it is not dragged from the same node and if it
-//			 * has a string data
-//			 */
-//			if (event.getGestureSource() != accPlugins
-//					&& event.getDragboard().hasString()) {
-//				/* allow for both copying and moving, whatever user chooses */
-//				event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-//			}
-//
-//			event.consume();
-//		});
-//		accPlugins.setOnDragEntered(event -> {
-//			System.out.println("accPlugins.setOnDragEntered");
-//			/* the drag-and-drop gesture entered the target */
-//			/* show to the user that it is an actual gesture target */
-//			if (event.getGestureSource() != accPlugins
-//					&& event.getDragboard().hasString()) {
-//				accPlugins.setStyle("-fx-background-color: DAE6F3;");
-//			}
-//
-//			event.consume();
-//		});
-//
-//		accPlugins.setOnDragExited(event -> {
-//			System.out.println("accPlugins.setOnDragExited");
-//			/* mouse moved away, remove the graphical cues */
-//			accPlugins.setStyle("");
-//
-//			event.consume();
-//		});
-//
-//		accPlugins.setOnDragDropped(event -> {
-//			System.out.println("accPlugins.setOnDragDropped");
-//			/* data dropped */
-//			/* if there is a string data on dragboard, read it and use it */
-//			Dragboard db = event.getDragboard();
-//			boolean success = false;
-//			if (db.hasString()) {
-//				System.out.println(db.getString());
-//				success = true;
-//			}
-//			/*
-//			 * let the source know whether the string was successfully
-//			 * transferred and used
-//			 */
-//			event.setDropCompleted(success);
-//
-//			event.consume();
-//		});
 
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_NEW_UI_SEQUENCE);

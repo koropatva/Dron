@@ -17,7 +17,7 @@ public class ParseFactoryTest {
 		Sequence sequence = ImportFactory.getInstance().importSequence(
 				new URI(getClass().getClassLoader()
 						.getResource("PostmanModelV2Version.json")
-						.toExternalForm()), ParserType.POSTMAN);
+						.toExternalForm()), ParserType.POSTMAN_VALUES);
 
 		assertThat(sequence).describedAs("Sequence can't be null").isNotNull();
 	}
@@ -29,7 +29,7 @@ public class ParseFactoryTest {
 				.importSequence(
 						new URI(
 								"https://www.getpostman.com/collections/78b06675a9c07320f29f"),
-						ParserType.POSTMAN);
+						ParserType.POSTMAN_VALUES);
 
 		System.out.println(sequence);
 	}

@@ -28,6 +28,8 @@
 								<SeparatorMenuItem mnemonicParsing="false" />
 								<MenuItem mnemonicParsing="false" text="Import"
 									onAction="#importSequence" />
+								<MenuItem mnemonicParsing="false" text="Import Postman"
+									onAction="#importPostmanSequence" />
 								<MenuItem mnemonicParsing="false" text="Export"
 									onAction="#exportSequence" />
 							</items>

@@ -9,6 +9,12 @@ public interface IStageService {
 	void initPrimaryStage(Stage primaryStage);
 
 	void showController(ControllerEnum controllerEnum);
+	
+	void showDialog(ControllerEnum controllerEnum);
 
+	void hideDialog();
+	
 	Stage getPrimaryStage();
+	
+	Stage getDialogStage();
 }

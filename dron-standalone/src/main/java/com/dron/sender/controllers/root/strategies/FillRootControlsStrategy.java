@@ -3,15 +3,15 @@ package com.dron.sender.controllers.root.strategies;
 import org.springframework.stereotype.Component;
 
 import com.dron.sender.controllers.base.interfaces.IBaseController;
-import com.dron.sender.controllers.root.ModelRootController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
+import com.dron.sender.controllers.root.models.BaseRootController;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 
 @Component
-public class FillRootControlsStrategy extends ModelRootController implements
+public class FillRootControlsStrategy extends BaseRootController implements
 		IControllerStrategy {
 
 	@Override

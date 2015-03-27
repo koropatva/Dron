@@ -1,4 +1,4 @@
-package com.dron.sender.controllers.root;
+package com.dron.sender.controllers.root.models;
 
 import java.io.File;
 
@@ -15,12 +15,9 @@ import javafx.scene.layout.HBox;
 
 import com.dron.sender.controllers.root.controls.AutoFillSequenceTextBox;
 import com.dron.sender.controllers.root.controls.RootConfig;
-import com.dron.sender.controllers.root.models.UIHttpHeaders;
-import com.dron.sender.controllers.root.models.UIParam;
-import com.dron.sender.controllers.root.models.UISequence;
 import com.dron.sender.sequence.models.Sequence;
 
-public abstract class ModelRootController extends Parent {
+public abstract class BaseRootController extends Parent {
 
 	protected static final int DEFAULT_SELECTED_UI_PLUGIN = 0;
 
@@ -84,7 +81,7 @@ public abstract class ModelRootController extends Parent {
 	// IMPORT_SEQUENCE strategies
 	private File tmpImportFile;
 
-	public void setUp(ModelRootController modelRootController) {
+	public void setUp(BaseRootController modelRootController) {
 		this.tfUrl = modelRootController.getTfUrl();
 		this.tfNewPluginName = modelRootController.getTfNewPluginName();
 		this.txaResponce = modelRootController.getTxaResponce();

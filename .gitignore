@@ -15,6 +15,7 @@ dron/.gradle/
 dron/.project
 dron/.settings/
 dron/build/
+build/
 .gradle/
 .project
 .settings/

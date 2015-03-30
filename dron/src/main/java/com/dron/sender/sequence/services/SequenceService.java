@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.dron.sender.exceptions.EmptyDataException;
+import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.sequence.models.FutureParam;
 import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Plugin;
 import com.dron.sender.sequence.models.Sequence;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,28 +27,26 @@ public class SequenceService {
 		this.sequence = sequence;
 	}
 
-	public void runSequence() throws EmptyDataException {
+	public void runSequence() throws DronSenderException {
 		for (int i = 0; i < sequence.getPlugins().size(); i++) {
 			Plugin plugin = sequence.getPlugins().get(i);
 			plugin.setSequence(sequence);
 			String response = restFullService.run(plugin);
 			plugin.setResponce(response);
 			System.out.println(response);
-			try {
-				fillFutureParams(response, plugin.getFutureParams());
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+			fillFutureParams(response, plugin.getFutureParams());
 		}
 	}
 
 	private void fillFutureParams(String response,
-			List<FutureParam> futureParams) throws JsonProcessingException,
-			IOException {
+			List<FutureParam> futureParams) {
 		for (FutureParam futureParam : futureParams) {
-
-			JsonNode node = mapper.readTree(response);
-			fillFutureParam(node, futureParam, futureParam.getDependence());
+			try {
+				JsonNode node = mapper.readTree(response);
+				fillFutureParam(node, futureParam, futureParam.getDependence());
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 

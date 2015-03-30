@@ -46,6 +46,8 @@
 											prefWidth="300" focusTraversable="true" />
 										<Button fx:id="btnSendSequence" onAction="#sendSequence"
 											text="Send sequence" focusTraversable="true" />
+										<Button fx:id="btnStopSendingSequence" text="Stop sending sequence"
+											onAction="#stopSendingSequence" visible="false" />
 									</items>
 								</ToolBar>
 								<ToolBar>

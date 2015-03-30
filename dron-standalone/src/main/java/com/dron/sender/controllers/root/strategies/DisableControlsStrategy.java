@@ -24,10 +24,12 @@ public class DisableControlsStrategy extends BaseRootController implements
 		setUp(controller);
 
 		RootConfig.setDisableRootProperty(true);
+		autoFillSequenceTextBox.disableProperty().set(true);
 		tblParams.disableProperty().set(true);
 		tbtnParams.disableProperty().set(true);
 		accPlugins.disableProperty().set(true);
 		tfNewPluginName.disableProperty().set(true);
 		btnAddNewPlugin.disableProperty().set(true);
+		btnStopSendingSequence.setVisible(true);
 	}
 }

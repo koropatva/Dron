@@ -1,5 +1,7 @@
 package com.dron.sender.controllers.root.strategies;
 
+import javafx.application.Platform;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -43,12 +45,18 @@ public class SendSequenceStrategy extends BaseRootController implements
 		initLogging(sequence);
 
 		txaResponce.setText("");
-		context.execute(controller,
-				ControllerActionStrategy.ROOT_DISABLE_CONTROLS);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				context.execute(controller,
+						ControllerActionStrategy.ROOT_DISABLE_CONTROLS);
+			}
+		});
 
 		SequenceTask sequenceTask = new SequenceTask(sequence, ctx);
 
-		new Thread(sequenceTask).start();
+		controller.setSendRequestThread(new Thread(sequenceTask));
+		controller.getSendRequestThread().start();
 	}
 
 	private Sequence fillRootSequence() {

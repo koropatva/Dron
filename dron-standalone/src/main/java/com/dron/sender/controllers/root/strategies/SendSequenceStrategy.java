@@ -1,6 +1,7 @@
 package com.dron.sender.controllers.root.strategies;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.dron.sender.controllers.base.interfaces.IBaseController;
@@ -25,6 +26,9 @@ public class SendSequenceStrategy extends BaseRootController implements
 	@Autowired
 	private ControllerStrategyContext context;
 
+	@Autowired
+	private ApplicationContext ctx;
+
 	@Override
 	public ControllerActionStrategy getStrategy() {
 		return ControllerActionStrategy.ROOT_SEND_SEQUENCE;
@@ -39,11 +43,10 @@ public class SendSequenceStrategy extends BaseRootController implements
 		initLogging(sequence);
 
 		txaResponce.setText("");
-		context.execute(controller, ControllerActionStrategy.ROOT_DISABLE_CONTROLS);
+		context.execute(controller,
+				ControllerActionStrategy.ROOT_DISABLE_CONTROLS);
 
-		SequenceTask sequenceTask = new SequenceTask(sequence);
-		sequenceTask.setContext(context);
-		sequenceTask.setController(controller);
+		SequenceTask sequenceTask = new SequenceTask(sequence, ctx);
 
 		new Thread(sequenceTask).start();
 	}

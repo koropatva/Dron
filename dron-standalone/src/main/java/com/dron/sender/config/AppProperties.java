@@ -18,6 +18,17 @@ public class AppProperties {
 	@Value("${tmp.import.postman.request.file.path}")
 	private String tmpImportPostmanRequestFilePath;
 
+	@Value("${request.duration.time.minuts}")
+	private Integer requestDuration;
+
+	public Integer getRequestDuration() {
+		return requestDuration;
+	}
+
+	public void setRequestDuration(Integer requestDuration) {
+		this.requestDuration = requestDuration;
+	}
+
 	public String getFilePath() {
 		return filePath;
 	}

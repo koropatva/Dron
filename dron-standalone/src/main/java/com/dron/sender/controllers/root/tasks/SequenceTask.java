@@ -1,13 +1,10 @@
 package com.dron.sender.controllers.root.tasks;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+
 import org.springframework.context.ApplicationContext;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.concurrent.Task;
-import javafx.util.Duration;
-
-import com.dron.sender.config.AppProperties;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exceptions.HandlerNotReadyException;
@@ -25,11 +22,8 @@ public class SequenceTask extends Task<String> {
 
 	private RootController controller;
 
-	private AppProperties appProperties;
-
 	public SequenceTask(Sequence sequence, ApplicationContext ctx) {
 		this.sequence = sequence;
-		this.appProperties = ctx.getBean(AppProperties.class);
 		this.controller = ctx.getBean(RootController.class);
 		this.context = ctx.getBean(ControllerStrategyContext.class);
 	}
@@ -38,26 +32,26 @@ public class SequenceTask extends Task<String> {
 	protected String call() {
 		final SequenceService sequenceService = new SequenceService(sequence);
 
-		Timeline timeline = new Timeline(new KeyFrame(
-				Duration.minutes(appProperties.getRequestDuration()), (ae) -> {
-					try {
-						sequenceService.runSequence();
-					} catch (DronSenderException e) {
-						if (e instanceof HandlerNotReadyException) {
-							System.out.println("Dron ERROR " + e.getMessage());
-						}
-						if (e instanceof RequestException) {
-							System.out.println("Request ERROR "
-									+ e.getMessage());
-						}
-					} catch (Exception e) {
-						System.out.println("System ERROR " + e.getMessage());
-					} finally {
-						context.execute(controller,
-								ControllerActionStrategy.ROOT_ENABLE_CONTROLS);
-					}
-				}));
-		timeline.play();
+		try {
+			sequenceService.runSequence();
+		} catch (DronSenderException e) {
+			if (e instanceof HandlerNotReadyException) {
+				System.out.println("Dron ERROR " + e.getMessage());
+			}
+			if (e instanceof RequestException) {
+				System.out.println("Request ERROR " + e.getMessage());
+			}
+		} catch (Exception e) {
+			System.out.println("System ERROR " + e.getMessage());
+		} finally {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					context.execute(controller,
+							ControllerActionStrategy.ROOT_ENABLE_CONTROLS);
+				}
+			});
+		}
 
 		return null;
 	}

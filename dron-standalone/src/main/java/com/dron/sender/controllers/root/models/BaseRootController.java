@@ -51,6 +51,9 @@ public abstract class BaseRootController extends Parent {
 	protected Button btnSendActivePlugin;
 
 	@FXML
+	protected Button btnStopSendingSequence;
+
+	@FXML
 	protected Button btnSendSequence;
 
 	@FXML
@@ -81,6 +84,9 @@ public abstract class BaseRootController extends Parent {
 	// IMPORT_SEQUENCE strategies
 	private File tmpImportFile;
 
+	// Thread that is using for send sequence requests
+	private Thread sendRequestThread;
+
 	public void setUp(BaseRootController modelRootController) {
 		this.tfUrl = modelRootController.getTfUrl();
 		this.tfNewPluginName = modelRootController.getTfNewPluginName();
@@ -97,12 +103,15 @@ public abstract class BaseRootController extends Parent {
 		this.tblParams = modelRootController.getTblParams();
 		this.uiSequence = modelRootController.getUiSequence();
 		this.btnSendActivePlugin = modelRootController.getBtnSendActivePlugin();
+		this.btnStopSendingSequence = modelRootController
+				.getBtnStopSendingSequence();
 		this.btnSendSequence = modelRootController.getBtnSendSequence();
 		this.btnAddNewPlugin = modelRootController.getBtnAddNewPlugin();
 		this.autoFillSequenceTextBox = modelRootController
 				.getAutoFillSequenceTextBox();
 		this.tmpImportSequence = modelRootController.getTmpImportSequence();
 		this.tmpImportFile = modelRootController.getTmpImportFile();
+		this.sendRequestThread = modelRootController.getSendRequestThread();
 	}
 
 	protected void updateControls() {
@@ -168,6 +177,10 @@ public abstract class BaseRootController extends Parent {
 		return btnSendActivePlugin;
 	}
 
+	public Button getBtnStopSendingSequence() {
+		return btnStopSendingSequence;
+	}
+
 	public Button getBtnSendSequence() {
 		return btnSendSequence;
 	}
@@ -194,6 +207,14 @@ public abstract class BaseRootController extends Parent {
 
 	public void setTmpImportFile(File tmpImportFile) {
 		this.tmpImportFile = tmpImportFile;
+	}
+
+	public Thread getSendRequestThread() {
+		return sendRequestThread;
+	}
+
+	public void setSendRequestThread(Thread sendRequestThread) {
+		this.sendRequestThread = sendRequestThread;
 	}
 
 }

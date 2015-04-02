@@ -132,8 +132,7 @@ public class ImportService {
 	public <T> T imports(InputStream src, Class<T> importClass)
 			throws DronSenderException {
 		try {
-			T sequence = mapper.readValue(src, importClass);
-			return sequence;
+			return mapper.readValue(src, importClass);
 		} catch (IOException e) {
 			throw new DronSenderException(e.getMessage(), e);
 		}

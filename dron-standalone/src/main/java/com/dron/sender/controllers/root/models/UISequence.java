@@ -13,6 +13,9 @@ public class UISequence {
 
 	private final StringProperty name = new SimpleStringProperty();
 
+	private final ObservableList<String> order = FXCollections
+			.observableArrayList();
+
 	private final ObservableList<UIParam> uiParams = FXCollections
 			.observableArrayList();
 
@@ -24,6 +27,7 @@ public class UISequence {
 	public void clear() {
 		uiParams.clear();
 		uiPlugins.clear();
+		order.clear();
 		name.set("");
 		selectedUIPLugin = 0;
 	}
@@ -32,6 +36,7 @@ public class UISequence {
 		selectedUIPLugin = 0;
 		uiParams.add(new UIParam());
 		uiPlugins.add(new UIPlugin());
+		order.add(uiPlugins.get(0).getId().get());
 	}
 
 	public ObservableList<UIParam> getUIParams() {
@@ -40,6 +45,10 @@ public class UISequence {
 
 	public ObservableList<UIPlugin> getUiPlugins() {
 		return uiPlugins;
+	}
+
+	public ObservableList<String> getOrder() {
+		return order;
 	}
 
 	public StringProperty getName() {
@@ -56,7 +65,8 @@ public class UISequence {
 			selectedUIPLugin = 1;
 		}
 		this.selectedUIPLugin = selectedUIPLugin;
-		context.execute(controller, ControllerActionStrategy.ROOT_FILL_ROOT_CONTROLS);
+		context.execute(controller,
+				ControllerActionStrategy.ROOT_FILL_ROOT_CONTROLS);
 		controller.getAccPlugins().setExpandedPane(
 				controller.getAccPlugins().getPanes()
 						.get(this.selectedUIPLugin));

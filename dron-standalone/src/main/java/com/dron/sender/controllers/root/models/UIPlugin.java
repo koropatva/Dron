@@ -1,6 +1,7 @@
 package com.dron.sender.controllers.root.models;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -23,6 +24,8 @@ public class UIPlugin implements Cloneable {
 
 	private final StringProperty name = new SimpleStringProperty();
 
+	private StringProperty id = new SimpleStringProperty();
+
 	private final ObservableList<UIHttpHeaders> headersList = FXCollections
 			.observableArrayList();
 
@@ -34,6 +37,7 @@ public class UIPlugin implements Cloneable {
 	}
 
 	public void clear() {
+		id.set(null);
 		url.set("");
 		postBody.set("");
 		name.set("");
@@ -45,6 +49,7 @@ public class UIPlugin implements Cloneable {
 		method.set(HttpMethod.GET.name());
 		headersList.add(new UIHttpHeaders());
 		futureParams.add(new UIFutureParam());
+		id.set(UUID.randomUUID().toString());
 	}
 
 	public ObservableList<UIHttpHeaders> getHeadersList() {
@@ -87,6 +92,14 @@ public class UIPlugin implements Cloneable {
 		this.method.set(method);
 	}
 
+	public StringProperty getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id.set(id);
+	}
+
 	public StringProperty getName() {
 		return name;
 	}
@@ -98,6 +111,7 @@ public class UIPlugin implements Cloneable {
 	@Override
 	public UIPlugin clone() {
 		UIPlugin plugin = new UIPlugin();
+		plugin.setId(id.get());
 		plugin.setMethod(method.get());
 		plugin.setName(name.get());
 		plugin.setPostBody(postBody.get());

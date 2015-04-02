@@ -31,8 +31,8 @@ import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 
 @Component
-public class FillUIPluginAccordionStrategy extends BaseRootController
-		implements IControllerStrategy {
+public class FillUIPluginAccordionStrategy extends BaseRootController implements
+		IControllerStrategy {
 
 	@Autowired
 	private ControllerStrategyContext context;
@@ -53,9 +53,16 @@ public class FillUIPluginAccordionStrategy extends BaseRootController
 			uiSequence.getUiPlugins().add(new UIPlugin());
 		}
 
-		uiSequence.getUiPlugins().forEach(uiPlugin -> {
-			titledPanes.add(createPluginTitlePane(uiPlugin, controller));
-		});
+		System.out.println(uiSequence.getOrder());
+		uiSequence.getOrder().forEach(
+				order -> {
+					UIPlugin uiPlugin = uiSequence.getUiPlugins().stream()
+							.filter(p -> p.getId().get().equals(order))
+							.findFirst().get();
+					System.out.println(uiPlugin.getId());
+					titledPanes
+							.add(createPluginTitlePane(uiPlugin, controller));
+				});
 
 		accPlugins.getPanes().clear();
 		accPlugins.getPanes().addAll(titledPanes);

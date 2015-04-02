@@ -1,5 +1,7 @@
 package com.dron.sender.controllers.root.strategies;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +47,16 @@ public class ImportSequenceStrategy extends BaseRootController implements
 			if (getTmpImportFile() != null) {
 				Sequence sequence = ImportService.getInstance().imports(
 						getTmpImportFile(), Sequence.class);
+				sequence.setOrder(new ArrayList<String>());
+				sequence.getPlugins().forEach(
+						p -> System.out.println(p.getId()));
+				System.out.println("ORDERS " + sequence.getOrder());
+				// TODO It's tmp solutions to fill sequence order. When all
+				// sequence will be ready need to REMOVE it
+				sequence.getPlugins().forEach(
+						p -> sequence.getOrder().add(p.getId()));
+				System.out.println("ORDERS " + sequence.getOrder());
+
 				TransformerFactory.transformEntity(sequence, uiSequence,
 						TransformKey.ROOT_SEQUENCE);
 

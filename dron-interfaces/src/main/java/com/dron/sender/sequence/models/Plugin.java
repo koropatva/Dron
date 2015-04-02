@@ -2,6 +2,7 @@ package com.dron.sender.sequence.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +36,7 @@ public class Plugin extends BaseNotificationModel {
 	public Plugin(HttpMethod httpMethod) {
 		this.httpMethod = httpMethod;
 		setHeaders(null);
-
+		setId(UUID.randomUUID().toString());
 		futureParams = new ArrayList<FutureParam>();
 	}
 
@@ -150,6 +151,9 @@ public class Plugin extends BaseNotificationModel {
 	}
 
 	public void setId(String id) {
+		if(id == null){
+			id = UUID.randomUUID().toString();
+		}
 		notifyListeners(this, PROPERTY_ID, this.id, this.id = id);
 	}
 

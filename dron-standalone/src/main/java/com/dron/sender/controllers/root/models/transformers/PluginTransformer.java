@@ -12,6 +12,7 @@ public class PluginTransformer implements IBaseTransformer<Plugin, UIPlugin> {
 
 	@Override
 	public UIPlugin transform(Plugin plugin, UIPlugin uiPlugin) {
+		uiPlugin.setId(plugin.getId());
 		uiPlugin.setName(plugin.getName());
 		uiPlugin.setUrl(plugin.getUrl());
 		uiPlugin.setPostBody(plugin.getPostBody());
@@ -27,6 +28,7 @@ public class PluginTransformer implements IBaseTransformer<Plugin, UIPlugin> {
 
 	@Override
 	public Plugin reverseTransform(Plugin plugin, UIPlugin uiPlugin) {
+		plugin.setId(uiPlugin.getId().get());
 		plugin.setName(uiPlugin.getName().get());
 		plugin.setUrl(uiPlugin.getUrl().get());
 		plugin.setPostBody(uiPlugin.getPostBody().get());

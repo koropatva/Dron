@@ -79,16 +79,20 @@ public class UISequence {
 
 	public void movePluginDown(String id) {
 		int index = findSelectedIndex(id);
-		String tmpOrder = order.get(index);
-		order.set(index, order.get(index + 1));
-		order.set(index + 1, tmpOrder);
+		if (index != order.size() - 1) {
+			String tmpOrder = order.get(index);
+			order.set(index, order.get(index + 1));
+			order.set(index + 1, tmpOrder);
+		}
 	}
 
 	public void movePluginUp(String id) {
 		int index = findSelectedIndex(id);
-		String tmpOrder = order.get(index);
-		order.set(index, order.get(index - 1));
-		order.set(index - 1, tmpOrder);
+		if (index != 0) {
+			String tmpOrder = order.get(index);
+			order.set(index, order.get(index - 1));
+			order.set(index - 1, tmpOrder);
+		}
 	}
 
 	public void selectedUIPLugin(ControllerStrategyContext context,
@@ -134,7 +138,7 @@ public class UISequence {
 	public UIPlugin getSelectedUIPLugin() {
 		return uiPlugins.stream()
 				.filter(p -> p.getId().get().equals(selectedUIPLuginID))
-				.findFirst().get();
+				.findFirst().orElse(null);
 	}
 
 }

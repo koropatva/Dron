@@ -78,6 +78,9 @@ public abstract class BaseRootController extends Parent {
 	// PREPARE_SEQUENCE strategies
 	private Sequence tmpImportSequence;
 
+	// The uiPLugin is used for share plugin to move it up and down
+	private UIPlugin tmpUiPlugin;
+
 	// The File is used for share file between SHOW_IMPORT_DIALOG_SEQUENCE and
 	// IMPORT_SEQUENCE strategies
 	private File tmpImportFile;
@@ -109,6 +112,8 @@ public abstract class BaseRootController extends Parent {
 				.getAutoFillSequenceTextBox();
 		this.tmpImportSequence = modelRootController.getTmpImportSequence();
 		this.tmpImportFile = modelRootController.getTmpImportFile();
+		this.tmpUiPlugin = modelRootController.getTmpUiPlugin() == null ? uiSequence
+				.getSelectedUIPLugin() : modelRootController.getTmpUiPlugin();
 		this.sendRequestThread = modelRootController.getSendRequestThread();
 	}
 
@@ -213,6 +218,14 @@ public abstract class BaseRootController extends Parent {
 
 	public void setSendRequestThread(Thread sendRequestThread) {
 		this.sendRequestThread = sendRequestThread;
+	}
+
+	public UIPlugin getTmpUiPlugin() {
+		return tmpUiPlugin;
+	}
+
+	public void setTmpUiPlugin(UIPlugin tmpUiPlugin) {
+		this.tmpUiPlugin = tmpUiPlugin;
 	}
 
 }

@@ -19,8 +19,6 @@ import com.dron.sender.sequence.models.Sequence;
 
 public abstract class BaseRootController extends Parent {
 
-	protected static final int DEFAULT_SELECTED_UI_PLUGIN = 0;
-
 	protected static final double DEFAULT_ACCORDION_WIDTH = 300.0;
 
 	@FXML

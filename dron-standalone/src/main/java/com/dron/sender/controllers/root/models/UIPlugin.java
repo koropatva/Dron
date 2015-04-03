@@ -16,6 +16,8 @@ public class UIPlugin implements Cloneable {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
+	private StringProperty id = new SimpleStringProperty();
+
 	private final StringProperty url = new SimpleStringProperty();
 
 	private final StringProperty postBody = new SimpleStringProperty();
@@ -23,8 +25,6 @@ public class UIPlugin implements Cloneable {
 	private final StringProperty method = new SimpleStringProperty();
 
 	private final StringProperty name = new SimpleStringProperty();
-
-	private StringProperty id = new SimpleStringProperty();
 
 	private final ObservableList<UIHttpHeaders> headersList = FXCollections
 			.observableArrayList();
@@ -46,10 +46,10 @@ public class UIPlugin implements Cloneable {
 	}
 
 	public void prepareEmptyPlugin() {
+		id.set(UUID.randomUUID().toString());
 		method.set(HttpMethod.GET.name());
 		headersList.add(new UIHttpHeaders());
 		futureParams.add(new UIFutureParam());
-		id.set(UUID.randomUUID().toString());
 	}
 
 	public ObservableList<UIHttpHeaders> getHeadersList() {

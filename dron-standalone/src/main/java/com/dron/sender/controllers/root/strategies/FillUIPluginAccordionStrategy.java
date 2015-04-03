@@ -10,10 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,39 +51,31 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 			uiSequence.getUiPlugins().add(new UIPlugin());
 		}
 
-		System.out.println(uiSequence.getOrder());
-		uiSequence.getOrder().forEach(
-				order -> {
-					UIPlugin uiPlugin = uiSequence.getUiPlugins().stream()
-							.filter(p -> p.getId().get().equals(order))
-							.findFirst().get();
-					System.out.println(uiPlugin.getId());
-					titledPanes
-							.add(createPluginTitlePane(uiPlugin, controller));
-				});
+		uiSequence.getOrder().forEach(order -> {
+			UIPlugin uiPlugin = uiSequence.findPlugin(order);
+			titledPanes.add(createPluginTitlePane(uiPlugin, controller));
+		});
 
 		accPlugins.getPanes().clear();
 		accPlugins.getPanes().addAll(titledPanes);
-		accPlugins.setExpandedPane(accPlugins.getPanes().get(
-				RootController.DEFAULT_SELECTED_UI_PLUGIN));
+		accPlugins.setExpandedPane(accPlugins.getPanes().get(0));
 
-		accPlugins.expandedPaneProperty()
-				.addListener(
-						(ObservableValue<? extends TitledPane> observable,
-								TitledPane oldValue, TitledPane newValue) -> {
-							if (oldValue != null) {
-								RootConfig.setDisableRootProperty(true);
-							}
-							if (newValue != null) {
-								int index = accPlugins
-										.getChildrenUnmodifiable().indexOf(
-												newValue);
+		accPlugins.expandedPaneProperty().addListener(
+				(ObservableValue<? extends TitledPane> observable,
+						TitledPane oldValue, TitledPane newValue) -> {
+					if (oldValue != null) {
+						RootConfig.setDisableRootProperty(true);
+					}
+					if (newValue != null) {
+						int index = accPlugins.getChildrenUnmodifiable()
+								.indexOf(newValue);
 
-								uiSequence.selectedUIPLugin(index, context,
-										controller);
-								RootConfig.setDisableRootProperty(false);
-							}
-						});
+						uiSequence.selectedUIPLugin(
+								uiSequence.getOrder().get(index), context,
+								controller);
+						RootConfig.setDisableRootProperty(false);
+					}
+				});
 
 	}
 
@@ -116,92 +106,57 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		tfPluginName.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
 		tfPluginName.textProperty().bindBidirectional(uiPlugin.getName());
 
-		Button btnRemove = new Button("Remove");
-		btnRemove
-				.setOnAction(listener -> {
-					int expantedIndex = getExpantedUIPluginIndex();
-					uiSequence.getUiPlugins().remove(
-							uiSequence.getUiPlugins().get(expantedIndex));
+		int index = uiSequence.findSelectedIndex(uiPlugin.getId().get());
+		Button btnMoveDown = null;
+		if (index != uiSequence.getOrder().size() - 1) {
+			btnMoveDown = new Button("Move down");
+			btnMoveDown
+					.setOnAction(listener -> {
+						uiSequence.movePluginDown(uiPlugin.getId().get());
 
-					context.execute(
-							controller,
-							ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
-					uiSequence.selectedUIPLugin(expantedIndex - 1, context,
-							controller);
-				});
+						context.execute(
+								controller,
+								ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
+						uiSequence.selectedUIPLugin(uiPlugin.getId().get(),
+								context, controller);
+					});
+		}
+
+		Button btnMoveUp = null;
+		if (index != 0) {
+			btnMoveUp = new Button("Move up");
+			btnMoveUp
+					.setOnAction(listener -> {
+						uiSequence.movePluginUp(uiPlugin.getId().get());
+
+						context.execute(
+								controller,
+								ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
+						uiSequence.selectedUIPLugin(uiPlugin.getId().get(),
+								context, controller);
+					});
+		}
+		Button btnRemove = new Button("Remove");
+		btnRemove.setOnAction(listener -> {
+			int expantedIndex = getExpantedUIPluginIndex();
+			uiSequence.removePlugin(expantedIndex);
+
+			context.execute(controller,
+					ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
+			uiSequence.selectedUIPLugin(context, controller);
+		});
 
 		AnchorPane anchorPane = new AnchorPane();
-		anchorPane.getChildren().addAll(
-				new VBox(tfPluginName, tblFutureParams, btnRemove));
-		anchorPane.setOnDragDetected(event -> {
-			System.out.println("anchorPane.setOnDragDetected "
-					+ getExpantedUIPluginIndex());
-			Dragboard db = anchorPane.startDragAndDrop(TransferMode.ANY);
+		HBox hBox = new HBox(btnRemove);
+		if (btnMoveDown != null) {
+			hBox.getChildren().add(btnMoveDown);
+		}
+		if (btnMoveUp != null) {
+			hBox.getChildren().add(btnMoveUp);
+		}
 
-			/* Put a string on a dragboard */
-			ClipboardContent content = new ClipboardContent();
-			content.putString(Integer.toString(getExpantedUIPluginIndex()));
-			db.setContent(content);
-
-			event.consume();
-		});
-		anchorPane.setOnDragOver(event -> {
-			System.out.println("anchorPane.setOnDragOver "
-					+ getExpantedUIPluginIndex());
-			/* data is dragged over the target */
-			/*
-			 * accept it only if it is not dragged from the same node and if it
-			 * has a string data
-			 */
-			if (event.getGestureSource() != anchorPane
-					&& event.getDragboard().hasString()) {
-				/* allow for both copying and moving, whatever user chooses */
-				event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-			}
-
-			event.consume();
-		});
-		anchorPane.setOnDragEntered(event -> {
-			System.out.println("anchorPane.setOnDragEntered "
-					+ getExpantedUIPluginIndex());
-			/* the drag-and-drop gesture entered the target */
-			/* show to the user that it is an actual gesture target */
-			if (event.getGestureSource() != anchorPane
-					&& event.getDragboard().hasString()) {
-				anchorPane.setStyle("-fx-background-color: DAE6F3;");
-			}
-
-			event.consume();
-		});
-
-		anchorPane.setOnDragExited(event -> {
-			System.out.println("anchorPane.setOnDragExited "
-					+ getExpantedUIPluginIndex());
-			/* mouse moved away, remove the graphical cues */
-			anchorPane.setStyle("");
-
-			event.consume();
-		});
-
-		anchorPane.setOnDragDropped(event -> {
-			System.out.println("anchorPane.setOnDragDropped "
-					+ getExpantedUIPluginIndex());
-			/* data dropped */
-			/* if there is a string data on dragboard, read it and use it */
-			Dragboard db = event.getDragboard();
-			boolean success = false;
-			if (db.hasString()) {
-				tfPluginName.setText(db.getString());
-				success = true;
-			}
-			/*
-			 * let the source know whether the string was successfully
-			 * transferred and used
-			 */
-			event.setDropCompleted(success);
-
-			event.consume();
-		});
+		VBox vBox = new VBox(tfPluginName, tblFutureParams, hBox);
+		anchorPane.getChildren().addAll(vBox);
 
 		return anchorPane;
 	}

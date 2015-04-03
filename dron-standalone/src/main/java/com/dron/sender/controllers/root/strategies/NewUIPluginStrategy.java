@@ -30,13 +30,13 @@ public class NewUIPluginStrategy extends BaseRootController implements
 
 		UIPlugin uiPlugin = new UIPlugin();
 		uiPlugin.setName(tfNewPluginName.getText());
-		uiSequence.getUiPlugins().add(uiPlugin);
+		uiSequence.addPlugin(uiPlugin);
 		tfNewPluginName.setText("");
 
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
-		uiSequence.selectedUIPLugin(uiSequence.getUiPlugins().size() - 1,
-				context, controller);
+		uiSequence
+				.selectedUIPLugin(uiPlugin.getId().get(), context, controller);
 	}
 
 }

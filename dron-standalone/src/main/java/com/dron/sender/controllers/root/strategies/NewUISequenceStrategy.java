@@ -27,12 +27,12 @@ public class NewUISequenceStrategy extends BaseRootController implements
 		RootController controller = (RootController) iBaseController;
 		setUp(controller);
 		// Clear all data
-		uiSequence.clear();
-		uiSequence.prepareEmptySequence();
+		uiSequence.setUpEmptyForm();
 
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
-		uiSequence.selectedUIPLugin(0, context, controller);
+		uiSequence.selectedUIPLugin(uiSequence.getOrder().get(0), context,
+				controller);
 	}
 
 }

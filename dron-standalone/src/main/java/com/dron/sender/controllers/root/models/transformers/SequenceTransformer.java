@@ -15,6 +15,8 @@ public class SequenceTransformer implements
 	public UISequence transform(final Sequence sequence,
 			final UISequence uiSequence) {
 
+		sequence.getOrder().forEach(o -> uiSequence.getOrder().add(o));
+
 		TransformerFactory.transformEntity(sequence.getParams(),
 				uiSequence.getUIParams(), TransformKey.ROOT_PARAMS);
 
@@ -32,6 +34,8 @@ public class SequenceTransformer implements
 	@Override
 	public Sequence reverseTransform(final Sequence sequence,
 			final UISequence uiSequence) {
+		uiSequence.getOrder().forEach(o -> sequence.getOrder().add(o));
+
 		TransformerFactory.reverseTransformEntity(sequence.getParams(),
 				uiSequence.getUIParams(), TransformKey.ROOT_PARAMS);
 

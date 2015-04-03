@@ -1,6 +1,5 @@
 package com.dron.sender.sequence.services;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,8 +27,9 @@ public class SequenceService {
 	}
 
 	public void runSequence() throws DronSenderException {
-		for (int i = 0; i < sequence.getPlugins().size(); i++) {
-			Plugin plugin = sequence.getPlugins().get(i);
+		for (String orderedId : sequence.getOrder()) {
+			Plugin plugin = sequence.findPlugin(orderedId);
+			System.out.println("PLugin is running with id = " + orderedId);
 			plugin.setSequence(sequence);
 			String response = restFullService.run(plugin);
 			plugin.setResponce(response);
@@ -40,14 +40,15 @@ public class SequenceService {
 
 	private void fillFutureParams(String response,
 			List<FutureParam> futureParams) {
-		for (FutureParam futureParam : futureParams) {
+		futureParams.forEach(f -> {
+			JsonNode node;
 			try {
-				JsonNode node = mapper.readTree(response);
-				fillFutureParam(node, futureParam, futureParam.getDependence());
-			} catch (IOException e) {
+				node = mapper.readTree(response);
+				fillFutureParam(node, f, f.getDependence());
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-		}
+		});
 	}
 
 	private void fillFutureParam(JsonNode node, FutureParam futureParam,
@@ -101,13 +102,9 @@ public class SequenceService {
 
 	private void addParamToList(JsonNode node, FutureParam futureParam) {
 		// Try to search if we have it param in the list
-		Param currentParam = null;
-		for (Param param : sequence.getParams()) {
-			if (param.getKey().equals(futureParam.getKey())) {
-				currentParam = param;
-				break;
-			}
-		}
+		Param currentParam = sequence.getParams().stream()
+				.filter(p -> p.getKey().equals(futureParam.getKey()))
+				.findFirst().orElse(null);
 
 		// If the param presents, just update it
 		if (currentParam != null) {

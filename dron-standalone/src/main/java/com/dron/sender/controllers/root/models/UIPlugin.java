@@ -1,6 +1,7 @@
 package com.dron.sender.controllers.root.models;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -14,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class UIPlugin implements Cloneable {
 
 	private ObjectMapper mapper = new ObjectMapper();
+
+	private StringProperty id = new SimpleStringProperty();
 
 	private final StringProperty url = new SimpleStringProperty();
 
@@ -34,6 +37,7 @@ public class UIPlugin implements Cloneable {
 	}
 
 	public void clear() {
+		id.set(null);
 		url.set("");
 		postBody.set("");
 		name.set("");
@@ -42,6 +46,7 @@ public class UIPlugin implements Cloneable {
 	}
 
 	public void prepareEmptyPlugin() {
+		id.set(UUID.randomUUID().toString());
 		method.set(HttpMethod.GET.name());
 		headersList.add(new UIHttpHeaders());
 		futureParams.add(new UIFutureParam());
@@ -87,6 +92,14 @@ public class UIPlugin implements Cloneable {
 		this.method.set(method);
 	}
 
+	public StringProperty getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id.set(id);
+	}
+
 	public StringProperty getName() {
 		return name;
 	}
@@ -98,6 +111,7 @@ public class UIPlugin implements Cloneable {
 	@Override
 	public UIPlugin clone() {
 		UIPlugin plugin = new UIPlugin();
+		plugin.setId(id.get());
 		plugin.setMethod(method.get());
 		plugin.setName(name.get());
 		plugin.setPostBody(postBody.get());

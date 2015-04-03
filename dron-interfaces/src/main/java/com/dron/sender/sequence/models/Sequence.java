@@ -3,6 +3,7 @@ package com.dron.sender.sequence.models;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Sequence extends BaseNotificationModel {
 
@@ -22,28 +23,40 @@ public class Sequence extends BaseNotificationModel {
 
 	private List<String> order;
 
-	private List<Plugin> plugins = new LinkedList<Plugin>();
+	private List<Plugin> plugins;
 
-	private List<Param> params = new ArrayList<Param>();
+	private List<Param> params;
+
+	public Sequence() {
+		order = new ArrayList<String>();
+		plugins = new LinkedList<Plugin>();
+		params = new ArrayList<Param>();
+	}
+
+	public Plugin findPlugin(String id) {
+		return plugins.stream().filter(p -> p.getId().equals(id)).findFirst()
+				.orElse(null);
+	}
 
 	public String findParam(String key) {
-		for (Param iterable : params) {
-			if (iterable.getKey().equals(key)) {
-				return iterable.getValue();
-			}
+		try {
+			return params.stream().filter(p -> p.getKey().equals(key))
+					.findFirst().get().getValue();
+		} catch (NoSuchElementException e) {
+			return null;
 		}
-		return null;
 	}
 
 	public void updateParam(Param param) {
-		for (Param iterable : params) {
-			if (iterable.getKey().equals(param.getKey())) {
-				notifyListeners(this, PROPERTY_PARAM, iterable.getValue(),
-						param.getValue());
-				iterable.setValue(param.getValue());
-				break;
-			}
-		}
+		params.stream()
+				.filter(p -> p.getKey().equals(param.getKey()))
+				.findFirst()
+				.ifPresent(
+						p -> {
+							notifyListeners(this, PROPERTY_PARAM, p.getValue(),
+									param.getValue());
+							p.setValue(param.getValue());
+						});
 	}
 
 	public void addParam(Param param) {

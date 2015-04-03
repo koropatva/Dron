@@ -39,7 +39,8 @@ public class PrepareSequenceStrategy extends BaseRootController implements
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
 
-		uiSequence.selectedUIPLugin(0, context, controller);
+		uiSequence.selectedUIPLugin(uiSequence.getOrder().get(0), context,
+				controller);
 	}
 
 }

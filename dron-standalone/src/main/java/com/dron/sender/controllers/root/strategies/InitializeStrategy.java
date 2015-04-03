@@ -41,8 +41,7 @@ public class InitializeStrategy extends BaseRootController implements
 		RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
-		uiSequence.clear();
-		uiSequence.prepareEmptySequence();
+		uiSequence.setUpEmptyForm();
 
 		tfNewPluginName.textProperty().bindBidirectional(uiSequence.getName());
 

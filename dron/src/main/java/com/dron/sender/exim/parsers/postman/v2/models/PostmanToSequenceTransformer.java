@@ -24,6 +24,7 @@ public class PostmanToSequenceTransformer implements
 					Plugin plugin = new Plugin();
 					TransformerFactory.transformEntity(request, plugin,
 							TransformKey.REQUEST_V2_TO_PLUGIN);
+					to.getOrder().add(plugin.getId());
 					to.getPlugins().add(plugin);
 				});
 		return to;

@@ -110,31 +110,21 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		Button btnMoveDown = null;
 		if (index != uiSequence.getOrder().size() - 1) {
 			btnMoveDown = new Button("Move down");
-			btnMoveDown
-					.setOnAction(listener -> {
-						uiSequence.movePluginDown(uiPlugin.getId().get());
-
-						context.execute(
-								controller,
-								ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
-						uiSequence.selectedUIPLugin(uiPlugin.getId().get(),
-								context, controller);
-					});
+			btnMoveDown.setOnAction(listener -> {
+				setTmpUiPlugin(uiPlugin);
+				context.execute(controller,
+						ControllerActionStrategy.ROOT_MOVE_PLUGIN_DOWN);
+			});
 		}
 
 		Button btnMoveUp = null;
 		if (index != 0) {
 			btnMoveUp = new Button("Move up");
-			btnMoveUp
-					.setOnAction(listener -> {
-						uiSequence.movePluginUp(uiPlugin.getId().get());
-
-						context.execute(
-								controller,
-								ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
-						uiSequence.selectedUIPLugin(uiPlugin.getId().get(),
-								context, controller);
-					});
+			btnMoveUp.setOnAction(listener -> {
+				setTmpUiPlugin(uiPlugin);
+				context.execute(controller,
+						ControllerActionStrategy.ROOT_MOVE_PLUGIN_UP);
+			});
 		}
 		Button btnRemove = new Button("Remove");
 		btnRemove.setOnAction(listener -> {

@@ -71,6 +71,20 @@ public class RootController extends BaseRootController implements
 						KeyCombination.SHIFT_DOWN), () -> {
 					iStageService.showDialog(ControllerEnum.IMPORT_POSTMAN);
 				});
+		scene.getAccelerators().put(
+				new KeyCodeCombination(KeyCode.DOWN, KeyCombination.META_DOWN,
+						KeyCombination.SHIFT_DOWN),
+				() -> {
+					context.execute(this,
+							ControllerActionStrategy.ROOT_MOVE_PLUGIN_DOWN);
+				});
+		scene.getAccelerators().put(
+				new KeyCodeCombination(KeyCode.UP, KeyCombination.META_DOWN,
+						KeyCombination.SHIFT_DOWN),
+				() -> {
+					context.execute(this,
+							ControllerActionStrategy.ROOT_MOVE_PLUGIN_UP);
+				});
 
 	}
 

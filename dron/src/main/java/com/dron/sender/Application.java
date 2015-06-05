@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exim.ImportService;
 import com.dron.sender.sequence.models.Sequence;
-import com.dron.sender.sequence.services.SequenceService;
+import com.dron.sender.sequence.services.SequenceRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class Application {
@@ -22,8 +22,8 @@ public class Application {
 
 		Sequence sequence = ImportService.getInstance().imports(
 				"/Users/admin/Documents/json/CreateUser.json", Sequence.class);
-		SequenceService sequenceService = new SequenceService(sequence);
+		SequenceRunner sequenceRunner = new SequenceRunner(sequence);
 
-		sequenceService.runSequence();
+		sequenceRunner.runSequence();
 	}
 }

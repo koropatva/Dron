@@ -134,6 +134,10 @@ public class Plugin extends BaseNotificationModel {
 				this.sequence = sequence);
 	}
 
+	public Sequence getSequence() {
+		return sequence;
+	}
+
 	public List<FutureParam> getFutureParams() {
 		return futureParams;
 	}
@@ -151,7 +155,7 @@ public class Plugin extends BaseNotificationModel {
 	}
 
 	public void setId(String id) {
-		if(id == null){
+		if (id == null) {
 			id = UUID.randomUUID().toString();
 		}
 		notifyListeners(this, PROPERTY_ID, this.id, this.id = id);

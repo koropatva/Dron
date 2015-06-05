@@ -4,46 +4,46 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.sequence.models.FutureParam;
 import com.dron.sender.sequence.models.Param;
 import com.dron.sender.sequence.models.Plugin;
-import com.dron.sender.sequence.models.Sequence;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class SequenceService {
+public class FutureParamService {
 
 	public static final String ROAD_SEPARATOR = "..";
 
-	private RESTfullService restFullService = RESTfullService.getInstance();
-
 	private final ObjectMapper mapper = new ObjectMapper();
 
-	private Sequence sequence;
+	private static FutureParamService INSTANCE;
 
-	public SequenceService(Sequence sequence) {
-		this.sequence = sequence;
+	private Plugin plugin;
+
+	private FutureParamService() {
 	}
 
-	public void runSequence() throws DronSenderException {
-		for (String orderedId : sequence.getOrder()) {
-			Plugin plugin = sequence.findPlugin(orderedId);
-			System.out.println("PLugin is running with id = " + orderedId);
-			plugin.setSequence(sequence);
-			String response = restFullService.run(plugin);
-			plugin.setResponce(response);
-			System.out.println(response);
-			fillFutureParams(response, plugin.getFutureParams());
+	public static FutureParamService getInstance() {
+		if (INSTANCE == null) {
+			synchronized (FutureParamService.class) {
+				if (INSTANCE == null) {
+					INSTANCE = new FutureParamService();
+				}
+			}
 		}
+		return INSTANCE;
 	}
 
-	private void fillFutureParams(String response,
-			List<FutureParam> futureParams) {
-		futureParams.forEach(f -> {
+	public void fillFutureParams(Plugin plugin) {
+
+		this.plugin = plugin;
+
+		plugin.getFutureParams().forEach(f -> {
 			JsonNode node;
 			try {
-				node = mapper.readTree(response);
+				node = mapper.readTree(plugin.getResponce());
+
+				// Start parsing
 				fillFutureParam(node, f, f.getDependence());
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -102,7 +102,7 @@ public class SequenceService {
 
 	private void addParamToList(JsonNode node, FutureParam futureParam) {
 		// Try to search if we have it param in the list
-		Param currentParam = sequence.getParams().stream()
+		Param currentParam = plugin.getSequence().getParams().stream()
 				.filter(p -> p.getKey().equals(futureParam.getKey()))
 				.findFirst().orElse(null);
 
@@ -114,7 +114,8 @@ public class SequenceService {
 					+ currentParam.getValue());
 		} else {
 			// Other way added new
-			sequence.addParam(new Param(futureParam.getKey(), node.asText()));
+			plugin.getSequence().addParam(
+					new Param(futureParam.getKey(), node.asText()));
 			System.out.println("Added new param with key = "
 					+ futureParam.getKey() + " and value = " + node.asText());
 		}

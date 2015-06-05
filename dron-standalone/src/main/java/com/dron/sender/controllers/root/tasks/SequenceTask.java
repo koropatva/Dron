@@ -12,7 +12,7 @@ import com.dron.sender.exceptions.RequestException;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
 import com.dron.sender.sequence.models.Sequence;
-import com.dron.sender.sequence.services.SequenceService;
+import com.dron.sender.sequence.services.SequenceRunner;
 
 public class SequenceTask extends Task<String> {
 
@@ -30,10 +30,10 @@ public class SequenceTask extends Task<String> {
 
 	@Override
 	protected String call() {
-		final SequenceService sequenceService = new SequenceService(sequence);
+		final SequenceRunner sequenceRunner = new SequenceRunner(sequence);
 
 		try {
-			sequenceService.runSequence();
+			sequenceRunner.runSequence();
 		} catch (DronSenderException e) {
 			if (e instanceof HandlerNotReadyException) {
 				System.out.println("Dron ERROR " + e.getMessage());

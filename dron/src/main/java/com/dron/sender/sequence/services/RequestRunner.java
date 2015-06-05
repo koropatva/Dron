@@ -5,22 +5,22 @@ import org.springframework.web.client.RestTemplate;
 import com.dron.sender.exceptions.HandlerNotReadyException;
 import com.dron.sender.sequence.models.Plugin;
 
-public class RESTfullService {
+public class RequestRunner {
 
-	private static RESTfullService resTfullService;
+	private static RequestRunner requestRunner;
 
-	private RESTfullService() {
+	private RequestRunner() {
 	}
 
-	public static RESTfullService getInstance() {
-		if (resTfullService == null) {
-			synchronized (RESTfullService.class) {
-				if (resTfullService == null) {
-					resTfullService = new RESTfullService();
+	public static RequestRunner getInstance() {
+		if (requestRunner == null) {
+			synchronized (RequestRunner.class) {
+				if (requestRunner == null) {
+					requestRunner = new RequestRunner();
 				}
 			}
 		}
-		return resTfullService;
+		return requestRunner;
 	}
 
 	private RestTemplate restTemplate = new RestTemplate();

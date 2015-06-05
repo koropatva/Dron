@@ -141,4 +141,12 @@ public class UISequence {
 				.findFirst().orElse(null);
 	}
 
+	public void setSelectedPluginId(String selectedPluginID) {
+		this.selectedUIPLuginID = selectedPluginID;
+	}
+
+	public String getSelectedPluginId() {
+		return selectedUIPLuginID;
+	}
+
 }

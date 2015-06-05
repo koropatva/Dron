@@ -60,8 +60,7 @@
 										<ToggleButton fx:id="tbtnParams" mnemonicParsing="false"
 											text="Params" focusTraversable="true" />
 										<Button fx:id="btnSendActivePlugin" mnemonicParsing="false"
-											onAction="#sendActivePlugin" text="Send plugin"
-											focusTraversable="true" />
+											onAction="#sendPlugin" text="Send plugin" focusTraversable="true" />
 									</items>
 								</ToolBar>
 								<VBox>

@@ -13,6 +13,8 @@ public class Sequence extends BaseNotificationModel {
 
 	public static final String PROPERTY_NAME = "Name";
 
+	public static final String PROPERTY_SELECTED_PLUGIN_ID = "Selected plugin ID";
+
 	public static final String PROPERTY_PARAMS = "Params";
 
 	public static final String PROPERTY_PARAM = "Param";
@@ -26,6 +28,8 @@ public class Sequence extends BaseNotificationModel {
 	private List<Plugin> plugins;
 
 	private List<Param> params;
+
+	private String selectedPluginId;
 
 	public Sequence() {
 		order = new ArrayList<String>();
@@ -86,6 +90,15 @@ public class Sequence extends BaseNotificationModel {
 
 	public void setName(String name) {
 		notifyListeners(this, PROPERTY_NAME, this.name, this.name = name);
+	}
+
+	public String getSelectedPluginId() {
+		return selectedPluginId;
+	}
+
+	public void setSelectedPluginId(String selectedPluginId) {
+		notifyListeners(this, PROPERTY_SELECTED_PLUGIN_ID,
+				this.selectedPluginId, this.selectedPluginId = selectedPluginId);
 	}
 
 	public List<String> getOrder() {

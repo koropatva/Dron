@@ -67,6 +67,12 @@ public class RootController extends BaseRootController implements
 							ControllerActionStrategy.ROOT_SEND_SEQUENCE);
 				});
 		scene.getAccelerators().put(
+				new KeyCodeCombination(KeyCode.F5, KeyCombination.META_DOWN),
+				() -> {
+					context.execute(this,
+							ControllerActionStrategy.ROOT_SEND_PLUGIN);
+				});
+		scene.getAccelerators().put(
 				new KeyCodeCombination(KeyCode.P, KeyCombination.META_DOWN,
 						KeyCombination.SHIFT_DOWN), () -> {
 					iStageService.showDialog(ControllerEnum.IMPORT_POSTMAN);
@@ -131,6 +137,11 @@ public class RootController extends BaseRootController implements
 	}
 
 	@FXML
+	protected void sendPlugin(final ActionEvent actionEvent) {
+		context.execute(this, ControllerActionStrategy.ROOT_SEND_PLUGIN);
+	}
+
+	@FXML
 	protected void sendSequence(final ActionEvent actionEvent) {
 		context.execute(this, ControllerActionStrategy.ROOT_SEND_SEQUENCE);
 	}
@@ -144,8 +155,4 @@ public class RootController extends BaseRootController implements
 		context.execute(this, ControllerActionStrategy.ROOT_ENABLE_CONTROLS);
 	}
 
-	@FXML
-	protected void sendActivePlugin(final ActionEvent actionEvent) {
-		context.execute(this, ControllerActionStrategy.ROOT_SEND_ACTIVE_PLUGIN);
-	}
 }

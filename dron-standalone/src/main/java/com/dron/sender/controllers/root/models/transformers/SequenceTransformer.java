@@ -15,6 +15,8 @@ public class SequenceTransformer implements
 	public UISequence transform(final Sequence sequence,
 			final UISequence uiSequence) {
 
+		uiSequence.setSelectedPluginId(sequence.getSelectedPluginId());
+
 		sequence.getOrder().forEach(o -> uiSequence.getOrder().add(o));
 
 		TransformerFactory.transformEntity(sequence.getParams(),
@@ -34,6 +36,8 @@ public class SequenceTransformer implements
 	@Override
 	public Sequence reverseTransform(final Sequence sequence,
 			final UISequence uiSequence) {
+		sequence.setSelectedPluginId(uiSequence.getSelectedPluginId());
+
 		uiSequence.getOrder().forEach(o -> sequence.getOrder().add(o));
 
 		TransformerFactory.reverseTransformEntity(sequence.getParams(),

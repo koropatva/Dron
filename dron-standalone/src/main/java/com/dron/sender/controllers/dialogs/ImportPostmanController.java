@@ -52,7 +52,7 @@ public class ImportPostmanController extends BaseImportPostmanController
 	private FXMLLoader loader;
 
 	public ImportPostmanController() {
-		ClassLoader classLoader = RootController.class.getClassLoader();
+		ClassLoader classLoader = ImportPostmanController.class.getClassLoader();
 
 		loader = new FXMLLoader(classLoader.getResource("ImportPostmanView.fxml"));
 		loader.setController(this);

@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Skin;
 import javafx.scene.control.TextField;
 import javafx.stage.Popup;
 import javafx.stage.Window;
@@ -57,6 +58,11 @@ public abstract class AutoFillTextBoxBase extends Control {
 		popup.setAutoHide(true);
 
 		listen();
+	}
+
+	@Override
+	protected Skin<?> createDefaultSkin() {
+		return new AutoFillTextBoxSkin(this);
 	}
 
 	private void listen() {

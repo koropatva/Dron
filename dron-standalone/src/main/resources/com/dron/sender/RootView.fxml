@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.TextArea?>
+<?import com.dron.sender.controllers.root.controls.AutoFillSequenceTextBox?>
+
+<AnchorPane layoutX="1.0" layoutY="1.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<VBox>
+			<children>
+				<MenuBar>
+					<menus>
+						<Menu mnemonicParsing="false" text="File">
+							<items>
+								<MenuItem mnemonicParsing="false" text="New"
+									onAction="#createNewSequence" />
+								<SeparatorMenuItem mnemonicParsing="false" />
+								<MenuItem mnemonicParsing="false" text="Save" />
+								<SeparatorMenuItem mnemonicParsing="false" />
+								<MenuItem mnemonicParsing="false" text="Import"
+									onAction="#importSequence" />
+								<MenuItem mnemonicParsing="false" text="Import Postman"
+									onAction="#importPostmanSequence" />
+								<MenuItem mnemonicParsing="false" text="Export"
+									onAction="#exportSequence" />
+							</items>
+						</Menu>
+					</menus>
+				</MenuBar>
+				<HBox>
+					<children>
+						<VBox>
+							<children>
+								<ToolBar>
+									<items>
+										<AutoFillSequenceTextBox fx:id="autoFillSequenceTextBox"
+											prefWidth="300" focusTraversable="true" />
+										<Button fx:id="btnSendSequence" onAction="#sendSequence"
+											text="Send sequence" focusTraversable="true" />
+										<Button fx:id="btnStopSendingSequence" text="Stop sending sequence"
+											onAction="#stopSendingSequence" visible="false" />
+									</items>
+								</ToolBar>
+								<ToolBar>
+									<items>
+										<TextField fx:id="tfUrl" prefWidth="448.0"
+											promptText="URL" focusTraversable="true" />
+										<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
+										<ToggleButton fx:id="tbtnHeaders"
+											mnemonicParsing="false" text="Headers" focusTraversable="true" />
+										<ToggleButton fx:id="tbtnParams" mnemonicParsing="false"
+											text="Params" focusTraversable="true" />
+										<Button fx:id="btnSendActivePlugin" mnemonicParsing="false"
+											onAction="#sendPlugin" text="Send plugin" focusTraversable="true" />
+									</items>
+								</ToolBar>
+								<VBox>
+									<children>
+										<GridPane>
+											<children>
+												<HBox fx:id="hbHeadersParamsTable"
+													AnchorPane.leftAnchor="5.0">
+													<children>
+														<TableView fx:id="tblHeaders" prefWidth="320.0" />
+														<TableView fx:id="tblParams" prefWidth="500.0" />
+													</children>
+												</HBox>
+											</children>
+										</GridPane>
+										<AnchorPane>
+											<children>
+												<TextArea fx:id="txaPostBody" promptText="Post body"
+													AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+													AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+											</children>
+										</AnchorPane>
+										<AnchorPane>
+											<children>
+												<TextArea fx:id="txaResponce" editable="false"
+													promptText="Responce" text="" AnchorPane.bottomAnchor="5.0"
+													AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+													AnchorPane.topAnchor="5.0" />
+											</children>
+										</AnchorPane>
+									</children>
+								</VBox>
+							</children>
+						</VBox>
+						<ScrollPane prefHeight="500" prefWidth="325.0">
+							<content>
+								<VBox>
+									<children>
+										<Accordion fx:id="accPlugins" />
+										<HBox>
+											<children>
+												<TextField fx:id="tfNewPluginName" />
+												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false"
+													onAction="#addNewPlugin" text="Add" />
+											</children>
+										</HBox>
+									</children>
+								</VBox>
+							</content>
+						</ScrollPane>
+					</children>
+				</HBox>
+				<TextArea fx:id="txaConsole" />
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>

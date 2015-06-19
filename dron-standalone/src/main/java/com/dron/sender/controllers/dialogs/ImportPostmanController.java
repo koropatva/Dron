@@ -54,7 +54,7 @@ public class ImportPostmanController extends BaseImportPostmanController
 	public ImportPostmanController() {
 		ClassLoader classLoader = ImportPostmanController.class.getClassLoader();
 
-		loader = new FXMLLoader(classLoader.getResource("/ImportPostmanView.fxml"));
+		loader = new FXMLLoader(classLoader.getResource("/com/dron/sender/ImportPostmanView.fxml"));
 		loader.setController(this);
 	}
 

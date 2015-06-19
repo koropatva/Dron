@@ -44,7 +44,7 @@ public class RootController extends BaseRootController implements
 	public RootController() {
 		ClassLoader classLoader = RootController.class.getClassLoader();
 
-		loader = new FXMLLoader(classLoader.getResource("RootView.fxml"));
+		loader = new FXMLLoader(classLoader.getResource("/RootView.fxml"));
 		loader.setController(this);
 	}
 

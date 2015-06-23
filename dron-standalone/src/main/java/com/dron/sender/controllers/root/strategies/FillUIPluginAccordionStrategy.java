@@ -20,6 +20,7 @@ import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.FutureParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.BaseRootController;
+import com.dron.sender.controllers.root.models.HistoryUiPlugin;
 import com.dron.sender.controllers.root.models.UIFutureParam;
 import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
@@ -107,7 +108,8 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		if (index != uiSequence.getOrder().size() - 1) {
 			btnMoveDown = new Button("Move down");
 			btnMoveDown.setOnAction(listener -> {
-				setUiPlugin(uiPlugin);
+				setHistoryUiPlugin(new HistoryUiPlugin(uiPlugin, uiSequence
+						.getUIParams()));
 				context.execute(controller,
 						ControllerActionStrategy.ROOT_MOVE_PLUGIN_DOWN);
 			});
@@ -117,7 +119,8 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		if (index != 0) {
 			btnMoveUp = new Button("Move up");
 			btnMoveUp.setOnAction(listener -> {
-				setUiPlugin(uiPlugin);
+				setHistoryUiPlugin(new HistoryUiPlugin(uiPlugin, uiSequence
+						.getUIParams()));
 				context.execute(controller,
 						ControllerActionStrategy.ROOT_MOVE_PLUGIN_UP);
 			});

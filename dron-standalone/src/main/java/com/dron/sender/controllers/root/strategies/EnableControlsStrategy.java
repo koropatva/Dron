@@ -11,7 +11,8 @@ import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.BaseRootController;
-import com.dron.sender.controllers.root.models.UIPlugin;
+import com.dron.sender.controllers.root.models.HistoryUiPlugin;
+import com.dron.sender.controllers.root.models.UIParam;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 
@@ -42,13 +43,16 @@ public class EnableControlsStrategy extends BaseRootController implements
 		btnStopSendingSequence.setVisible(false);
 		btnSendSequence.requestFocus();
 
-		
-		//Add sent plugins to the history and update history list
-//		uiSequence.getSentPlugins().forEach(
-//				plugin -> cache.getSentPlugins().add(plugin));
-//		ObservableList<UIPlugin> items = FXCollections.observableArrayList();
-//		cache.getSentPlugins().forEach(plugin -> items.add(plugin));
-//		lvHistory.getItems().clear();
-//		lvHistory.setItems(items);
+		// Add sent plugins to the history and update history list
+		ObservableList<UIParam> params = FXCollections.observableArrayList();
+		uiSequence.getUIParams().forEach(param -> params.add(param.clone()));
+		uiSequence.getSentPlugins().forEach(
+				plugin -> cache.getSentPlugins().add(
+						new HistoryUiPlugin(plugin, params)));
+		ObservableList<HistoryUiPlugin> items = FXCollections
+				.observableArrayList();
+		cache.getSentPlugins().forEach(plugin -> items.add(plugin));
+		lvHistory.getItems().clear();
+		lvHistory.setItems(items);
 	}
 }

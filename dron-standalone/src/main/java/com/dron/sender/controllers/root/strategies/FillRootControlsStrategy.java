@@ -7,6 +7,7 @@ import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.controls.HeaderTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.BaseRootController;
+import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 
@@ -35,10 +36,10 @@ public class FillRootControlsStrategy extends BaseRootController implements
 		RootConfig.bindPostBody(txaPostBody, uiSequence.getSelectedUIPLugin()
 				.getMethod().get());
 
-		tblHeaders = new HeaderTableView().initialize(uiSequence
-				.getSelectedUIPLugin().getHeadersList(), tblHeaders);
+		UIPlugin selectedPlugin = uiSequence.getSelectedUIPLugin();
+		tblHeaders = new HeaderTableView().initialize(
+				selectedPlugin.getHeadersList(), tblHeaders, null);
 
 		updateControls();
 	}
-
 }

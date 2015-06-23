@@ -22,6 +22,10 @@ public class SequenceTransformer implements
 		TransformerFactory.transformEntity(sequence.getParams(),
 				uiSequence.getUIParams(), TransformKey.ROOT_PARAMS);
 
+		uiSequence.getKeys().clear();
+		uiSequence.getUIParams().forEach(
+				param -> uiSequence.getKeys().add(param.getKey()));
+
 		sequence.getPlugins().forEach(
 				plugin -> {
 					UIPlugin uiPlugin = new UIPlugin();

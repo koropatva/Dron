@@ -29,7 +29,6 @@ public class DisableControlsStrategy extends BaseRootController implements
 		tbtnParams.disableProperty().set(true);
 		accPlugins.disableProperty().set(true);
 		tfNewPluginName.disableProperty().set(true);
-		btnAddNewPlugin.disableProperty().set(true);
 		btnStopSendingSequence.setVisible(true);
 	}
 }

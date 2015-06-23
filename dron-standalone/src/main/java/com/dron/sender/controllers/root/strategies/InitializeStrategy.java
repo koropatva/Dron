@@ -100,7 +100,8 @@ public class InitializeStrategy extends BaseRootController implements
 				(observer, oldValue, newValue) -> {
 					uiSequence.getSelectedUIPLugin().setPostBody(newValue);
 				});
-
+		btnAddNewPlugin.disableProperty().bind(tfNewPluginName.textProperty().isEmpty());
+		
 		tbtnHeaders.setSelected(true);
 		tbtnHeaders.disableProperty().bind(RootConfig.getDisableRootProperty());
 		tbtnHeaders.setOnAction(event -> {

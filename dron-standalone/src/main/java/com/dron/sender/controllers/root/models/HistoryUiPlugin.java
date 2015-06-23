@@ -20,7 +20,7 @@ public class HistoryUiPlugin {
 	public HistoryUiPlugin(UIPlugin uiPlugin, ObservableList<UIParam> uiParams) {
 		this.uiPlugin = uiPlugin.clone();
 		this.uiParams.clear();
-		this.uiParams.addAll(uiParams);
+		uiParams.forEach(param -> this.uiParams.add(param.clone()));
 	}
 
 	public ObservableList<UIParam> getUiParams() {

@@ -39,7 +39,5 @@ public class FillRootControlsStrategy extends BaseRootController implements
 		UIPlugin selectedPlugin = uiSequence.getSelectedUIPLugin();
 		tblHeaders = new HeaderTableView().initialize(
 				selectedPlugin.getHeadersList(), tblHeaders, null);
-
-		updateControls();
 	}
 }

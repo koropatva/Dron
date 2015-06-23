@@ -24,7 +24,7 @@ public class SequenceRunner {
 		}
 	}
 
-	public void runPlugin(String orderedId) throws HandlerNotReadyException {
+	public void runPlugin(String orderedId) throws DronSenderException {
 		if (orderedId == null) {
 			throw new HandlerNotReadyException("orderId can't be null");
 		}
@@ -34,14 +34,19 @@ public class SequenceRunner {
 			throw new HandlerNotReadyException("Plugin can't be null");
 		}
 
-		plugin.setSequence(sequence);
-		String response = restFullService.run(plugin);
-		plugin.setResponce(response);
+		try {
+			plugin.setSequence(sequence);
+			String response = restFullService.run(plugin);
+			plugin.setResponce(response);
+			plugin.setSuccess(true);
+			futureParamService.fillFutureParams(plugin);
 
-		futureParamService.fillFutureParams(plugin);
-
-		// Added sent plugin to the history
-		sequence.getSentPlugins().add(plugin.clone());
+		} catch (Exception e) {
+			plugin.setResponce(e.getMessage());
+			plugin.setSuccess(false);
+		} finally {
+			// Added sent plugin to the history
+			sequence.getSentPlugins().add(plugin.clone());
+		}
 	}
-
 }

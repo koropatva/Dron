@@ -69,6 +69,8 @@ public class Plugin extends BaseNotificationModel implements Cloneable {
 
 	private String responce;
 
+	private boolean success;
+	
 	/**
 	 * Structure of parameter way looks like: names of JSON object separated by
 	 * dot. If you need to select someone object from the list you should to use
@@ -161,11 +163,20 @@ public class Plugin extends BaseNotificationModel implements Cloneable {
 		notifyListeners(this, PROPERTY_ID, this.id, this.id = id);
 	}
 
+	public boolean isSuccess() {
+		return success;
+	}
+	
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+	
 	@Override
 	public Plugin clone() {
 		Plugin plugin = new Plugin();
 		plugin.setId(id);
 		plugin.setName(name);
+		plugin.setSuccess(success);
 		plugin.setPostBody(postBody);
 		plugin.setResponce(responce);
 		plugin.setSequence(sequence);

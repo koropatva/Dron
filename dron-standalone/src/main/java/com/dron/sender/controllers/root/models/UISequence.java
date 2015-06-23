@@ -24,6 +24,9 @@ public class UISequence {
 	private final ObservableList<UIPlugin> uiPlugins = FXCollections
 			.observableArrayList();
 
+	private final ObservableList<String> keys = FXCollections
+			.observableArrayList();
+
 	private String selectedUIPLuginID;
 
 	public void setUpEmptyForm() {
@@ -33,6 +36,7 @@ public class UISequence {
 
 	public void prepareEmptySequence() {
 		uiParams.add(new UIParam());
+		fillKeys();
 		UIPlugin uiPlugin = new UIPlugin();
 		uiPlugins.add(uiPlugin);
 		order.add(uiPlugin.getId().get());
@@ -41,10 +45,15 @@ public class UISequence {
 
 	public void clear() {
 		uiParams.clear();
+		fillKeys();
 		uiPlugins.clear();
 		order.clear();
 		name.set("");
 		selectedUIPLuginID = null;
+	}
+
+	private void fillKeys() {
+		uiParams.forEach(param -> keys.add(param.getKey()));
 	}
 
 	public UIPlugin findPlugin(String id) {
@@ -147,6 +156,10 @@ public class UISequence {
 
 	public String getSelectedPluginId() {
 		return selectedUIPLuginID;
+	}
+
+	public ObservableList<String> getKeys() {
+		return keys;
 	}
 
 }

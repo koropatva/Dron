@@ -20,6 +20,7 @@ import com.dron.sender.sequence.models.Sequence;
 public abstract class BaseRootController extends Parent {
 
 	protected static final double DEFAULT_ACCORDION_WIDTH = 300.0;
+	protected static final double DEFAULT_ACCORDION_HEIGHT = 100.0;
 
 	@FXML
 	protected TextField tfUrl;

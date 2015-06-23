@@ -73,8 +73,15 @@ public class InitializeStrategy extends BaseRootController implements
 					updateControls();
 				});
 
-		tblParams = new ParamTableView().initialize(uiSequence.getUIParams(),
-				tblParams);
+		tblParams = new ParamTableView()
+				.initialize(
+						uiSequence.getUIParams(),
+						tblParams,
+						onKey -> {
+							uiSequence.getKeys().clear();
+							onKey.forEach(key -> uiSequence.getKeys().add(
+									key.getKey()));
+						});
 		tblParams
 				.editableProperty()
 				.addListener(

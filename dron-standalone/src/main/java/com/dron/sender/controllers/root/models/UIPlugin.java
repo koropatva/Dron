@@ -32,6 +32,7 @@ public class UIPlugin implements Cloneable {
 	private final ObservableList<UIFutureParam> futureParams = FXCollections
 			.observableArrayList();
 
+
 	public UIPlugin() {
 		prepareEmptyPlugin();
 	}
@@ -122,7 +123,7 @@ public class UIPlugin implements Cloneable {
 		futureParams.forEach(futureParam -> {
 			plugin.getFutureParams().add(futureParam.clone());
 		});
-
 		return plugin;
 	}
+
 }

@@ -39,7 +39,6 @@ public class EnableControlsStrategy extends BaseRootController implements
 		tbtnParams.disableProperty().set(false);
 		accPlugins.disableProperty().set(false);
 		tfNewPluginName.disableProperty().set(false);
-		btnAddNewPlugin.disableProperty().set(false);
 		btnStopSendingSequence.setVisible(false);
 		btnSendSequence.requestFocus();
 
@@ -51,8 +50,10 @@ public class EnableControlsStrategy extends BaseRootController implements
 						new HistoryUiPlugin(plugin, params)));
 		ObservableList<HistoryUiPlugin> items = FXCollections
 				.observableArrayList();
+
 		cache.getSentPlugins().forEach(plugin -> items.add(plugin));
 		lvHistory.getItems().clear();
+		FXCollections.reverse(items);
 		lvHistory.setItems(items);
 	}
 }

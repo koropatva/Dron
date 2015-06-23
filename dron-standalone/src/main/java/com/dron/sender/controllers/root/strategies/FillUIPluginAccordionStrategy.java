@@ -107,7 +107,7 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		if (index != uiSequence.getOrder().size() - 1) {
 			btnMoveDown = new Button("Move down");
 			btnMoveDown.setOnAction(listener -> {
-				setTmpUiPlugin(uiPlugin);
+				setUiPlugin(uiPlugin);
 				context.execute(controller,
 						ControllerActionStrategy.ROOT_MOVE_PLUGIN_DOWN);
 			});
@@ -117,7 +117,7 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		if (index != 0) {
 			btnMoveUp = new Button("Move up");
 			btnMoveUp.setOnAction(listener -> {
-				setTmpUiPlugin(uiPlugin);
+				setUiPlugin(uiPlugin);
 				context.execute(controller,
 						ControllerActionStrategy.ROOT_MOVE_PLUGIN_UP);
 			});

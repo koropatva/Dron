@@ -35,11 +35,13 @@ public class SequenceRunner {
 		}
 
 		plugin.setSequence(sequence);
-		System.out.println("Plugin is running with id = " + plugin.getId());
 		String response = restFullService.run(plugin);
 		plugin.setResponce(response);
-		System.out.println(response);
+
 		futureParamService.fillFutureParams(plugin);
+
+		// Added sent plugin to the history
+		sequence.getSentPlugins().add(plugin.clone());
 	}
 
 }

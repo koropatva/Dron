@@ -1,44 +1,54 @@
 package com.dron.sender.sequence.models;
 
-public class Rule {
+public class Rule implements Cloneable {
 
-    private String key;
-    
-    private String value;
-    
-    private RuleCheckingEnum ruleCheckingEnum;
-    
-    private RuleSplitterEnum ruleSplitterEnum;
+	private String key;
 
-    public String getKey() {
-        return key;
-    }
+	private String value;
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	private RuleCheckingEnum ruleCheckingEnum;
 
-    public String getValue() {
-        return value;
-    }
+	private RuleSplitterEnum ruleSplitterEnum;
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public String getKey() {
+		return key;
+	}
 
-    public RuleCheckingEnum getRuleCheckingEnum() {
-        return ruleCheckingEnum;
-    }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public void setRuleCheckingEnum(RuleCheckingEnum ruleCheckingEnum) {
-        this.ruleCheckingEnum = ruleCheckingEnum;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public RuleSplitterEnum getRuleSplitterEnum() {
-        return ruleSplitterEnum;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    public void setRuleSplitterEnum(RuleSplitterEnum ruleSplitterEnum) {
-        this.ruleSplitterEnum = ruleSplitterEnum;
-    }
+	public RuleCheckingEnum getRuleCheckingEnum() {
+		return ruleCheckingEnum;
+	}
+
+	public void setRuleCheckingEnum(RuleCheckingEnum ruleCheckingEnum) {
+		this.ruleCheckingEnum = ruleCheckingEnum;
+	}
+
+	public RuleSplitterEnum getRuleSplitterEnum() {
+		return ruleSplitterEnum;
+	}
+
+	public void setRuleSplitterEnum(RuleSplitterEnum ruleSplitterEnum) {
+		this.ruleSplitterEnum = ruleSplitterEnum;
+	}
+
+	@Override
+	protected Rule clone() throws CloneNotSupportedException {
+		Rule rule = new Rule();
+		rule.setKey(key);
+		rule.setValue(value);
+		rule.setRuleCheckingEnum(ruleCheckingEnum);
+		rule.setRuleSplitterEnum(ruleSplitterEnum);
+		return rule;
+	}
 }

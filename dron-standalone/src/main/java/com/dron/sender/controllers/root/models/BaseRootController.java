@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -68,14 +69,16 @@ public abstract class BaseRootController extends Parent {
 	@FXML
 	protected AutoFillSequenceTextBox autoFillSequenceTextBox;
 
+	@FXML
+	protected ListView<UIPlugin> lvHistory;
+
 	protected UISequence uiSequence;
 
+	private UIPlugin uiPlugin;
+	
 	// The sequence is used for share sequence between IMPORT_SEQUENCE and
 	// PREPARE_SEQUENCE strategies
 	private Sequence tmpImportSequence;
-
-	// The uiPLugin is used for share plugin to move it up and down
-	private UIPlugin tmpUiPlugin;
 
 	// The File is used for share file between SHOW_IMPORT_DIALOG_SEQUENCE and
 	// IMPORT_SEQUENCE strategies
@@ -97,6 +100,7 @@ public abstract class BaseRootController extends Parent {
 		this.tblHeaders = modelRootController.getTblHeaders();
 		this.tblParams = modelRootController.getTblParams();
 		this.uiSequence = modelRootController.getUiSequence();
+		this.uiPlugin = modelRootController.getUiPlugin();
 		this.btnSendActivePlugin = modelRootController.getBtnSendActivePlugin();
 		this.btnStopSendingSequence = modelRootController
 				.getBtnStopSendingSequence();
@@ -106,9 +110,8 @@ public abstract class BaseRootController extends Parent {
 				.getAutoFillSequenceTextBox();
 		this.tmpImportSequence = modelRootController.getTmpImportSequence();
 		this.tmpImportFile = modelRootController.getTmpImportFile();
-		this.tmpUiPlugin = modelRootController.getTmpUiPlugin() == null ? uiSequence
-				.getSelectedUIPLugin() : modelRootController.getTmpUiPlugin();
 		this.sendRequestThread = modelRootController.getSendRequestThread();
+		this.lvHistory = modelRootController.getLvHistory();
 	}
 
 	public TextField getTfUrl() {
@@ -203,12 +206,20 @@ public abstract class BaseRootController extends Parent {
 		this.sendRequestThread = sendRequestThread;
 	}
 
-	public UIPlugin getTmpUiPlugin() {
-		return tmpUiPlugin;
+	public ListView<UIPlugin> getLvHistory() {
+		return lvHistory;
 	}
 
-	public void setTmpUiPlugin(UIPlugin tmpUiPlugin) {
-		this.tmpUiPlugin = tmpUiPlugin;
+	public void setLvHistory(ListView<UIPlugin> lvHistory) {
+		this.lvHistory = lvHistory;
+	}
+
+	public UIPlugin getUiPlugin() {
+		return uiPlugin;
+	}
+
+	public void setUiPlugin(UIPlugin uiPlugin) {
+		this.uiPlugin = uiPlugin;
 	}
 
 }

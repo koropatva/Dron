@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ListView?>
+
 
 <?import com.dron.sender.controllers.root.controls.AutoFillSequenceTextBox?>
 
@@ -158,7 +160,7 @@
                                       <content>
                                         <AnchorPane minHeight="-Infinity">
                                              <children>
-                                                <ListView />
+                                                <ListView fx:id="lvHistory"/>
                                              </children>
                                           </AnchorPane>
                                       </content>

@@ -27,6 +27,8 @@ public class Sequence extends BaseNotificationModel {
 
 	private List<Plugin> plugins;
 
+	private final List<Plugin> sentPlugins;
+
 	private List<Param> params;
 
 	private String selectedPluginId;
@@ -34,6 +36,7 @@ public class Sequence extends BaseNotificationModel {
 	public Sequence() {
 		order = new ArrayList<String>();
 		plugins = new LinkedList<Plugin>();
+		sentPlugins = new LinkedList<Plugin>();
 		params = new ArrayList<Param>();
 	}
 
@@ -116,4 +119,9 @@ public class Sequence extends BaseNotificationModel {
 	public void setId(String id) {
 		notifyListeners(this, PROPERTY_ID, this.id, this.id = id);
 	}
+
+	public List<Plugin> getSentPlugins() {
+		return sentPlugins;
+	}
+
 }

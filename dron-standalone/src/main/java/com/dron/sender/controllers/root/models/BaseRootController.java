@@ -11,10 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.HBox;
 
 import com.dron.sender.controllers.root.controls.AutoFillSequenceTextBox;
-import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.sequence.models.Sequence;
 
 public abstract class BaseRootController extends Parent {
@@ -36,9 +34,6 @@ public abstract class BaseRootController extends Parent {
 
 	@FXML
 	protected TextArea txaConsole;
-
-	@FXML
-	protected HBox hbHeadersParamsTable;
 
 	@FXML
 	protected ToggleButton tbtnHeaders;
@@ -95,8 +90,6 @@ public abstract class BaseRootController extends Parent {
 		this.txaResponce = modelRootController.getTxaResponce();
 		this.txaPostBody = modelRootController.getTxaPostBody();
 		this.txaConsole = modelRootController.getTxaConsole();
-		this.hbHeadersParamsTable = modelRootController
-				.getHbHeadersParamsTable();
 		this.tbtnHeaders = modelRootController.getTbtnHeaders();
 		this.tbtnParams = modelRootController.getTbtnParams();
 		this.cbMethods = modelRootController.getCbMethods();
@@ -116,13 +109,6 @@ public abstract class BaseRootController extends Parent {
 		this.tmpUiPlugin = modelRootController.getTmpUiPlugin() == null ? uiSequence
 				.getSelectedUIPLugin() : modelRootController.getTmpUiPlugin();
 		this.sendRequestThread = modelRootController.getSendRequestThread();
-	}
-
-	protected void updateControls() {
-		hbHeadersParamsTable.setPrefHeight(RootConfig
-				.getHbHeadersParamsHeight());
-		txaPostBody.setPrefHeight(RootConfig.getPostBodyHeight());
-		txaResponce.setPrefHeight(RootConfig.getResponceHeight());
 	}
 
 	public TextField getTfUrl() {
@@ -147,10 +133,6 @@ public abstract class BaseRootController extends Parent {
 
 	public TableView<UIParam> getTblParams() {
 		return tblParams;
-	}
-
-	public HBox getHbHeadersParamsTable() {
-		return hbHeadersParamsTable;
 	}
 
 	public ToggleButton getTbtnHeaders() {

@@ -69,8 +69,6 @@ public class InitializeStrategy extends BaseRootController implements
 					uiSequence.getSelectedUIPLugin().setMethod(newValue);
 
 					RootConfig.bindPostBody(txaPostBody, newValue);
-
-					updateControls();
 				});
 
 		tblParams = new ParamTableView()
@@ -102,20 +100,11 @@ public class InitializeStrategy extends BaseRootController implements
 		tbtnHeaders.disableProperty().bind(RootConfig.getDisableRootProperty());
 		tbtnHeaders.setOnAction(event -> {
 			tblHeaders.setVisible(!tblHeaders.isVisible());
-			RootConfig.bindHeaders(tblHeaders.isVisible()
-					|| tblParams.isVisible());
-
-			updateControls();
 		});
 
 		tbtnParams.setSelected(true);
 		tbtnParams.setOnAction(event -> {
 			tblParams.setVisible(!tblParams.isVisible());
-
-			RootConfig.bindHeaders(tblHeaders.isVisible()
-					|| tblParams.isVisible());
-
-			updateControls();
 		});
 
 		tblHeaders.disableProperty().bind(RootConfig.getDisableRootProperty());

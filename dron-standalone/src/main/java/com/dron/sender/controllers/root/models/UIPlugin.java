@@ -26,12 +26,13 @@ public class UIPlugin implements Cloneable {
 
 	private final StringProperty name = new SimpleStringProperty();
 
+	private final StringProperty responce = new SimpleStringProperty();
+
 	private final ObservableList<UIHttpHeaders> headersList = FXCollections
 			.observableArrayList();
 
 	private final ObservableList<UIFutureParam> futureParams = FXCollections
 			.observableArrayList();
-
 
 	public UIPlugin() {
 		prepareEmptyPlugin();
@@ -42,6 +43,7 @@ public class UIPlugin implements Cloneable {
 		url.set("");
 		postBody.set("");
 		name.set("");
+		responce.set("");
 		headersList.clear();
 		futureParams.clear();
 	}
@@ -109,12 +111,21 @@ public class UIPlugin implements Cloneable {
 		this.name.set(name);
 	}
 
+	public StringProperty getResponce() {
+		return responce;
+	}
+
+	public void setResponce(String name) {
+		this.responce.set(name);
+	}
+
 	@Override
 	public UIPlugin clone() {
 		UIPlugin plugin = new UIPlugin();
 		plugin.setId(id.get());
 		plugin.setMethod(method.get());
 		plugin.setName(name.get());
+		plugin.setResponce(responce.get());
 		plugin.setPostBody(postBody.get());
 		plugin.setUrl(url.get());
 		headersList.forEach(header -> {
@@ -124,6 +135,14 @@ public class UIPlugin implements Cloneable {
 			plugin.getFutureParams().add(futureParam.clone());
 		});
 		return plugin;
+	}
+
+	@Override
+	public String toString() {
+		return "UIPlugin [mapper=" + mapper + ", id=" + id + ", url=" + url
+				+ ", postBody=" + postBody + ", method=" + method + ", name="
+				+ name + ", responce=" + responce + ", headersList="
+				+ headersList + ", futureParams=" + futureParams + "]";
 	}
 
 }

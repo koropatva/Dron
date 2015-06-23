@@ -1,5 +1,9 @@
 package com.dron.sender.controllers.root.strategies;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.SelectionMode;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,7 @@ import com.dron.sender.controllers.root.controls.AutoFillSequenceHelper;
 import com.dron.sender.controllers.root.controls.ParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.BaseRootController;
+import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
@@ -112,6 +117,23 @@ public class InitializeStrategy extends BaseRootController implements
 		autoFillSequenceTextBox.setUp(ctx, controller);
 		autoFillSequenceTextBox.setItems(AutoFillSequenceHelper
 				.getFiles(appProperties.getFilePath()));
+
+		lvHistory.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		lvHistory.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<UIPlugin>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends UIPlugin> observable,
+							UIPlugin oldValue, UIPlugin newValue) {
+						System.out.println(newValue);
+						if (newValue != null) {
+							controller.setUiPlugin(newValue);
+							context.execute(
+									controller,
+									ControllerActionStrategy.ROOT_FILL_ROOT_CONTROLS);
+						}
+					}
+				});
 
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_NEW_UI_SEQUENCE);

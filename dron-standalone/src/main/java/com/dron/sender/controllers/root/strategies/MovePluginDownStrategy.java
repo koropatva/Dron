@@ -27,11 +27,11 @@ public class MovePluginDownStrategy extends BaseRootController implements
 		final RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
-		uiSequence.movePluginDown(getTmpUiPlugin().getId().get());
+		uiSequence.movePluginDown(getUiPlugin().getId().get());
 
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
-		uiSequence.selectedUIPLugin(getTmpUiPlugin().getId().get(), context,
+		uiSequence.selectedUIPLugin(getUiPlugin().getId().get(), context,
 				controller);
 	}
 

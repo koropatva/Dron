@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 
 import com.dron.sender.sequence.utils.ParamsUtils;
 
-public class Plugin extends BaseNotificationModel {
+public class Plugin extends BaseNotificationModel implements Cloneable {
 
 	public static final String PROPERTY_NAME = "Name";
 
@@ -159,6 +159,22 @@ public class Plugin extends BaseNotificationModel {
 			id = UUID.randomUUID().toString();
 		}
 		notifyListeners(this, PROPERTY_ID, this.id, this.id = id);
+	}
+
+	@Override
+	public Plugin clone() {
+		Plugin plugin = new Plugin();
+		plugin.setId(id);
+		plugin.setName(name);
+		plugin.setPostBody(postBody);
+		plugin.setResponce(responce);
+		plugin.setSequence(sequence);
+		plugin.setUrl(url);
+		plugin.setHeaders(headers);
+		plugin.setHttpMethod(httpMethod);
+		futureParams.forEach(futureParam -> plugin.getFutureParams().add(
+				futureParam));
+		return plugin;
 	}
 
 }

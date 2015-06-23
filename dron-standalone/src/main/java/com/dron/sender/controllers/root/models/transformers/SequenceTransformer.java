@@ -33,6 +33,14 @@ public class SequenceTransformer implements
 							TransformKey.ROOT_PLUGIN);
 					uiSequence.getUiPlugins().add(uiPlugin);
 				});
+		uiSequence.getSentPlugins().clear();
+		sequence.getSentPlugins().forEach(
+				plugin -> {
+					UIPlugin uiPlugin = new UIPlugin();
+					TransformerFactory.transformEntity(plugin, uiPlugin,
+							TransformKey.ROOT_PLUGIN);
+					uiSequence.getSentPlugins().add(uiPlugin);
+				});
 
 		return uiSequence;
 	}
@@ -43,7 +51,8 @@ public class SequenceTransformer implements
 		sequence.setSelectedPluginId(uiSequence.getSelectedPluginId());
 
 		uiSequence.getOrder().forEach(o -> sequence.getOrder().add(o));
-
+		sequence.getSentPlugins().clear();
+		
 		TransformerFactory.reverseTransformEntity(sequence.getParams(),
 				uiSequence.getUIParams(), TransformKey.ROOT_PARAMS);
 

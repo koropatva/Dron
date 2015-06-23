@@ -10,7 +10,9 @@ import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exceptions.HandlerNotReadyException;
 import com.dron.sender.exceptions.RequestException;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
+import com.dron.sender.pattern.models.transformers.TransformKey;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
+import com.dron.sender.pattern.services.transformers.TransformerFactory;
 import com.dron.sender.sequence.models.Sequence;
 import com.dron.sender.sequence.services.SequenceRunner;
 
@@ -47,6 +49,10 @@ public class SequenceTask extends Task<String> {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
+					TransformerFactory.transformEntity(sequence,
+							controller.getUiSequence(),
+							TransformKey.ROOT_SEQUENCE);
+
 					context.execute(controller,
 							ControllerActionStrategy.ROOT_ENABLE_CONTROLS);
 				}

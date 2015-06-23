@@ -1,8 +1,9 @@
 package com.dron.sender.sequence.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class FutureParam extends BaseNotificationModel {
+public class FutureParam extends BaseNotificationModel implements Cloneable {
 
 	public static final String PROPERTY_KEY = "Key";
 
@@ -11,9 +12,11 @@ public class FutureParam extends BaseNotificationModel {
 	public static final String PROPERTY_RULES = "Rules";
 
 	public FutureParam() {
+		rules = new ArrayList<Rule>();
 	}
 
 	public FutureParam(final String key, final String dependence) {
+		this();
 		this.key = key;
 		this.dependence = dependence;
 	}
@@ -47,5 +50,14 @@ public class FutureParam extends BaseNotificationModel {
 
 	public void setRules(List<Rule> rules) {
 		notifyListeners(this, PROPERTY_RULES, rules, this.rules = rules);
+	}
+
+	@Override
+	protected FutureParam clone() throws CloneNotSupportedException {
+		FutureParam futureParam = new FutureParam();
+		futureParam.setKey(key);
+		futureParam.setDependence(dependence);
+		rules.forEach(rule -> futureParam.getRules().add(rule));
+		return futureParam;
 	}
 }

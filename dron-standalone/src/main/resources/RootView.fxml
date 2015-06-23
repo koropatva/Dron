@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.collections.*?>
 <?import javafx.scene.*?>
 <?import javafx.geometry.*?>
@@ -10,111 +11,168 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.TextArea?>
-<?import com.dron.sender.controllers.root.controls.AutoFillSequenceTextBox?>
 
-<AnchorPane layoutX="1.0" layoutY="1.0"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<!-- <?import com.dron.sender.controllers.root.controls.AutoFillSequenceTextBox?> -->
+
+<AnchorPane layoutX="1.0" layoutY="1.0" prefHeight="540.0" prefWidth="1000.0" stylesheets="@control.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<VBox>
-			<children>
-				<MenuBar>
+				<MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 					<menus>
 						<Menu mnemonicParsing="false" text="File">
 							<items>
-								<MenuItem mnemonicParsing="false" text="New"
-									onAction="#createNewSequence" />
+								<MenuItem mnemonicParsing="false" onAction="#createNewSequence" text="New" />
 								<SeparatorMenuItem mnemonicParsing="false" />
 								<MenuItem mnemonicParsing="false" text="Save" />
 								<SeparatorMenuItem mnemonicParsing="false" />
-								<MenuItem mnemonicParsing="false" text="Import"
-									onAction="#importSequence" />
-								<MenuItem mnemonicParsing="false" text="Import Postman"
-									onAction="#importPostmanSequence" />
-								<MenuItem mnemonicParsing="false" text="Export"
-									onAction="#exportSequence" />
+								<MenuItem mnemonicParsing="false" onAction="#importSequence" text="Import" />
+								<MenuItem mnemonicParsing="false" onAction="#importPostmanSequence" text="Import Postman" />
+								<MenuItem mnemonicParsing="false" onAction="#exportSequence" text="Export" />
 							</items>
 						</Menu>
 					</menus>
 				</MenuBar>
-				<HBox>
-					<children>
-						<VBox>
-							<children>
-								<ToolBar>
-									<items>
-										<AutoFillSequenceTextBox fx:id="autoFillSequenceTextBox"
-											prefWidth="300" focusTraversable="true" />
-										<Button fx:id="btnSendSequence" onAction="#sendSequence"
-											text="Send sequence" focusTraversable="true" />
-										<Button fx:id="btnStopSendingSequence" text="Stop sending sequence"
-											onAction="#stopSendingSequence" visible="false" />
-									</items>
-								</ToolBar>
-								<ToolBar>
-									<items>
-										<TextField fx:id="tfUrl" prefWidth="448.0"
-											promptText="URL" focusTraversable="true" />
-										<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
-										<ToggleButton fx:id="tbtnHeaders"
-											mnemonicParsing="false" text="Headers" focusTraversable="true" />
-										<ToggleButton fx:id="tbtnParams" mnemonicParsing="false"
-											text="Params" focusTraversable="true" />
-										<Button fx:id="btnSendActivePlugin" mnemonicParsing="false"
-											onAction="#sendPlugin" text="Send plugin" focusTraversable="true" />
-									</items>
-								</ToolBar>
-								<VBox>
-									<children>
-										<GridPane>
-											<children>
-												<HBox fx:id="hbHeadersParamsTable"
-													AnchorPane.leftAnchor="5.0">
-													<children>
-														<TableView fx:id="tblHeaders" prefWidth="320.0" />
-														<TableView fx:id="tblParams" prefWidth="500.0" />
-													</children>
-												</HBox>
-											</children>
-										</GridPane>
-										<AnchorPane>
-											<children>
-												<TextArea fx:id="txaPostBody" promptText="Post body"
-													AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-													AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-											</children>
-										</AnchorPane>
-										<AnchorPane>
-											<children>
-												<TextArea fx:id="txaResponce" editable="false"
-													promptText="Responce" text="" AnchorPane.bottomAnchor="5.0"
-													AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-													AnchorPane.topAnchor="5.0" />
-											</children>
-										</AnchorPane>
-									</children>
-								</VBox>
-							</children>
-						</VBox>
-						<ScrollPane prefHeight="500" prefWidth="325.0">
-							<content>
-								<VBox>
-									<children>
-										<Accordion fx:id="accPlugins" />
-										<HBox>
-											<children>
-												<TextField fx:id="tfNewPluginName" />
-												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false"
-													onAction="#addNewPlugin" text="Add" />
-											</children>
-										</HBox>
-									</children>
-								</VBox>
-							</content>
-						</ScrollPane>
-					</children>
-				</HBox>
-				<TextArea fx:id="txaConsole" />
-			</children>
-		</VBox>
+      <SplitPane dividerPositions="0.7715430861723447" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <items>
+            <AnchorPane>
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefViewportHeight="507.0" prefViewportWidth="762.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <AnchorPane prefHeight="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                        								<ToolBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        									<items>
+                        										<AutoFillSequenceTextBox fx:id="autoFillSequenceTextBox" focusTraversable="true" prefWidth="300" />
+                        										<Button fx:id="btnSendSequence" focusTraversable="true" onAction="#sendSequence" styleClass="send-sequense-new" text="Send sequence" />
+                        										<Button fx:id="btnStopSendingSequence" onAction="#stopSendingSequence" styleClass="send-sequense-new" text="Stop sending sequence" visible="false" />
+                        									</items>
+                        								</ToolBar>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutY="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+                                 <children>
+                        								<ToolBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        									<items>
+                        										<TextField fx:id="tfUrl" focusTraversable="true" maxWidth="400.0" minWidth="250.0" promptText="URL" />
+                        										<ChoiceBox fx:id="cbMethods" prefWidth="150.0" />
+                        										<ToggleButton fx:id="tbtnHeaders" focusTraversable="true" mnemonicParsing="false" text="Headers" />
+                        										<ToggleButton fx:id="tbtnParams" focusTraversable="true" mnemonicParsing="false" text="Params" />
+                        										<Button fx:id="btnSendActivePlugin" focusTraversable="true" mnemonicParsing="false" onAction="#sendPlugin" text="Send plugin" />
+                        									</items>
+                        								</ToolBar>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutY="76.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
+                                 <children>
+                                    <SplitPane dividerPositions="0.25" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <items>
+                                        <AnchorPane minHeight="120.0" minWidth="0.0">
+                                             <children>
+                        										<GridPane minHeight="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        											<children>
+                  														<TableView fx:id="tblHeaders" minHeight="150.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        											</children>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints />
+                                                   </rowConstraints>
+                        										</GridPane>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane>
+                                             <children>
+                                                <SplitPane dividerPositions="0.3" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <items>
+                              										<AnchorPane>
+                              											<children>
+                                    												<TextArea fx:id="txaPostBody" minHeight="-Infinity" promptText="Post body" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              											</children>
+                              										</AnchorPane>
+                              										<AnchorPane>
+                              											<children>
+                                          												<TextArea fx:id="txaResponce" editable="false" promptText="Responce" text="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              											</children>
+                              										</AnchorPane>
+                                                   </items>
+                                                </SplitPane>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab text="Sequences">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <SplitPane dividerPositions="0.35" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <items>
+                                        <AnchorPane minHeight="120.0">
+                                             <children>
+                              														<TableView fx:id="tblParams" styleClass="key-values-column" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <AnchorPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                              												<TextField fx:id="tfNewPluginName" prefWidth="120.0" />
+                              												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false" onAction="#addNewPlugin" text="Add" AnchorPane.leftAnchor="125.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                  <content>
+                                                    <AnchorPane>
+                                                         <children>
+                                          										<Accordion fx:id="accPlugins" minHeight="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </ScrollPane>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="History">
+                           <content>
+                              <AnchorPane>
+                                 <children>
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <content>
+                                        <AnchorPane minHeight="-Infinity">
+                                             <children>
+                                                <ListView />
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </ScrollPane>
+                        				<TextArea fx:id="txaConsole" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
 	</children>
 </AnchorPane>

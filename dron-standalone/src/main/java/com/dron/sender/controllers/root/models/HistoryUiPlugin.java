@@ -25,7 +25,7 @@ public class HistoryUiPlugin {
 
 	@Override
 	public String toString() {
-		return uiPlugin.getName().get() + " " + uiPlugin.isSuccess();
+		return uiPlugin.getUrl().get();
 	}
 
 }

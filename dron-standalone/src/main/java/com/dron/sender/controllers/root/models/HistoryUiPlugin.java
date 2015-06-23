@@ -9,8 +9,11 @@ public class HistoryUiPlugin {
 	private final ObservableList<UIParam> uiParams = FXCollections
 			.observableArrayList();
 
-	private final ObservableList<UIHttpHeaders> headersList = FXCollections
-			.observableArrayList();
+	public HistoryUiPlugin(UIPlugin uiPlugin, ObservableList<UIParam> uiParams) {
+		this.uiPlugin = uiPlugin.clone();
+		this.uiParams.clear();
+		this.uiParams.addAll(uiParams);
+	}
 
 	public ObservableList<UIParam> getUiParams() {
 		return uiParams;
@@ -20,13 +23,9 @@ public class HistoryUiPlugin {
 		return uiPlugin;
 	}
 
-	public ObservableList<UIHttpHeaders> getHeadersList() {
-		return headersList;
-	}
-
 	@Override
 	public String toString() {
-		return uiPlugin.getName().get();
+		return uiPlugin.getName().get() + " " + uiPlugin.isSuccess();
 	}
 
 }

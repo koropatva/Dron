@@ -17,6 +17,7 @@ public class PluginTransformer implements IBaseTransformer<Plugin, UIPlugin> {
 		uiPlugin.setResponce(plugin.getResponce());
 		uiPlugin.setUrl(plugin.getUrl());
 		uiPlugin.setPostBody(plugin.getPostBody());
+		uiPlugin.setSuccess(plugin.isSuccess());
 		uiPlugin.setMethod(plugin.getHttpMethod().name());
 
 		TransformerFactory.transformEntity(plugin.getHeaders(),
@@ -34,6 +35,7 @@ public class PluginTransformer implements IBaseTransformer<Plugin, UIPlugin> {
 		plugin.setResponce(uiPlugin.getResponce().get());
 		plugin.setUrl(uiPlugin.getUrl().get());
 		plugin.setPostBody(uiPlugin.getPostBody().get());
+		plugin.setSuccess(uiPlugin.isSuccess().get());
 		plugin.setHttpMethod(HttpMethod.valueOf(uiPlugin.getMethod().get()));
 		TransformerFactory.reverseTransformEntity(plugin.getHeaders(),
 				uiPlugin.getHeadersList(), TransformKey.ROOT_HTTP_HEADERS);

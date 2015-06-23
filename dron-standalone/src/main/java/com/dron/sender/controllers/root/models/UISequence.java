@@ -120,7 +120,8 @@ public class UISequence {
 		}
 		this.selectedUIPLuginID = selectedUIPLugin;
 
-		controller.setUiPlugin(getSelectedUIPLugin());
+		controller.setHistoryUiPlugin(new HistoryUiPlugin(
+				getSelectedUIPLugin(), uiParams));
 
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_FILL_ROOT_CONTROLS);

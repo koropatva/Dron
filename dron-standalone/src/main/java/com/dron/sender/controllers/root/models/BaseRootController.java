@@ -70,12 +70,12 @@ public abstract class BaseRootController extends Parent {
 	protected AutoFillSequenceTextBox autoFillSequenceTextBox;
 
 	@FXML
-	protected ListView<UIPlugin> lvHistory;
+	protected ListView<HistoryUiPlugin> lvHistory;
 
 	protected UISequence uiSequence;
 
-	private UIPlugin uiPlugin;
-	
+	private HistoryUiPlugin historyUiPlugin;
+
 	// The sequence is used for share sequence between IMPORT_SEQUENCE and
 	// PREPARE_SEQUENCE strategies
 	private Sequence tmpImportSequence;
@@ -100,7 +100,7 @@ public abstract class BaseRootController extends Parent {
 		this.tblHeaders = modelRootController.getTblHeaders();
 		this.tblParams = modelRootController.getTblParams();
 		this.uiSequence = modelRootController.getUiSequence();
-		this.uiPlugin = modelRootController.getUiPlugin();
+		this.historyUiPlugin = modelRootController.getHistoryUiPlugin();
 		this.btnSendActivePlugin = modelRootController.getBtnSendActivePlugin();
 		this.btnStopSendingSequence = modelRootController
 				.getBtnStopSendingSequence();
@@ -206,20 +206,21 @@ public abstract class BaseRootController extends Parent {
 		this.sendRequestThread = sendRequestThread;
 	}
 
-	public ListView<UIPlugin> getLvHistory() {
+	public ListView<HistoryUiPlugin> getLvHistory() {
 		return lvHistory;
 	}
 
-	public void setLvHistory(ListView<UIPlugin> lvHistory) {
+	public void setLvHistory(ListView<HistoryUiPlugin> lvHistory) {
 		this.lvHistory = lvHistory;
 	}
 
-	public UIPlugin getUiPlugin() {
-		return uiPlugin;
+	public HistoryUiPlugin getHistoryUiPlugin() {
+		return historyUiPlugin;
 	}
 
-	public void setUiPlugin(UIPlugin uiPlugin) {
-		this.uiPlugin = uiPlugin;
+	public void setHistoryUiPlugin(HistoryUiPlugin historyUiPlugin) {
+		this.historyUiPlugin = historyUiPlugin;
 	}
+
 
 }

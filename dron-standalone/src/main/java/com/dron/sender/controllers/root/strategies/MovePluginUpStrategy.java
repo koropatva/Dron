@@ -27,12 +27,13 @@ public class MovePluginUpStrategy extends BaseRootController implements
 		final RootController controller = (RootController) iBaseController;
 		setUp(controller);
 
-		uiSequence.movePluginUp(getUiPlugin().getId().get());
+		uiSequence.movePluginUp(getHistoryUiPlugin().getUiPlugin().getId()
+				.get());
 
 		context.execute(controller,
 				ControllerActionStrategy.ROOT_FILL_UI_PLUGIN_ACCORDION);
-		uiSequence.selectedUIPLugin(getUiPlugin().getId().get(), context,
-				controller);
+		uiSequence.selectedUIPLugin(getHistoryUiPlugin().getUiPlugin().getId()
+				.get(), context, controller);
 	}
 
 }

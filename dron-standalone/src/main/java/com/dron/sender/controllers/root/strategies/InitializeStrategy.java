@@ -18,7 +18,7 @@ import com.dron.sender.controllers.root.controls.AutoFillSequenceHelper;
 import com.dron.sender.controllers.root.controls.ParamTableView;
 import com.dron.sender.controllers.root.controls.RootConfig;
 import com.dron.sender.controllers.root.models.BaseRootController;
-import com.dron.sender.controllers.root.models.UIPlugin;
+import com.dron.sender.controllers.root.models.HistoryUiPlugin;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
@@ -120,14 +120,13 @@ public class InitializeStrategy extends BaseRootController implements
 
 		lvHistory.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		lvHistory.getSelectionModel().selectedItemProperty()
-				.addListener(new ChangeListener<UIPlugin>() {
+				.addListener(new ChangeListener<HistoryUiPlugin>() {
 					@Override
 					public void changed(
-							ObservableValue<? extends UIPlugin> observable,
-							UIPlugin oldValue, UIPlugin newValue) {
-						System.out.println(newValue);
+							ObservableValue<? extends HistoryUiPlugin> observable,
+							HistoryUiPlugin oldValue, HistoryUiPlugin newValue) {
 						if (newValue != null) {
-							controller.setUiPlugin(newValue);
+							controller.setHistoryUiPlugin(newValue);
 							context.execute(
 									controller,
 									ControllerActionStrategy.ROOT_FILL_ROOT_CONTROLS);

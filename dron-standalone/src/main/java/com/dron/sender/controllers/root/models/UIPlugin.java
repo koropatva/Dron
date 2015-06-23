@@ -3,6 +3,8 @@ package com.dron.sender.controllers.root.models;
 import java.io.IOException;
 import java.util.UUID;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -28,6 +30,8 @@ public class UIPlugin implements Cloneable {
 
 	private final StringProperty responce = new SimpleStringProperty();
 
+	private final BooleanProperty success = new SimpleBooleanProperty();
+
 	private final ObservableList<UIHttpHeaders> headersList = FXCollections
 			.observableArrayList();
 
@@ -44,6 +48,7 @@ public class UIPlugin implements Cloneable {
 		postBody.set("");
 		name.set("");
 		responce.set("");
+		success.set(true);
 		headersList.clear();
 		futureParams.clear();
 	}
@@ -119,6 +124,14 @@ public class UIPlugin implements Cloneable {
 		this.responce.set(name);
 	}
 
+	public BooleanProperty isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(Boolean success) {
+		this.success.set(success);
+	}
+
 	@Override
 	public UIPlugin clone() {
 		UIPlugin plugin = new UIPlugin();
@@ -126,6 +139,7 @@ public class UIPlugin implements Cloneable {
 		plugin.setMethod(method.get());
 		plugin.setName(name.get());
 		plugin.setResponce(responce.get());
+		plugin.setSuccess(success.get());
 		plugin.setPostBody(postBody.get());
 		plugin.setUrl(url.get());
 		headersList.forEach(header -> {

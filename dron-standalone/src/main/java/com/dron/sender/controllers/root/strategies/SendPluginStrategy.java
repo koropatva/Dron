@@ -28,6 +28,8 @@ public class SendPluginStrategy extends BaseRootController implements
 	@Autowired
 	private ControllerStrategyContext context;
 
+	private RootController controller;
+
 	@Autowired
 	private ApplicationContext ctx;
 
@@ -38,13 +40,12 @@ public class SendPluginStrategy extends BaseRootController implements
 
 	@Override
 	public void execute(IBaseController iBaseController) {
-		RootController controller = (RootController) iBaseController;
+		controller = (RootController) iBaseController;
 		setUp(controller);
 
 		Sequence sequence = fillRootSequence();
 		initLogging(sequence);
 
-		txaResponce.setText("");
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -61,8 +62,22 @@ public class SendPluginStrategy extends BaseRootController implements
 
 	private Sequence fillRootSequence() {
 		Sequence sequence = new Sequence();
-		TransformerFactory.reverseTransformEntity(sequence, uiSequence,
-				TransformKey.ROOT_SEQUENCE);
+		sequence.setSelectedPluginId(controller.getHistoryUiPlugin()
+				.getUiPlugin().getId().get());
+
+		sequence.getOrder().add(
+				controller.getHistoryUiPlugin().getUiPlugin().getId().get());
+
+		sequence.getSentPlugins().clear();
+
+		TransformerFactory.reverseTransformEntity(sequence.getParams(),
+				controller.getHistoryUiPlugin().getUiParams(),
+				TransformKey.ROOT_PARAMS);
+
+		Plugin plugin = new Plugin();
+		TransformerFactory.reverseTransformEntity(plugin, controller
+				.getHistoryUiPlugin().getUiPlugin(), TransformKey.ROOT_PLUGIN);
+		sequence.getPlugins().add(plugin);
 		return sequence;
 	}
 

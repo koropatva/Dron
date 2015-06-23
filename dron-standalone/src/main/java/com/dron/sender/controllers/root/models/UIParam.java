@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 import com.dron.sender.controllers.base.interfaces.IModelTableView;
 import com.dron.sender.sequence.models.Param;
 
-public class UIParam implements IModelTableView {
+public class UIParam implements IModelTableView, Cloneable {
 
 	public UIParam() {
 		this("", "");
@@ -83,6 +83,11 @@ public class UIParam implements IModelTableView {
 
 	public void setValue(String value) {
 		this.value.set(value);
+	}
+
+	@Override
+	public UIParam clone() {
+		return new UIParam(getKey(), getValue());
 	}
 
 }

@@ -71,11 +71,11 @@
                                  <children>
                                     <SplitPane dividerPositions="0.25" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <items>
-                                        <AnchorPane minHeight="120.0" minWidth="0.0">
+                                        <AnchorPane>
                                              <children>
-                        										<GridPane minHeight="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        										<GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         											<children>
-                  														<TableView fx:id="tblHeaders" minHeight="150.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                  														<TableView fx:id="tblHeaders" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                         											</children>
                                                    <columnConstraints>
                                                       <ColumnConstraints />
@@ -118,7 +118,7 @@
                <children>
                   <SplitPane dividerPositions="0.35" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane minHeight="120.0">
+                      <AnchorPane>
                            <children>
             														<TableView fx:id="tblParams" styleClass="key-values-column" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>

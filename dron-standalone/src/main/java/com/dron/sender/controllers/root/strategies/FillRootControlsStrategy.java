@@ -1,5 +1,7 @@
 package com.dron.sender.controllers.root.strategies;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,7 @@ import com.dron.sender.controllers.root.models.BaseRootController;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
 import com.dron.sender.pattern.services.strategies.ControllerStrategyContext;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class FillRootControlsStrategy extends BaseRootController implements
@@ -19,6 +22,8 @@ public class FillRootControlsStrategy extends BaseRootController implements
 
 	@Autowired
 	private ControllerStrategyContext context;
+
+	private ObjectMapper mapper = new ObjectMapper();
 
 	@Override
 	public ControllerActionStrategy getStrategy() {
@@ -37,10 +42,26 @@ public class FillRootControlsStrategy extends BaseRootController implements
 				.select(controller.getHistoryUiPlugin().getUiPlugin()
 						.getMethod().get());
 
-		txaPostBody.setText(controller.getHistoryUiPlugin().getUiPlugin()
-				.getPostBody().get());
-		txaResponce.setText(controller.getHistoryUiPlugin().getUiPlugin()
-				.getResponce().get());
+		try {
+			Object json;
+			if (controller.getHistoryUiPlugin().getUiPlugin().getPostBody()
+					.get() != null) {
+				json = mapper.readValue(controller.getHistoryUiPlugin()
+						.getUiPlugin().getPostBody().get(), Object.class);
+				txaPostBody.setText(mapper.writerWithDefaultPrettyPrinter()
+						.writeValueAsString(json));
+			}
+
+			if (controller.getHistoryUiPlugin().getUiPlugin().getResponce()
+					.get() != null) {
+				json = mapper.readValue(controller.getHistoryUiPlugin()
+						.getUiPlugin().getResponce().get(), Object.class);
+				txaResponce.setText(mapper.writerWithDefaultPrettyPrinter()
+						.writeValueAsString(json));
+			}
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 
 		RootConfig.bindPostBody(txaPostBody, controller.getHistoryUiPlugin()
 				.getUiPlugin().getMethod().get(), spHeaders, tblHeaders);

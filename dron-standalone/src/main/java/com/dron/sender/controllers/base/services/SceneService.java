@@ -45,7 +45,8 @@ public class SceneService implements ISceneService {
 				IBaseController baseController = (IBaseController) ctx
 						.getBean(controllerEnum.getControllerName());
 				scene = new Scene((Parent) baseController.getLoader().load());
-
+				scene.getStylesheets().clear();
+				scene.getStylesheets().add(SceneService.class.getClassLoader().getResource("control.css").toExternalForm());
 				// Add new scene to the list
 				scenes.put(controllerEnum, scene);
 			} catch (IOException e) {

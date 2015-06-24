@@ -101,33 +101,30 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 				tblFutureParams);
 
 		int index = uiSequence.findSelectedIndex(uiPlugin.getId().get());
-		Button btnMoveDown = null;
-		if (index != uiSequence.getOrder().size() - 1) {
-			btnMoveDown = new Button("Move down");
-			btnMoveDown.getStyleClass().add("btn-move-down");
-			btnMoveDown.setPrefWidth(25.0);
-			btnMoveDown.setMnemonicParsing(false);
-			btnMoveDown.setOnAction(listener -> {
-				setHistoryUiPlugin(new HistoryUiPlugin(uiPlugin, uiSequence
-						.getUIParams()));
-				context.execute(controller,
-						ControllerActionStrategy.ROOT_MOVE_PLUGIN_DOWN);
-			});
-		}
+		Button btnMoveDown = new Button("Move down");
+		btnMoveDown.getStyleClass().add("btn-move-down");
+		btnMoveDown.setPrefWidth(25.0);
+		btnMoveDown.setMnemonicParsing(false);
+		btnMoveDown.setOnAction(listener -> {
+			setHistoryUiPlugin(new HistoryUiPlugin(uiPlugin, uiSequence
+					.getUIParams()));
+			context.execute(controller,
+					ControllerActionStrategy.ROOT_MOVE_PLUGIN_DOWN);
+		});
+		btnMoveDown.setVisible(index != uiSequence.getOrder().size() - 1);
 
-		Button btnMoveUp = null;
-		if (index != 0) {
-			btnMoveUp = new Button("Move up");
-			btnMoveUp.getStyleClass().add("btn-move-up");
-			btnMoveUp.setPrefWidth(25.0);
-			btnMoveUp.setMnemonicParsing(false);
-			btnMoveUp.setOnAction(listener -> {
-				setHistoryUiPlugin(new HistoryUiPlugin(uiPlugin, uiSequence
-						.getUIParams()));
-				context.execute(controller,
-						ControllerActionStrategy.ROOT_MOVE_PLUGIN_UP);
-			});
-		}
+		Button btnMoveUp = new Button("Move up");
+		btnMoveUp.getStyleClass().add("btn-move-up");
+		btnMoveUp.setPrefWidth(25.0);
+		btnMoveUp.setMnemonicParsing(false);
+		btnMoveUp.setOnAction(listener -> {
+			setHistoryUiPlugin(new HistoryUiPlugin(uiPlugin, uiSequence
+					.getUIParams()));
+			context.execute(controller,
+					ControllerActionStrategy.ROOT_MOVE_PLUGIN_UP);
+		});
+		btnMoveUp.setVisible(index != 0);
+
 		Button btnRemove = new Button("Remove");
 		VBox.setMargin(btnRemove, new Insets(0.0, 0.0, 25.0, 0.0));
 		btnRemove.getStyleClass().add("btn-remove");
@@ -144,13 +141,7 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 
 		AnchorPane anchorPane = new AnchorPane();
 		VBox vOrientation = new VBox();
-		vOrientation.getChildren().add(btnRemove);
-		if (btnMoveUp != null) {
-			vOrientation.getChildren().add(btnMoveUp);
-		}
-		if (btnMoveDown != null) {
-			vOrientation.getChildren().add(btnMoveDown);
-		}
+		vOrientation.getChildren().addAll(btnRemove, btnMoveUp, btnMoveDown);
 
 		HBox hRename = new HBox();
 

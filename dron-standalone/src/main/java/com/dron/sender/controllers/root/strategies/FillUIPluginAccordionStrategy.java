@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -86,6 +87,8 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 
 		TitledPane pluginTitle = new TitledPane(uiPlugin.getName().get(),
 				anchorPane);
+		setAnchor(pluginTitle);
+		pluginTitle.setAnimated(false);
 		pluginTitle.textProperty().bindBidirectional(uiPlugin.getName());
 		return pluginTitle;
 	}
@@ -93,13 +96,13 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 	private AnchorPane createAnchorPane(final UIPlugin uiPlugin,
 			final RootController controller) {
 		TableView<UIFutureParam> tblFutureParams = new TableView<>();
-		tblFutureParams.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
-		tblFutureParams.setPrefHeight(DEFAULT_ACCORDION_HEIGHT);
-
+//		tblFutureParams.setPrefHeight(100);
 		tblFutureParams = new FutureParamTableView().initializeWithKeyList(
 				uiPlugin.getFutureParams(), uiSequence.getKeys(),
 				tblFutureParams);
-
+//		tblFutureParams.getColumns().get(0).setPrefWidth(80);
+//		tblFutureParams.getColumns().get(1).setPrefWidth(80);
+		
 		int index = uiSequence.findSelectedIndex(uiPlugin.getId().get());
 		Button btnMoveDown = new Button("Move down");
 		btnMoveDown.getStyleClass().add("btn-move-down");
@@ -139,7 +142,6 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 			uiSequence.selectedUIPLugin(context, controller);
 		});
 
-		AnchorPane anchorPane = new AnchorPane();
 		VBox vOrientation = new VBox();
 		vOrientation.getChildren().addAll(btnRemove, btnMoveUp, btnMoveDown);
 
@@ -169,14 +171,26 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		hRenamePanel.getChildren().addAll(tfPluginName, btnSave, btnCancel);
 
 		hRename.getChildren().addAll(btnRename, hRenamePanel);
+		setAnchor(hRename);
 
 		HBox hBox = new HBox();
 		hBox.getChildren().addAll(tblFutureParams, vOrientation);
+		setAnchor(hBox);
 
 		VBox vBox = new VBox(hBox, hRename);
+		setAnchor(vBox);
+
+		AnchorPane anchorPane = new AnchorPane();
 		anchorPane.getChildren().addAll(vBox);
 
 		return anchorPane;
+	}
+
+	private void setAnchor(Node node) {
+		AnchorPane.setBottomAnchor(node, 0.0);
+		AnchorPane.setLeftAnchor(node, 0.0);
+		AnchorPane.setRightAnchor(node, 0.0);
+		AnchorPane.setTopAnchor(node, 0.0);
 	}
 
 	private int getExpantedUIPluginIndex() {

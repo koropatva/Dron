@@ -123,11 +123,14 @@
                               												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false" onAction="#addNewPlugin" text="Add" AnchorPane.leftAnchor="125.0" />
                                                    </children>
                                                 </AnchorPane>
-                                                <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" fitToHeight="true" fitToWidth="true">
                                                   <content>
                                                     <AnchorPane>
                                                          <children>
-                                          										<Accordion fx:id="accPlugins" minHeight="100.0" style="-fx-pref-width: 100%;" styleClass="acordion-class" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           										<Accordion fx:id="accPlugins"  
+                           											 styleClass="acordion-class" 
+                           											AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" 
+                           											AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                   </content>

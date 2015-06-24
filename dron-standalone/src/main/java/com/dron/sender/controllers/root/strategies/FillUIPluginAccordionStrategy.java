@@ -99,7 +99,7 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		tblFutureParams = new FutureParamTableView().initializeWithKeyList(
 				uiPlugin.getFutureParams(), uiSequence.getKeys(),
 				tblFutureParams);
-		
+
 		int index = uiSequence.findSelectedIndex(uiPlugin.getId().get());
 		Button btnMoveDown = new Button("");
 		btnMoveDown.getStyleClass().add("btn-move-down");
@@ -146,11 +146,13 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 
 		HBox hRenamePanel = new HBox();
 		hRenamePanel.setVisible(false);
+		hRenamePanel.setManaged(false);
 
 		Button btnRename = new Button("Rename");
-		btnRename.visibleProperty().bind(hRenamePanel.visibleProperty().not());
+		btnRename.managedProperty().bind(hRenamePanel.visibleProperty().not());
 		btnRename.setOnAction(listener -> {
-			hRenamePanel.setVisible(!hRenamePanel.isVisible());
+			hRenamePanel.setVisible(true);
+			hRenamePanel.setManaged(true);
 		});
 
 		TextField tfPluginName = new TextField();
@@ -159,11 +161,13 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		Button btnSave = new Button("Save");
 		btnSave.setOnAction(listener -> {
 			uiPlugin.getName().set(tfPluginName.getText());
-			hRenamePanel.setVisible(!hRenamePanel.isVisible());
+			hRenamePanel.setVisible(false);
+			hRenamePanel.setManaged(false);
 		});
 		Button btnCancel = new Button("Cancel");
 		btnCancel.setOnAction(listener -> {
-			hRenamePanel.setVisible(!hRenamePanel.isVisible());
+			hRenamePanel.setVisible(false);
+			hRenamePanel.setManaged(false);
 		});
 		hRenamePanel.getChildren().addAll(tfPluginName, btnSave, btnCancel);
 

@@ -1,9 +1,5 @@
 @CHARSET "UTF-8";
 
-.autofill-text {
-	-fx-skin:
-		"com.dron.sender.controllers.base.controls.AutoFillTextBoxSkin";
-}
 .send-sequense-new{
 	/*-fx-background-color : #ddd;
     -fx-text-fill: #FFF;*/

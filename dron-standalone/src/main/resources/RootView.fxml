@@ -69,7 +69,7 @@
                               </AnchorPane>
                               <AnchorPane layoutY="76.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
                                  <children>
-                                    <SplitPane fx:id="spHeaders" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <SplitPane fx:id="spHeaders" dividerPositions="0.5, 0.5" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <items>
                                         <AnchorPane>
                                              <children>
@@ -77,12 +77,18 @@
                         							<children>
                   										<TableView fx:id="tblHeaders" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                         							</children>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints />
+                                                   </rowConstraints>
                         						</GridPane>
                                              </children>
                                           </AnchorPane>
 	   										<AnchorPane>
 	                              				<children>
-	                                    			<TextArea fx:id="txaPostBody" minHeight="-Infinity" promptText="Post body" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+	                                    			<TextArea fx:id="txaPostBody" minHeight="100.0" promptText="Post body" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 												</children>
 	                              			</AnchorPane>
 	                              			<AnchorPane>
@@ -100,7 +106,7 @@
                   </ScrollPane>
                </children>
             </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minWidth="300.0">
                <children>
                   <SplitPane fx:id="spParams" dividerPositions="0.35" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
@@ -117,20 +123,24 @@
                                        <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
-                                                <AnchorPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <HBox>
                                                    <children>
-                              												<TextField fx:id="tfNewPluginName" prefWidth="120.0" />
-                              												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false" onAction="#addNewPlugin" text="Add" AnchorPane.leftAnchor="125.0" />
+                              												<TextField fx:id="tfNewPluginName" prefWidth="140.0" />
+                              												<Button fx:id="btnAddNewPlugin" mnemonicParsing="false" onAction="#addNewPlugin" text="Add new request" AnchorPane.leftAnchor="125.0">
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                      </Button>
                                                    </children>
-                                                </AnchorPane>
-                                                <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" fitToHeight="true" fitToWidth="true">
+                                                   <padding>
+                                                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                                   <content>
                                                     <AnchorPane>
                                                          <children>
-                           										<Accordion fx:id="accPlugins"  
-                           											 styleClass="acordion-class" 
-                           											AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" 
-                           											AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           										<Accordion fx:id="accPlugins" styleClass="acordion-class" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                   </content>

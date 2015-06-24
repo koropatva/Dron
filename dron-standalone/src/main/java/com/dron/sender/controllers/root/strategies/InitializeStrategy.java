@@ -114,6 +114,7 @@ public class InitializeStrategy extends BaseRootController implements
 		tbtnParams.setSelected(true);
 		tbtnParams.setOnAction(event -> {
 			tblParams.setVisible(!tblParams.isVisible());
+			spParams.setDividerPositions(tblParams.isVisible() ? 0.4 : 0.0);
 		});
 
 		tblHeaders.disableProperty().bind(RootConfig.getDisableRootProperty());

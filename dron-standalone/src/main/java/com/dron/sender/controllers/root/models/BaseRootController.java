@@ -76,6 +76,9 @@ public abstract class BaseRootController extends Parent {
 	@FXML
 	protected SplitPane spHeaders;
 	
+	@FXML
+	protected SplitPane spParams;
+	
 	protected UISequence uiSequence;
 
 	private HistoryUiPlugin historyUiPlugin;
@@ -117,6 +120,7 @@ public abstract class BaseRootController extends Parent {
 		this.sendRequestThread = modelRootController.getSendRequestThread();
 		this.lvHistory = modelRootController.getLvHistory();
 		this.spHeaders = modelRootController.getSpHeaders();
+		this.spParams = modelRootController.getSpParams();
 	}
 
 	public TextField getTfUrl() {
@@ -233,5 +237,13 @@ public abstract class BaseRootController extends Parent {
 
 	public void setSpHeaders(SplitPane spHeaders) {
 		this.spHeaders = spHeaders;
+	}
+
+	public SplitPane getSpParams() {
+		return spParams;
+	}
+
+	public void setSpParams(SplitPane spParams) {
+		this.spParams = spParams;
 	}
 }

@@ -17,6 +17,7 @@ public class SequenceTransformer implements
 
 		uiSequence.setSelectedPluginId(sequence.getSelectedPluginId());
 
+		uiSequence.getOrder().clear();
 		sequence.getOrder().forEach(o -> uiSequence.getOrder().add(o));
 
 		TransformerFactory.transformEntity(sequence.getParams(),
@@ -26,6 +27,7 @@ public class SequenceTransformer implements
 		uiSequence.getUIParams().forEach(
 				param -> uiSequence.getKeys().add(param.getKey()));
 
+		uiSequence.getUiPlugins().clear();
 		sequence.getPlugins().forEach(
 				plugin -> {
 					UIPlugin uiPlugin = new UIPlugin();
@@ -50,12 +52,15 @@ public class SequenceTransformer implements
 			final UISequence uiSequence) {
 		sequence.setSelectedPluginId(uiSequence.getSelectedPluginId());
 
+		sequence.getOrder().clear();
 		uiSequence.getOrder().forEach(o -> sequence.getOrder().add(o));
+		
 		sequence.getSentPlugins().clear();
 		
 		TransformerFactory.reverseTransformEntity(sequence.getParams(),
 				uiSequence.getUIParams(), TransformKey.ROOT_PARAMS);
 
+		sequence.getPlugins().clear();
 		uiSequence.getUiPlugins().forEach(
 				uiPlugin -> {
 					Plugin plugin = new Plugin();

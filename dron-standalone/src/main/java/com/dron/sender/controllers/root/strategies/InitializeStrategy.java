@@ -73,7 +73,7 @@ public class InitializeStrategy extends BaseRootController implements
 					cbMethods.getSelectionModel().select(newValue);
 					uiSequence.getSelectedUIPLugin().setMethod(newValue);
 
-					RootConfig.bindPostBody(txaPostBody, newValue);
+					RootConfig.bindPostBody(txaPostBody, newValue, spHeaders, tblHeaders);
 				});
 
 		tblParams = new ParamTableView()
@@ -100,12 +100,15 @@ public class InitializeStrategy extends BaseRootController implements
 				(observer, oldValue, newValue) -> {
 					uiSequence.getSelectedUIPLugin().setPostBody(newValue);
 				});
-		btnAddNewPlugin.disableProperty().bind(tfNewPluginName.textProperty().isEmpty());
-		
+		btnAddNewPlugin.disableProperty().bind(
+				tfNewPluginName.textProperty().isEmpty());
+
 		tbtnHeaders.setSelected(true);
 		tbtnHeaders.disableProperty().bind(RootConfig.getDisableRootProperty());
 		tbtnHeaders.setOnAction(event -> {
 			tblHeaders.setVisible(!tblHeaders.isVisible());
+			RootConfig.bindPostBody(txaPostBody, cbMethods.getSelectionModel()
+					.getSelectedItem(), spHeaders, tblHeaders);
 		});
 
 		tbtnParams.setSelected(true);

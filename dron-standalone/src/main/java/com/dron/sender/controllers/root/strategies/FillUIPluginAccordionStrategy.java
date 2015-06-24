@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -103,6 +104,9 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		Button btnMoveDown = null;
 		if (index != uiSequence.getOrder().size() - 1) {
 			btnMoveDown = new Button("Move down");
+			btnMoveDown.getStyleClass().add("btn-move-down");
+			btnMoveDown.setPrefWidth(25.0);
+			btnMoveDown.setMnemonicParsing(false);
 			btnMoveDown.setOnAction(listener -> {
 				setHistoryUiPlugin(new HistoryUiPlugin(uiPlugin, uiSequence
 						.getUIParams()));
@@ -114,6 +118,9 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		Button btnMoveUp = null;
 		if (index != 0) {
 			btnMoveUp = new Button("Move up");
+			btnMoveUp.getStyleClass().add("btn-move-up");
+			btnMoveUp.setPrefWidth(25.0);
+			btnMoveUp.setMnemonicParsing(false);
 			btnMoveUp.setOnAction(listener -> {
 				setHistoryUiPlugin(new HistoryUiPlugin(uiPlugin, uiSequence
 						.getUIParams()));
@@ -122,6 +129,10 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 			});
 		}
 		Button btnRemove = new Button("Remove");
+		VBox.setMargin(btnRemove, new Insets(0.0, 0.0, 25.0, 0.0));
+		btnRemove.getStyleClass().add("btn-remove");
+		btnRemove.setPrefWidth(25.0);
+		btnRemove.setMnemonicParsing(false);
 		btnRemove.setOnAction(listener -> {
 			int expantedIndex = getExpantedUIPluginIndex();
 			uiSequence.removePlugin(expantedIndex);
@@ -132,12 +143,13 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		});
 
 		AnchorPane anchorPane = new AnchorPane();
-		HBox hBox = new HBox(btnRemove);
-		if (btnMoveDown != null) {
-			hBox.getChildren().add(btnMoveDown);
-		}
+		VBox vOrientation = new VBox();
+		vOrientation.getChildren().add(btnRemove);
 		if (btnMoveUp != null) {
-			hBox.getChildren().add(btnMoveUp);
+			vOrientation.getChildren().add(btnMoveUp);
+		}
+		if (btnMoveDown != null) {
+			vOrientation.getChildren().add(btnMoveDown);
 		}
 
 		HBox hRename = new HBox();
@@ -167,7 +179,10 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 
 		hRename.getChildren().addAll(btnRename, hRenamePanel);
 
-		VBox vBox = new VBox(tblFutureParams, hBox, hRename);
+		HBox hBox = new HBox();
+		hBox.getChildren().addAll(tblFutureParams, vOrientation);
+
+		VBox vBox = new VBox(hBox, hRename);
 		anchorPane.getChildren().addAll(vBox);
 
 		return anchorPane;

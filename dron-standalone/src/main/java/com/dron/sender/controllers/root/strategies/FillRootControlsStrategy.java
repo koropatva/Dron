@@ -50,6 +50,8 @@ public class FillRootControlsStrategy extends BaseRootController implements
 						.getUiPlugin().getPostBody().get(), Object.class);
 				txaPostBody.setText(mapper.writerWithDefaultPrettyPrinter()
 						.writeValueAsString(json));
+			}else{
+				txaPostBody.setText("");
 			}
 
 			if (controller.getHistoryUiPlugin().getUiPlugin().getResponce()
@@ -58,6 +60,8 @@ public class FillRootControlsStrategy extends BaseRootController implements
 						.getUiPlugin().getResponce().get(), Object.class);
 				txaResponce.setText(mapper.writerWithDefaultPrettyPrinter()
 						.writeValueAsString(json));
+			}else{
+				txaResponce.setText("");
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

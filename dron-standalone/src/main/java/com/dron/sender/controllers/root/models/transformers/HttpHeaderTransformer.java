@@ -24,6 +24,7 @@ public class HttpHeaderTransformer implements
 	@Override
 	public HttpHeaders reverseTransform(final HttpHeaders headers,
 			final List<UIHttpHeaders> uiHttpHeaders) {
+		headers.clear();
 		uiHttpHeaders.forEach(uiHttpHeader -> {
 			if (!uiHttpHeader.isEmpty()) {
 				headers.add(uiHttpHeader.getHeader(), uiHttpHeader.getValue());

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.models.BaseRootController;
+import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.controllers.root.tasks.SequenceTask;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
 import com.dron.sender.pattern.models.strategy.ControllerActionStrategy;
@@ -31,6 +32,8 @@ public class SendSequenceStrategy extends BaseRootController implements
 	@Autowired
 	private ApplicationContext ctx;
 
+	private RootController controller;
+
 	@Override
 	public ControllerActionStrategy getStrategy() {
 		return ControllerActionStrategy.ROOT_SEND_SEQUENCE;
@@ -38,7 +41,7 @@ public class SendSequenceStrategy extends BaseRootController implements
 
 	@Override
 	public void execute(IBaseController iBaseController) {
-		RootController controller = (RootController) iBaseController;
+		this.controller = (RootController) iBaseController;
 		setUp(controller);
 
 		Sequence sequence = fillRootSequence();
@@ -60,6 +63,24 @@ public class SendSequenceStrategy extends BaseRootController implements
 	}
 
 	private Sequence fillRootSequence() {
+		uiSequence.setSelectedPluginId(controller.getHistoryUiPlugin()
+				.getUiPlugin().getId().get());
+
+		UIPlugin uiPlugin = uiSequence.getSelectedUIPLugin();
+		uiPlugin.setId(controller.getHistoryUiPlugin().getUiPlugin().getId().get());
+		uiPlugin.setUrl(controller.getHistoryUiPlugin().getUiPlugin().getUrl().get());
+		uiPlugin.setMethod(controller.getHistoryUiPlugin().getUiPlugin().getMethod().get());
+		uiPlugin.setName(controller.getHistoryUiPlugin().getUiPlugin().getName().get());
+		uiPlugin.setPostBody(controller.getHistoryUiPlugin().getUiPlugin().getPostBody().get());
+		uiPlugin.setResponce(controller.getHistoryUiPlugin().getUiPlugin().getResponce().get());
+		uiPlugin.setSuccess(controller.getHistoryUiPlugin().getUiPlugin().isSuccess().get());
+		
+		uiSequence.getUIParams().clear();
+		controller.getHistoryUiPlugin().getUiParams()
+				.forEach(param -> uiSequence.getUIParams().add(param.clone()));
+
+		uiSequence.getSentPlugins().clear();
+
 		Sequence sequence = new Sequence();
 		TransformerFactory.reverseTransformEntity(sequence, uiSequence,
 				TransformKey.ROOT_SEQUENCE);

@@ -55,7 +55,8 @@ public class UIPlugin implements Cloneable {
 
 	public void prepareEmptyPlugin() {
 		id.set(UUID.randomUUID().toString());
-		method.set(HttpMethod.GET.name());
+		name.set("Default plugin");
+		method.set(HttpMethod.POST.name());
 		headersList.add(new UIHttpHeaders());
 		futureParams.add(new UIFutureParam());
 	}
@@ -142,9 +143,11 @@ public class UIPlugin implements Cloneable {
 		plugin.setSuccess(success.get());
 		plugin.setPostBody(postBody.get());
 		plugin.setUrl(url.get());
+		plugin.getHeadersList().clear();
 		headersList.forEach(header -> {
 			plugin.getHeadersList().add(header.clone());
 		});
+		plugin.getFutureParams().clear();
 		futureParams.forEach(futureParam -> {
 			plugin.getFutureParams().add(futureParam.clone());
 		});

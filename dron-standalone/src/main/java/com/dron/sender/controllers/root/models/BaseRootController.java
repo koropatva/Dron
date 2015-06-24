@@ -8,6 +8,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -72,6 +73,9 @@ public abstract class BaseRootController extends Parent {
 	@FXML
 	protected ListView<HistoryUiPlugin> lvHistory;
 
+	@FXML
+	protected SplitPane spHeaders;
+	
 	protected UISequence uiSequence;
 
 	private HistoryUiPlugin historyUiPlugin;
@@ -112,6 +116,7 @@ public abstract class BaseRootController extends Parent {
 		this.tmpImportFile = modelRootController.getTmpImportFile();
 		this.sendRequestThread = modelRootController.getSendRequestThread();
 		this.lvHistory = modelRootController.getLvHistory();
+		this.spHeaders = modelRootController.getSpHeaders();
 	}
 
 	public TextField getTfUrl() {
@@ -222,5 +227,11 @@ public abstract class BaseRootController extends Parent {
 		this.historyUiPlugin = historyUiPlugin;
 	}
 
+	public SplitPane getSpHeaders() {
+		return spHeaders;
+	}
 
+	public void setSpHeaders(SplitPane spHeaders) {
+		this.spHeaders = spHeaders;
+	}
 }

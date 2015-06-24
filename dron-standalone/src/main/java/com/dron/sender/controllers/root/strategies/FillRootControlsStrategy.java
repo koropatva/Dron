@@ -43,7 +43,7 @@ public class FillRootControlsStrategy extends BaseRootController implements
 				.getResponce().get());
 
 		RootConfig.bindPostBody(txaPostBody, controller.getHistoryUiPlugin()
-				.getUiPlugin().getMethod().get());
+				.getUiPlugin().getMethod().get(), spHeaders, tblHeaders);
 
 		tblHeaders = new HeaderTableView().initialize(controller
 				.getHistoryUiPlugin().getUiPlugin().getHeadersList(),

@@ -11,9 +11,7 @@
 .key-values-column{
 	-fx-size:5;
 }
-.acordion-cla]ss{
-	-fx-width: 100%;
-}
+
 .stop-load-btn{
 	-fx-background-image: url(images/ajax-loader.gif);
 	-fx-background-repeat: no-repeat;

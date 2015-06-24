@@ -99,10 +99,6 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 				uiPlugin.getFutureParams(), uiSequence.getKeys(),
 				tblFutureParams);
 
-		TextField tfPluginName = new TextField();
-		tfPluginName.setPrefWidth(DEFAULT_ACCORDION_WIDTH);
-		tfPluginName.textProperty().bindBidirectional(uiPlugin.getName());
-
 		int index = uiSequence.findSelectedIndex(uiPlugin.getId().get());
 		Button btnMoveDown = null;
 		if (index != uiSequence.getOrder().size() - 1) {
@@ -144,7 +140,34 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 			hBox.getChildren().add(btnMoveUp);
 		}
 
-		VBox vBox = new VBox(tfPluginName, tblFutureParams, hBox);
+		HBox hRename = new HBox();
+
+		HBox hRenamePanel = new HBox();
+		hRenamePanel.setVisible(false);
+
+		Button btnRename = new Button("Rename");
+		btnRename.visibleProperty().bind(hRenamePanel.visibleProperty().not());
+		btnRename.setOnAction(listener -> {
+			hRenamePanel.setVisible(!hRenamePanel.isVisible());
+		});
+
+		TextField tfPluginName = new TextField();
+		tfPluginName.setText(uiPlugin.getName().get());
+
+		Button btnSave = new Button("Save");
+		btnSave.setOnAction(listener -> {
+			uiPlugin.getName().set(tfPluginName.getText());
+			hRenamePanel.setVisible(!hRenamePanel.isVisible());
+		});
+		Button btnCancel = new Button("Cancel");
+		btnCancel.setOnAction(listener -> {
+			hRenamePanel.setVisible(!hRenamePanel.isVisible());
+		});
+		hRenamePanel.getChildren().addAll(tfPluginName, btnSave, btnCancel);
+
+		hRename.getChildren().addAll(btnRename, hRenamePanel);
+
+		VBox vBox = new VBox(tblFutureParams, hBox, hRename);
 		anchorPane.getChildren().addAll(vBox);
 
 		return anchorPane;

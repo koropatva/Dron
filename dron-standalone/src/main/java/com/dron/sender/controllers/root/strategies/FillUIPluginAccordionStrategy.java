@@ -96,15 +96,12 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 	private AnchorPane createAnchorPane(final UIPlugin uiPlugin,
 			final RootController controller) {
 		TableView<UIFutureParam> tblFutureParams = new TableView<>();
-//		tblFutureParams.setPrefHeight(100);
 		tblFutureParams = new FutureParamTableView().initializeWithKeyList(
 				uiPlugin.getFutureParams(), uiSequence.getKeys(),
 				tblFutureParams);
-//		tblFutureParams.getColumns().get(0).setPrefWidth(80);
-//		tblFutureParams.getColumns().get(1).setPrefWidth(80);
 		
 		int index = uiSequence.findSelectedIndex(uiPlugin.getId().get());
-		Button btnMoveDown = new Button("Move down");
+		Button btnMoveDown = new Button("");
 		btnMoveDown.getStyleClass().add("btn-move-down");
 		btnMoveDown.setPrefWidth(25.0);
 		btnMoveDown.setMnemonicParsing(false);
@@ -116,7 +113,7 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		});
 		btnMoveDown.setVisible(index != uiSequence.getOrder().size() - 1);
 
-		Button btnMoveUp = new Button("Move up");
+		Button btnMoveUp = new Button("");
 		btnMoveUp.getStyleClass().add("btn-move-up");
 		btnMoveUp.setPrefWidth(25.0);
 		btnMoveUp.setMnemonicParsing(false);
@@ -128,7 +125,7 @@ public class FillUIPluginAccordionStrategy extends BaseRootController implements
 		});
 		btnMoveUp.setVisible(index != 0);
 
-		Button btnRemove = new Button("Remove");
+		Button btnRemove = new Button("");
 		VBox.setMargin(btnRemove, new Insets(0.0, 0.0, 25.0, 0.0));
 		btnRemove.getStyleClass().add("btn-remove");
 		btnRemove.setPrefWidth(25.0);

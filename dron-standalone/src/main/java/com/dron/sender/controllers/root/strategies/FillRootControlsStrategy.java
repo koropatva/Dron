@@ -42,29 +42,35 @@ public class FillRootControlsStrategy extends BaseRootController implements
 				.select(controller.getHistoryUiPlugin().getUiPlugin()
 						.getMethod().get());
 
+		Object json;
 		try {
-			Object json;
 			if (controller.getHistoryUiPlugin().getUiPlugin().getPostBody()
 					.get() != null) {
 				json = mapper.readValue(controller.getHistoryUiPlugin()
 						.getUiPlugin().getPostBody().get(), Object.class);
 				txaPostBody.setText(mapper.writerWithDefaultPrettyPrinter()
 						.writeValueAsString(json));
-			}else{
+			} else {
 				txaPostBody.setText("");
 			}
+		} catch (IOException e) {
+			txaPostBody.setText(controller.getHistoryUiPlugin().getUiPlugin()
+					.getPostBody().get());
+		}
 
+		try {
 			if (controller.getHistoryUiPlugin().getUiPlugin().getResponce()
 					.get() != null) {
 				json = mapper.readValue(controller.getHistoryUiPlugin()
 						.getUiPlugin().getResponce().get(), Object.class);
 				txaResponce.setText(mapper.writerWithDefaultPrettyPrinter()
 						.writeValueAsString(json));
-			}else{
+			} else {
 				txaResponce.setText("");
 			}
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			txaResponce.setText(controller.getHistoryUiPlugin().getUiPlugin()
+					.getResponce().get());
 		}
 
 		RootConfig.bindPostBody(txaPostBody, controller.getHistoryUiPlugin()

@@ -12,6 +12,7 @@ import com.dron.sender.controllers.base.interfaces.IBaseController;
 import com.dron.sender.controllers.base.interfaces.IStageService;
 import com.dron.sender.controllers.root.RootController;
 import com.dron.sender.controllers.root.models.BaseRootController;
+import com.dron.sender.controllers.root.models.UIPlugin;
 import com.dron.sender.exceptions.DronSenderException;
 import com.dron.sender.exim.ExportService;
 import com.dron.sender.pattern.interfaces.IControllerStrategy;
@@ -51,6 +52,25 @@ public class ExportSequenceStrategy extends BaseRootController implements
 					.getPrimaryStage());
 
 			if (choosenFile != null) {
+				uiSequence.setSelectedPluginId(controller.getHistoryUiPlugin()
+						.getUiPlugin().getId().get());
+
+				UIPlugin uiPlugin = uiSequence.getSelectedUIPLugin();
+				uiPlugin.setId(controller.getHistoryUiPlugin().getUiPlugin().getId().get());
+				uiPlugin.setUrl(controller.getHistoryUiPlugin().getUiPlugin().getUrl().get());
+				uiPlugin.setMethod(controller.getHistoryUiPlugin().getUiPlugin().getMethod().get());
+				uiPlugin.setName(controller.getHistoryUiPlugin().getUiPlugin().getName().get());
+				uiPlugin.setPostBody(controller.getHistoryUiPlugin().getUiPlugin().getPostBody().get());
+				uiPlugin.setResponce(controller.getHistoryUiPlugin().getUiPlugin().getResponce().get());
+				uiPlugin.setSuccess(controller.getHistoryUiPlugin().getUiPlugin().isSuccess().get());
+				
+				uiSequence.getUIParams().clear();
+				controller.getHistoryUiPlugin().getUiParams()
+						.forEach(param -> uiSequence.getUIParams().add(param.clone()));
+
+				uiSequence.getSentPlugins().clear();
+
+				
 				Sequence sequence = new Sequence();
 				TransformerFactory.reverseTransformEntity(sequence, uiSequence,
 						TransformKey.ROOT_SEQUENCE);
